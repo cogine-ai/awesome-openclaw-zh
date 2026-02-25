@@ -1,7 +1,7 @@
 # Awesome OpenClaw 中文精选（awesome-openclaw-zh）
 
 一个面向中文用户的 OpenClaw 实战仓库：
-**先看懂能干什么，再 5 分钟用起来。**
+**先 5 分钟用起来，再不断扩充能力边界。**
 
 本仓库主打：
 - 非技术用户友好
@@ -60,7 +60,7 @@
 
 ## 说明与致谢
 
-本仓库主要整合并重写自以下仓库（按你要求）：
+本仓库主要来源于团队自用经验，结合互联网公开信息和优秀的GitHub开源仓库：
 
 - [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
@@ -70,6 +70,3 @@
 - [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 
 每个用例页都保留了来源链接，方便追溯。
-
-如果你想看“这 6 个仓库分别贡献了什么能力”，请看：
-- [前5仓库知识提炼（含 hesamsheikh 补充）](./resources/04-top5-repos-notes.md)
