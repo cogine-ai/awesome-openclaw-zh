@@ -49,9 +49,8 @@
 
 - [安装与部署入口（小白版）](./resources/01-install-and-deploy.md)
 - [模型、渠道、技能怎么选](./resources/02-model-channel-skill-guide.md)
-- [低成本稳定运行（runbook 精简版）](./playbooks/01-low-cost-stable-run.md)
+- [低成本稳定运行（精简版）](./playbooks/01-low-cost-stable-run.md)
 - [安全与权限边界（非技术版）](./playbooks/02-safe-usage-boundary.md)
-- [14天冲 1000 Star 执行表](./resources/05-14day-star-plan.md)
 
 ## 投稿与共建
 
