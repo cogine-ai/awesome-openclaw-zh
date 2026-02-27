@@ -1,56 +1,81 @@
-# Swift 日志记录包
+# Swift 日志包（TDD）
 
-> TDD 包开发
+> 用 TDD 流程自动推进一个 Swift 日志包，从测试到发布形成闭环。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「TDD 包开发」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把“写包 + 写测试 + 发布”变成可重复执行流程。
+- 先测后码，减少功能漂移和回归。
+- 提前固化质量门槛，避免上线后再补测试。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `swift` | 编写与验证 Swift 包代码 | OpenClaw Built-in |
+| 内置 | `git` | 版本管理与发布流程 | OpenClaw Built-in |
 
-- `swift`
-- `git`
-- `GitHub`
+## 快速体验版（先跑一轮）
 
-### 命令片段
-
-```bash
-git
-```
-
-## 可复制提示词
+先用一个最小功能验证 TDD：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「Swift 日志记录包」。
-
-任务目标：TDD 包开发
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：swift、git、GitHub）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“Swift 日志包”的预演版：
+1. 先定义最小 API 需求。
+2. 先写 1 个失败测试（red）。
+3. 再写最小实现让测试通过（green）。
+4. 最后输出本轮重构建议（refactor）。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) TDD 核心片段
 
-## CITATION
+```swift
+// 1. Write test first
+func testLoggerWritesToFile() {
+  let logger = DelamainLogger(path: "/tmp/test.log")
+  logger.info("test message")
+  XCTAssertTrue(FileManager.default.fileExists("/tmp/test.log"))
+}
+
+// 2. Implement to pass test
+public class DelamainLogger {
+  public func info(_ message: String) {
+    // Implementation
+  }
+}
+```
+
+### 2) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“Swift Logger Package”。
+请使用内置 Skills：swift、git。
+
+开发流程：
+1. 定义 API 需求。
+2. 编写单元测试（red）。
+3. 以最小实现通过测试（green）。
+4. 在测试通过前提下重构。
+5. 完成 API 文档。
+6. 打版本标签。
+7. 发布到 GitHub。
+
+质量门槛：
+- 100% test coverage
+- SwiftLint passing
+- Documentation complete
+```
+
+## 成功标准
+
+- [ ] All tests passing
+- [ ] Published to GitHub
+- [ ] Documentation complete
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/37-swift-logger-package.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/37-swift-logger-package.md)

@@ -1,49 +1,72 @@
-# 夜间 WhatsApp 复兴
+# 夜间 WhatsApp 关系维护
 
-> 回复消息，恢复冷淡友谊
+> 自动处理未读消息并维护长期沉默会话，降低“忘回消息”的社交损耗。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「回复消息，恢复冷淡友谊」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 每 5 分钟扫描未读消息，按紧急/工作/朋友分层处理。
+- 对长期未互动联系人自动发送轻量问候，维持联系温度。
+- 关键敏感话题先交给人工确认，避免误回。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `whatsapp` | 读取并回复消息 | OpenClaw Built-in |
+| 内置 | `memory` | 记录会话历史与已发送内容 | OpenClaw Built-in |
 
-- `whatsapp`
-- `memory`
-- `WhatsApp`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+先只做分类与草稿，不实际发送：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「夜间 WhatsApp 复兴」。
-
-任务目标：回复消息，恢复冷淡友谊
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：whatsapp、memory、WhatsApp）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“夜间 WhatsApp 关系维护”的预演版：
+1. 扫描当前未读消息并按 urgent/work/friend 分类。
+2. 为每条消息生成回复草稿，但先不要发送。
+3. 对 7 天以上未互动联系人给出一条 check-in 草稿。
+4. 标记需要人工确认的敏感话题。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 消息分类规则
 
-## CITATION
+```javascript
+const categories = {
+  urgent: { response: "I'll have my human reply ASAP", maxAge: 0 },
+  work: { response: "Acknowledged, will follow up", maxAge: 2 },
+  friend: { response: "Hey! How have you been?", maxAge: 7 }
+};
+```
+
+### 2) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“Night WhatsApp Revival”。
+请使用内置 Skills：whatsapp、memory。
+
+每 5 分钟执行：
+1. 扫描 WhatsApp Web 未读消息。
+2. 按发送者类型和紧急程度分类。
+3. 工作消息：先发确认与预计跟进时间。
+4. 朋友消息：超过 7 天未互动时发送轻量问候。
+5. 所有已发送内容写入 memory/。
+6. 家庭相关消息默认不自动回复，需人工批准。
+
+安全规则：
+- No financial transactions
+- No personal/confidential info
+- Flag sensitive topics for human review
+```
+
+## 成功标准
+
+- [ ] Response time <1 hour for work
+- [ ] No friendship stale >14 days
+- [ ] Zero inappropriate auto-replies
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/14-night-whatsapp-revival.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/14-night-whatsapp-revival.md)
