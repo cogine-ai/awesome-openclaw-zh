@@ -1,73 +1,99 @@
 # SSH 密钥扫描器
 
-> 查找暴露的 SSH 密钥
+> 定期扫描文件系统，找出暴露的 SSH 私钥与 AWS 凭证。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「查找暴露的 SSH 密钥」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 自动发现错误位置、错误权限、误入 Git 仓库的私钥文件。
+- 同时检查明文 AWS 凭证，提前拦截高风险泄露。
+- 输出可执行修复动作（`chmod`、`git rm --cached`、密钥轮换）。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `filesystem` | 递归扫描目录 | OpenClaw Built-in |
+| 内置 | `git` | 检查是否已被版本控制追踪 | OpenClaw Built-in |
+| 内置 | `telegram` | 高风险告警推送 | OpenClaw Built-in |
 
-- `filesystem`
-- `git`
-- `telegram`
-- `config/security-scan.json`
-- `scripts/ssh-key-scanner.js`
-- `SKILL.md`
-- `Telegram`
-- `cron`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+### 1) 准备扫描配置（原文）
+
+`config/security-scan.json`：
+
+```json
+{
+  "scan_paths": ["~/.ssh", "~/Downloads", "~/projects", "~/workspace"],
+  "exclusions": ["node_modules", ".git/objects", "*.pub"],
+  "patterns": {
+    "ssh_key": [
+      "BEGIN OPENSSH PRIVATE KEY",
+      "BEGIN RSA PRIVATE KEY",
+      "BEGIN EC PRIVATE KEY"
+    ],
+    "aws_key": [
+      "AKIA[0-9A-Z]{16}",
+      "aws_access_key_id",
+      "aws_secret_access_key"
+    ]
+  }
+}
+```
+
+### 2) 先做一次手工修复演练
 
 ```bash
+# 权限修复
+chmod 600 ~/.ssh/*
+
+# 若误提交到 git，先从索引移除
 git rm --cached deploy_key
-git
-git ls-files "${filePath}"
+echo "deploy_key" >> .gitignore
 ```
 
-### 调度信息
+## 稳定自动版（可长期运行）
 
-- 0 2 * * 0
-- 02:00
+### 1) 扫描脚本（原文逻辑）
 
-## 可复制提示词
+- 递归扫描 `scan_paths`
+- 命中私钥后检查：
+  - 权限是否 `600`
+  - 是否在 `~/.ssh/`
+  - 是否处在 Git 仓库并被追踪
+- 命中 AWS Key 模式时标记高危
+
+### 2) 调度配置（原文）
+
+```json
+{
+  "schedule": "0 2 * * 0",
+  "task": "security_key_scan",
+  "immediate_alert_threshold": "high"
+}
+```
+
+### 3) OpenClaw 执行提示词（原文流程）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「SSH 密钥扫描器」。
-
-任务目标：查找暴露的 SSH 密钥
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：filesystem、git、telegram、config/security-scan.json、scripts/ssh-key-scanner.js、SKILL.md）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Weekly security scan (Sundays 02:00):
+1. Scan all configured paths for SSH private keys
+2. Check file permissions (must be 600)
+3. Check if keys are in git repositories
+4. Check for AWS credentials in plain text
+5. Look for keys in non-standard locations
+6. Generate security report
+7. Send critical alerts immediately
+8. Save report to memory/security-scans/YYYY-MM-DD.md
 ```
 
-## 风险与边界
+## 成功标准
 
-- 密钥与凭证不要放在公开文本或提示词中。
-- 远程访问和权限建议按最小授权配置。
+- [ ] SSH 私钥权限 100% 合规（`600`）。
+- [ ] Git 仓库内零私钥文件。
+- [ ] 明文 AWS 凭证能被及时告警并处理。
 
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/09-ssh-key-scanner.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/09-ssh-key-scanner.md)

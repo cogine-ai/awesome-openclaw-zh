@@ -1,59 +1,65 @@
 # 定制早间简报
 
-> 获取完全定制的每日简报 —— 新闻、任务、内容草稿和 AI 推荐的操作 —— 每天早上通过短信发送给你。
+> 每天固定时间自动推送你的晨间信息包（新闻、任务、创作草稿、AI建议）。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「获取完全定制的每日简报 —— 新闻、任务、内容草稿和 AI 推荐的操作 —— 每天早上通过短信发送给你。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把起床后“找信息”的时间前置到夜间自动准备。
+- 早上直接收到结构化简报，不用来回切换应用。
+- 可持续微调简报字段（天气、股票、仅 AI 新闻等）。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | Telegram / Discord / iMessage 通道 | 接收简报 | OpenClaw Built-in |
+| 外部（可选） | Todoist / Apple Reminders / Asana | 读取当日任务 | 官方 API / 集成 |
+| 外部（可选） | `x-research-v2` | 趋势研究补充 | ClawHub |
 
-- `Telegram`
-- `Discord`
-- `Todoist`
-- `OpenClaw`
-
-### 调度信息
-
-- 8:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「定制早间简报」。
-
-任务目标：获取完全定制的每日简报 —— 新闻、任务、内容草稿和 AI 推荐的操作 —— 每天早上通过短信发送给你。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Discord、Todoist、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的晨报助手。
+请先生成今天的简报样稿，包含：
+1) AI/创业/科技相关新闻
+2) 今日待办优先级
+3) 1条可直接执行的内容草稿
+4) 你建议我今天交给你代做的任务
+本轮只输出，不定时发送。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### OpenClaw 执行提示词（源案例）
 
-## 使用建议
+```text
+I want to set up a regular morning brief. Every morning at 8:00 AM,
+send me a report through Telegram.
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+I want this report to include:
+1. News stories relevant to my interests (AI, startups, tech)
+2. Ideas for content I can create today
+3. Tasks I need to complete today (pull from my to-do list)
+4. Recommendations for tasks you can complete for me today
 
-## CITATION
+For the content ideas, write full draft scripts/outlines — not just titles.
+```
+
+### 迭代口令（源案例）
+
+```text
+Add weather forecast to my morning brief.
+Stop including general news, focus only on AI.
+Include a motivational quote each morning.
+```
+
+## 成功标准
+
+- [ ] 简报每天按时送达。
+- [ ] 内容可直接执行，而不是只给方向。
+- [ ] 调整需求可以通过对话快速生效。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/custom-morning-brief.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/custom-morning-brief.md)

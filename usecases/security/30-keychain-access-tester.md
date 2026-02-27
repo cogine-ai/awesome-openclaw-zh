@@ -1,53 +1,54 @@
 # 钥匙串访问测试器
 
-> 测试人类安全意识
+> 通过可控测试验证“人是否会在未核验来源时输入密码”。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「测试人类安全意识」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 定期演练人机协作中的社会工程学风险。
+- 记录响应时间、核验动作、是否误输密码。
+- 把测试结果沉淀为家庭/团队安全规则。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `system` | 触发测试命令 | OpenClaw Built-in |
+| 内置 | `memory` | 记录测试结果与规则更新 | OpenClaw Built-in |
 
-- `system`
-- `memory`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「钥匙串访问测试器」。
-
-任务目标：测试人类安全意识
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：system、memory）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```bash
+security find-generic-password -s "test" -w
 ```
 
-## 风险与边界
+该命令会触发 Keychain 弹窗，用于观察是否进行来源核验。
 
-- 密钥与凭证不要放在公开文本或提示词中。
+## 稳定自动版（可长期运行）
 
-## 使用建议
+### 1) 月度测试流程（原文）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+```text
+Monthly security test:
+1. Run command that triggers keychain dialog
+2. Observe if human types password
+3. Document response time and verification
+4. If password entered: security briefing
+5. Update household security rules
+```
 
-## CITATION
+### 2) 安全教育要点（原文）
+
+- 输入密码前先确认弹窗来源进程
+- 不确定时优先点击 Cancel
+- 把“先核验再输入”写成固定规则
+
+## 成功标准
+
+- [ ] 每月测试有记录。
+- [ ] 人工核验率可跟踪。
+- [ ] 安全规则会根据测试结果更新。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/30-keychain-access-tester.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/30-keychain-access-tester.md)

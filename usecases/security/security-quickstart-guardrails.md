@@ -1,53 +1,87 @@
 # 安全快速启动模板
 
-> 快速建立基础安全策略，适合新手的第一套防护。
+> 用 4 组可复制提示词，快速完成审计、加固、成本保护与备份。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「快速建立基础安全策略，适合新手的第一套防护。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 新部署时先有一套可执行的安全起步流程。
+- 先查问题再改配置，减少“改完不可用”的概率。
+- 把安全、成本与备份统一纳入同一套上手动作。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | OpenClaw 配置读写能力 | 审计与更新 `openclaw.json` | OpenClaw Built-in |
+| 外部（系统） | `tar` / `cron` | 备份与定时执行 | 系统工具 |
 
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+先备份（原文）：
 
-```text
-你是我的 OpenClaw 助手，请帮我完成「安全快速启动模板」。
-
-任务目标：快速建立基础安全策略，适合新手的第一套防护。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```bash
+tar -czf ~/openclaw-backup-$(date +%Y%m%d).tar.gz ~/.openclaw/
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### Prompt 1：安全审计（原文）
 
-## 使用建议
+```text
+Check my OpenClaw deployment at ~/.openclaw/ for security issues:
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+1. In openclaw.json, check:
+   - Are API keys hardcoded or using env vars (${VAR})?
+   - Which tools are allowed? List dangerous ones (exec, cron, gateway)
+   - Is logging.redactSensitive enabled?
+   - Is gateway.bind set to loopback?
 
-## CITATION
+2. Check file permissions on ~/.openclaw/ and openclaw.json
+
+Report as:
+- CRITICAL: Fix immediately
+- HIGH: Fix today
+- MEDIUM: Fix this week
+```
+
+### Prompt 2：基础加固（原文）
+
+- 使用 `${VAR}` 管理密钥
+- 默认禁止 `exec`/`cron`/`gateway`/`nodes`
+- 开启 `logging.redactSensitive`
+- 网关 `bind: loopback` + token 认证
+
+### Prompt 3：成本保护（原文）
+
+- 配置模型成本字段
+- 按 agent 分配模型层级
+- 禁止 cron/public agent 默认走高价模型
+
+### Prompt 4：备份自动化（原文）
+
+```text
+Create a backup script at ~/.openclaw/scripts/backup.sh:
+
+Requirements:
+1. Backup location: ~/backups/openclaw/YYYY-MM-DD/
+2. Include:
+   - openclaw.json
+   - workspace/*.md (AGENTS.md, SOUL.md, etc)
+   - memory/*.md (last 30 days)
+3. Encrypt with gpg
+4. Make executable
+5. Set up cron for daily 2 AM runs
+
+Provide the complete script and cron line.
+```
+
+## 成功标准
+
+- [ ] 四组提示词都能执行并产出结果。
+- [ ] 安全基线（密钥、网关、工具权限、日志脱敏）已落地。
+- [ ] 备份任务能定时运行并可恢复。
+
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [examples/security-quickstart.md](https://github.com/digitalknk/openclaw-runbook/blob/main/examples/security-quickstart.md)

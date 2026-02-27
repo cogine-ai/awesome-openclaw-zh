@@ -1,60 +1,62 @@
 # 多源科技新闻摘要
 
-> 自动聚合和分发来自 109+ 来源（RSS、Twitter/X、GitHub、网页搜索）的质量评分科技新闻。
+> 自动聚合 RSS、Twitter/X、GitHub 发布与网页搜索，生成去重后的高质量科技快报。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「自动聚合和分发来自 109+ 来源（RSS、Twitter/X、GitHub、网页搜索）的质量评分科技新闻。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把分散的信息源统一进一条流水线，不再手工切换多个平台。
+- 自动去重与质量评分，优先输出“值得看”的 5-10 条。
+- 支持 Discord、邮件、Telegram 多渠道分发。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `tech-news-digest` | 多源采集、去重、评分、分发 | [clawhub.ai/skills/tech-news-digest](https://clawhub.ai/skills/tech-news-digest) |
+| 外部（可选） | `gog` | Gmail 邮件分发 | [clawhub.ai/skills/gog](https://clawhub.ai/skills/gog) |
+| 环境变量（可选） | `X_BEARER_TOKEN` / `BRAVE_API_KEY` / `GITHUB_TOKEN` | 扩展 X、搜索、GitHub API 能力 | 源文定义 |
 
-- `X_BEARER_TOKEN`
-- `BRAVE_API_KEY`
-- `GITHUB_TOKEN`
-- `Telegram`
-- `Discord`
-- `Gmail`
-- `GitHub`
-- `Web Search`
-- `RSS`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+安装并立即生成一次日报：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「多源科技新闻摘要」。
-
-任务目标：自动聚合和分发来自 109+ 来源（RSS、Twitter/X、GitHub、网页搜索）的质量评分科技新闻。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：X_BEARER_TOKEN、BRAVE_API_KEY、GITHUB_TOKEN、Telegram、Discord、Gmail）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Install tech-news-digest from ClawHub. Set up a daily tech digest at 9am to Discord #tech-news channel. Also send it to my email at myemail@example.com.
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 添加自定义信息源（原文）
 
-## 使用建议
+```text
+Add these to my tech digest sources:
+- RSS: https://my-company-blog.com/feed
+- Twitter: @myFavResearcher
+- GitHub: my-org/my-framework
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 按需临时生成（原文）
 
-## CITATION
+```text
+Generate a tech digest for the past 24 hours and send it here.
+```
+
+### 3) 流水线结构（原文）
+
+- RSS（46 源）
+- Twitter/X（44 账号）
+- GitHub Releases（19 仓库）
+- Web Search（4 主题）
+
+最终合并后按标题相似度去重，再按优先源、多源重叠、时效、互动等维度评分。
+
+## 成功标准
+
+- [ ] 每天固定时间产出可读摘要。
+- [ ] 结果经过去重，重复资讯显著减少。
+- [ ] 自定义源可快速加入并生效。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/multi-source-tech-news-digest.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-source-tech-news-digest.md)

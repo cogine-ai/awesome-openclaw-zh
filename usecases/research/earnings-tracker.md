@@ -1,56 +1,73 @@
 # AI 财报追踪器
 
-> 追踪科技/AI 财报，带有自动化预览、警报和详细摘要。
+> 每周自动扫财报日历，你只确认名单，后续财报摘要自动推送。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「追踪科技/AI 财报，带有自动化预览、警报和详细摘要。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 周日自动产出下周科技/AI 公司财报预览，不用手动翻日历。
+- 你选定关注公司后，自动创建“单次 cron 任务”，到点抓取财报结果。
+- 推送统一格式摘要：`beat/miss`、营收、EPS、AI 相关亮点、指引。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `web_search` | 获取财报日历与财报结果 | OpenClaw Built-in |
+| 内置 | `cron` | 周任务 + 单次任务调度 | OpenClaw Built-in |
+| 渠道 | Telegram 话题 | 接收预览与财报总结 | Telegram |
 
-- `web_search`
-- `Telegram`
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+把下面提示词直接发给 OpenClaw，先跑“预览 + 人工确认”闭环：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「AI 财报追踪器」。
+Every Sunday at 6 PM, run a cron job to:
+1. Search for the upcoming week's earnings calendar for tech and AI companies
+2. Filter for companies I care about (NVDA, MSFT, GOOGL, META, AMZN, TSLA, AMD, etc.)
+3. Post the list to my Telegram "earnings" topic
+4. Wait for me to confirm which ones I want to track
 
-任务目标：追踪科技/AI 财报，带有自动化预览、警报和详细摘要。
+When I reply with which companies to track:
+1. Schedule one-shot cron jobs for each earnings date/time
+2. After each report drops, search for earnings results
+3. Format a summary including: beat/miss, revenue, EPS, key metrics, AI-related highlights, guidance
+4. Post to Telegram "earnings" topic
 
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：web_search、Telegram、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Keep a memory of which companies I typically track so you can auto-suggest them each week.
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 先建好接收通道
 
-## 使用建议
+- 在 Telegram 建立话题：`earnings`
+- 先手动测试一次消息是否能到该话题
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 固定节奏
 
-## CITATION
+- 周日 18:00：自动发下周预览
+- 你回复“本周跟踪公司清单”后：自动注册对应的一次性财报任务
+
+### 3) 建议输出格式（便于复盘）
+
+```markdown
+## 公司：NVDA
+- 财报结论：Beat / Miss
+- Revenue：...
+- EPS：...
+- 关键指标：...
+- AI 相关亮点：...
+- 指引（Guidance）：...
+- 来源链接：...
+```
+
+## 成功标准
+
+- [ ] 每周都能按时收到“下周财报预览”。
+- [ ] 确认名单后，财报后总结可自动到达 Telegram。
+- [ ] 常跟踪公司会被系统自动建议，减少重复输入。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/earnings-tracker.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/earnings-tracker.md)

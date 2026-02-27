@@ -1,88 +1,115 @@
 # 个人知识图谱构建
 
-> 把知识点和关系沉淀成图谱，提升检索与复盘效率。
+> 把碎片知识变成“节点 + 关系”的结构化图谱，支持检索、推荐和复盘。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「把知识点和关系沉淀成图谱，提升检索与复盘效率。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把分散在笔记、浏览记录、对话里的知识统一进图谱。
+- 自动抽取实体关系，建立“概念之间如何关联”的可追踪结构。
+- 支持图谱可视化、每周更新、质量检查和导出复用。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `note-parser` | 从笔记中提取知识点 | ClawHub |
+| 外部（需安装） | `browser-history-analyzer` | 从浏览历史提取主题 | ClawHub |
+| 外部（需安装） | `knowledge-graph-visualizer` | 生成图谱可视化页面 | ClawHub |
+| 外部（需安装） | `knowledge-exporter` | 导出图谱为 Markdown | ClawHub |
+| 内置 | `openclaw agent` | 关系提取、推荐、复盘与维护 | OpenClaw Built-in |
 
-- `Telegram`
-- `Discord`
-- `Notion`
-- `GitHub`
-- `cron`
-- `OpenClaw`
-- `RSS`
-
-### 命令片段
-
-```bash
-openclaw agent --message "请使用 rss-reader skill 收集 ~/.openclaw/info-sources.json 中配置的RSS源，保存到 $OUTPUT_DIR/rss-$DATE.json"
-openclaw agent --message "请收集GitHub今日Python热门项目，保存到 $OUTPUT_DIR/github-$DATE.json"
-openclaw agent --message "请搜索'OpenClaw AI工具'相关信息，最多10条结果，保存到 $OUTPUT_DIR/search-$DATE.json"
-openclaw agent --message "请合并 $OUTPUT_DIR/*-$DATE.json 中的所有信息并去重，保存到 $OUTPUT_DIR/merged-$DATE.json"
-openclaw agent --message "请分析 $OUTPUT_DIR/merged-$DATE.json 中的内容并评分，保存到 $OUTPUT_DIR/analyzed-$DATE.json"
-openclaw channels send feishu \
-crontab -e
-openclaw skills run brave-search \
-bash ~/.openclaw/scripts/content-creation.sh "OpenClaw自动化测试实战"
-openclaw agent --message "分析最近的技术热点，生成3个博客选题"
-bash ~/.openclaw/scripts/content-creation.sh "选题1"
-openclaw agent --message "生成今日效率报告"
-```
-
-### 调度信息
-
-- 08:00
-- 09:00
-- 18:00
-- 11:00
-- 14:00
-- 16:00
-- 15:00
-- 12:00
-- 13:00
-- 17:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「个人知识图谱构建」。
-
-任务目标：把知识点和关系沉淀成图谱，提升检索与复盘效率。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Discord、Notion、GitHub、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的知识图谱助手。
+我会用“#知识点 xxx”给你几条输入，
+请为每条提取：实体、关系、分类，并输出一份关系网预览。
+本轮不做可视化，只验证结构是否合理。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 知识收集
 
-## 使用建议
+```bash
+clawhub install note-parser
+openclaw agent --message "请使用 note-parser skill 从 ~/.openclaw/notes 提取知识点，保存到 ~/.openclaw/knowledge/entities.json"
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+clawhub install browser-history-analyzer
+openclaw agent --message "请使用 browser-history-analyzer skill 分析最近30天的浏览历史，保存到 ~/.openclaw/knowledge/topics.json"
 
-## CITATION
+openclaw agent --message "分析我最近的对话，提取关键知识点"
+```
+
+### 2) 关系提取
+
+```bash
+openclaw agent --message "分析我的知识库，提取知识点之间的关系"
+```
+
+关系定义示例：
+
+```json
+{
+  "relationships": [
+    {
+      "from": "OpenClaw",
+      "to": "Skills",
+      "type": "包含",
+      "weight": 1.0
+    },
+    {
+      "from": "Skills",
+      "to": "自动化",
+      "type": "实现",
+      "weight": 0.9
+    },
+    {
+      "from": "find-skills",
+      "to": "ProactiveAgent",
+      "type": "配合使用",
+      "weight": 0.8
+    }
+  ]
+}
+```
+
+### 3) 可视化
+
+```bash
+clawhub install knowledge-graph-visualizer
+openclaw skills run knowledge-graph-visualizer \
+  --input ~/.openclaw/knowledge \
+  --output ~/.openclaw/knowledge/graph.html \
+  --style "force-directed"
+
+open ~/.openclaw/knowledge/graph.html
+```
+
+### 4) 应用与维护
+
+```bash
+openclaw agent --message "搜索：如何使用Skills"
+openclaw agent --message "根据我的知识图谱，推荐下一步学习内容"
+openclaw agent --message "生成本周知识复盘报告"
+
+# 每周更新
+openclaw agent --message "更新知识图谱"
+
+# 质量检查
+openclaw agent --message "检查知识图谱质量"
+
+# 导出
+openclaw agent --message "请使用 knowledge-exporter skill 导出知识图谱为 markdown 格式，保存到 ~/knowledge-base.md"
+```
+
+## 成功标准
+
+- [ ] 图谱能持续吸收新增知识点。
+- [ ] 关系网络可支持检索与学习推荐。
+- [ ] 每周更新与质量检查稳定执行。
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/13-advanced-automation.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/13-advanced-automation.md)

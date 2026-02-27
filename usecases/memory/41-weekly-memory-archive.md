@@ -1,60 +1,67 @@
-# 每周内存归档
+# 每周记忆归档
 
-> 将旧日志压缩为摘要
+> 每周压缩 30 天前的日记文件并产出月度摘要，降低上下文负担。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「将旧日志压缩为摘要」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 减少历史日志堆积造成的检索和加载成本。
+- 保留可追溯历史，同时让当前上下文更轻量。
+- 建立“日记 → 月摘要 → 年摘要”的分层留存。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `filesystem` | 扫描、压缩、迁移历史文件 | OpenClaw Built-in |
+| 内置 | `git` | 归档变更可追踪 | OpenClaw Built-in |
 
-- `filesystem`
-- `git`
-
-### 命令片段
-
-```bash
-node scripts/summarize-month.js 2026-01
-git
-```
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「每周内存归档」。
-
-任务目标：将旧日志压缩为摘要
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：filesystem、git）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的记忆归档助手。
+请先扫描 memory 目录，列出“超过 30 天”的文件候选，
+并给出本周将执行的归档计划与月摘要大纲。
+本轮只输出计划，不执行压缩和移动。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 归档命令示例
 
-## 使用建议
+```bash
+# Compress old dailies
+tar -czf memory/archive/2026-01.tar.gz memory/2026-01-*.md
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+# Generate monthly summary
+node scripts/summarize-month.js 2026-01
+```
 
-## CITATION
+### 2) OpenClaw 执行提示词（自动版）
+
+```markdown
+## Weekly Memory Archive
+
+Every Sunday:
+1. Find memory files >30 days old
+2. Generate monthly summary
+3. Compress daily files
+4. Move to archive/
+5. Update MEMORY.md with summary link
+6. Git commit archive
+
+Retention:
+- Keep last 30 days as individual files
+- Monthly summaries for older
+- Yearly summaries after 12 months
+```
+
+## 成功标准
+
+- [ ] 每周归档稳定执行。
+- [ ] 最近 30 天可快速访问，历史数据可追溯。
+- [ ] 归档后上下文加载明显更轻。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/41-weekly-memory-archive.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/41-weekly-memory-archive.md)

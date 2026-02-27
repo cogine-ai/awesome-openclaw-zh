@@ -1,65 +1,110 @@
-# Todoist 任务管理器
+# Todoist 任务管理器（Agent 可视化）
 
-> 通过将推理和进度日志同步到 Todoist，最大化智能体的透明度。
+> 把代理执行计划和进度日志同步到 Todoist，实现任务过程透明化。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「通过将推理和进度日志同步到 Todoist，最大化智能体的透明度。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 将复杂任务拆解状态可视化到 `In Progress/Waiting/Done`。
+- 让计划、子步骤日志、完成状态都沉淀在任务系统中。
+- 通过心跳巡检发现停滞任务并提醒处理。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需配置） | Todoist REST API | 创建/更新任务与评论 | [developer.todoist.com](https://developer.todoist.com/rest/v2/) |
+| 内置 | Shell + 文件系统 | 运行本地脚本封装 API | OpenClaw Built-in |
+| 内置 | `heartbeat` | 定期巡检 stalled 任务 | OpenClaw Built-in |
 
-- `todoist-task-manager`
-- `scripts/todoist_api.sh`
-- `scripts/sync_task.sh`
-- `scripts/add_comment.sh`
-- `Todoist`
-- `filesystem`
-- `heartbeat`
-- `OpenClaw`
-
-### 命令片段
-
-```bash
-curl -s -X "$METHOD" "https://api.todoist.com/rest/v2/$ENDPOINT" \
-```
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「Todoist 任务管理器」。
-
-任务目标：通过将推理和进度日志同步到 Todoist，最大化智能体的透明度。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：todoist-task-manager、scripts/todoist_api.sh、scripts/sync_task.sh、scripts/add_comment.sh、Todoist、filesystem）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 Todoist 可视化助手。
+请先模拟一次复杂任务执行：
+1) 创建 In Progress 任务并写入 PLAN
+2) 增加 3 条进度评论
+3) 任务完成后移动 Done
+本轮不调用真实 API。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) `scripts/todoist_api.sh`
 
-## 使用建议
+```bash
+#!/bin/bash
+# Usage: ./todoist_api.sh <endpoint> <method> [data_json]
+ENDPOINT=$1
+METHOD=$2
+DATA=$3
+TOKEN="YOUR_TODOIST_API_TOKEN"
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+if [ -z "$DATA" ]; then
+  curl -s -X "$METHOD" "https://api.todoist.com/rest/v2/$ENDPOINT" \
+    -H "Authorization: Bearer $TOKEN"
+else
+  curl -s -X "$METHOD" "https://api.todoist.com/rest/v2/$ENDPOINT" \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d "$DATA"
+fi
+```
 
-## CITATION
+### 2) `scripts/sync_task.sh`
+
+```bash
+#!/bin/bash
+# Usage: ./sync_task.sh <task_content> <status> [task_id] [description] [labels_json_array]
+CONTENT=$1
+STATUS=$2
+TASK_ID=$3
+DESCRIPTION=$4
+LABELS=$5
+PROJECT_ID="YOUR_PROJECT_ID"
+
+case $STATUS in
+  "In Progress") SECTION_ID="SECTION_ID_PROGRESS" ;;
+  "Waiting")     SECTION_ID="SECTION_ID_WAITING" ;;
+  "Done")        SECTION_ID="SECTION_ID_DONE" ;;
+  *)             SECTION_ID="" ;;
+esac
+
+PAYLOAD="{\"content\": \"$CONTENT\""
+[ -n "$SECTION_ID" ] && PAYLOAD="$PAYLOAD, \"section_id\": \"$SECTION_ID\""
+[ -n "$PROJECT_ID" ] && [ -z "$TASK_ID" ] && PAYLOAD="$PAYLOAD, \"project_id\": \"$PROJECT_ID\""
+if [ -n "$DESCRIPTION" ]; then
+  ESC_DESC=$(echo "$DESCRIPTION" | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
+  PAYLOAD="$PAYLOAD, \"description\": \"$ESC_DESC\""
+fi
+[ -n "$LABELS" ] && PAYLOAD="$PAYLOAD, \"labels\": $LABELS"
+PAYLOAD="$PAYLOAD}"
+
+if [ -n "$TASK_ID" ]; then
+  ./scripts/todoist_api.sh "tasks/$TASK_ID" POST "$PAYLOAD"
+else
+  ./scripts/todoist_api.sh "tasks" POST "$PAYLOAD"
+fi
+```
+
+### 3) `scripts/add_comment.sh`
+
+```bash
+#!/bin/bash
+# Usage: ./add_comment.sh <task_id> <comment_text>
+TASK_ID=$1
+TEXT=$2
+ESC_TEXT=$(echo "$TEXT" | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
+PAYLOAD="{\"task_id\": \"$TASK_ID\", \"content\": \"$ESC_TEXT\"}"
+./scripts/todoist_api.sh "comments" POST "$PAYLOAD"
+```
+
+## 成功标准
+
+- [ ] 复杂任务过程在 Todoist 中可见。
+- [ ] 子步骤评论持续更新。
+- [ ] 停滞任务能被巡检发现并提醒。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/todoist-task-manager.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/todoist-task-manager.md)

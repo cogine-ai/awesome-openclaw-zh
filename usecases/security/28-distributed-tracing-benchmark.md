@@ -1,55 +1,58 @@
 # 分布式追踪基准测试
 
-> 可观察性开销测试
+> 对比不同 tracing 方案在代理网络中的延迟与内存开销，避免盲目上线。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「可观察性开销测试」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 对比 OpenTelemetry / Jaeger / 自定义 tracer 的真实开销。
+- 用统一采样率矩阵评估 P99 延迟和吞吐影响。
+- 用“延迟、内存、成本”三维指标给出可落地选型建议。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `system` | 性能采样与统计 | OpenClaw Built-in |
+| 内置 | `docker` | 隔离测试环境 | OpenClaw Built-in |
 
-- `system`
-- `docker`
+## 快速体验版（先跑一轮）
 
-### 命令片段
-
-```bash
-docker
+```javascript
+const configs = [
+  { tracer: 'otlp', sampling: 1.0 },
+  { tracer: 'jaeger', sampling: 0.1 },
+  { tracer: 'custom', sampling: 0.5 }
+];
 ```
 
-## 可复制提示词
+先小规模跑完 3 组配置，确认指标采集链路可用。
+
+## 稳定自动版（可长期运行）
+
+### 1) 周度基准流程（原文）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「分布式追踪基准测试」。
-
-任务目标：可观察性开销测试
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：system、docker）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Weekly benchmark:
+1. Deploy test mesh with different tracers
+2. Measure P99 latency at each sampling rate
+3. Track memory overhead
+4. Test throughput under load
+5. Generate comparison report
 ```
 
-## 使用建议
+### 2) 选型阈值（原文）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- Latency impact `<5ms` 优先
+- Memory overhead `<10%`
+- 成本与可观测价值匹配
 
-## CITATION
+## 成功标准
+
+- [ ] 关键 tracer 方案都有统一基准数据。
+- [ ] 延迟与内存开销数据可复现。
+- [ ] 结果被落实为明确配置建议。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/28-distributed-tracing-benchmark.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/28-distributed-tracing-benchmark.md)

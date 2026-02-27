@@ -1,65 +1,110 @@
 # 想法漏斗自动推进（Idea Pipeline）
 
-> 把零散想法自动收集、筛选、排序并推进到下一步执行。
+> 把白天收集的想法，凌晨自动做调研、可行性评估，再写回任务系统。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「把零散想法自动收集、筛选、排序并推进到下一步执行。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 不再让想法“只采集不研究”，每天早上直接看到可执行结论。
+- 每条想法自动补齐：竞品/开源替代、技术复杂度、预估工期、主要阻塞。
+- 默认限制每晚只处理优先级最高的 3 条，避免信息过载。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `web_search` | 研究市场与技术方案 | OpenClaw Built-in |
+| 内置 | 子代理能力（`sessions_spawn`） | 多想法并行研究 | OpenClaw Built-in |
+| 外部 | 任务系统 API（Todoist / Trello / Asana） | 写回研究结果 | 对应平台 |
+| 渠道 | Telegram / Discord / Email / 文件目录 | 作为想法采集入口 | 用户自选 |
 
-- `cron.jobs`
-- `idea-pipeline`
-- `Telegram`
-- `Discord`
-- `Todoist`
-- `Web Search`
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+先手工触发一次，验证全链路：
 
 ```bash
 openclaw cron run idea-pipeline
 ```
 
-### 调度信息
+## 稳定自动版（可长期运行）
 
-- 0 3 * * 0
+### 1) 放入 cron.jobs（原文配置）
 
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「想法漏斗自动推进（Idea Pipeline）」。
-
-任务目标：把零散想法自动收集、筛选、排序并推进到下一步执行。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：cron.jobs、idea-pipeline、Telegram、Discord、Todoist、Web Search）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```json
+{
+  "name": "idea-pipeline",
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 3 * * *",
+    "tz": "UTC"
+  },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Process ideas from [YOUR_CAPTURE_METHOD]. For each idea: 1) Search web for existing solutions and market landscape. 2) Analyze technical feasibility (complexity 1-5, estimated time, blockers). 3) Write summary to [YOUR_TASK_SYSTEM] with findings, top 3 similar solutions, feasibility assessment, and next steps. Be concise."
+  },
+  "sessionTarget": "isolated"
+}
 ```
 
-## 使用建议
+把以下占位符换成你的真实入口：
+- `[YOUR_CAPTURE_METHOD]`：例如 `Telegram bot` / `Discord #ideas`
+- `[YOUR_TASK_SYSTEM]`：例如 `Todoist` / `Trello`
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 工具最小配置（原文示例）
 
-## CITATION
+```yaml
+tools:
+  web_search: {}
+  message: {}
+  todoist: {}
+```
+
+### 3) 详细执行提示词（原文）
+
+```text
+Process the ideas captured from [YOUR_CAPTURE_METHOD].
+
+For each idea:
+1. SEARCH: Search web for
+   - Existing products/services solving similar problem
+   - Open source alternatives
+   - Technical approaches others used
+   - Market size or demand indicators
+
+2. ANALYZE feasibility:
+   - Technical complexity (1-5 scale)
+   - Estimated build time
+   - Key technical decisions needed
+   - Potential blockers
+
+3. WRITE summary to [YOUR_TASK_SYSTEM]:
+   - Brief overview of findings
+   - Top 3 similar solutions found with links
+   - Feasibility assessment
+   - Recommended next steps
+
+Be concise. Focus on actionable insights, not exhaustive research.
+Limit to top 3 ideas per night by priority.
+```
+
+### 4) 并行增强（可选）
+
+```javascript
+for (const idea of ideas) {
+  sessions_spawn({
+    task: `Research: "${idea.text}". Search web, analyze feasibility, return structured summary.`,
+    agentId: "researcher",
+    model: "gemini"
+  });
+}
+```
+
+## 成功标准
+
+- [ ] 每天都有稳定的“研究后想法”输出，而不是只堆积原始灵感。
+- [ ] 每条想法都包含复杂度、工期、阻塞与下一步。
+- [ ] 晚间处理量受控（Top 3），信息密度高但不拥挤。
+
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [showcases/idea-pipeline.md](https://github.com/digitalknk/openclaw-runbook/blob/main/showcases/idea-pipeline.md)

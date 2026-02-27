@@ -1,56 +1,62 @@
 # 第二大脑
 
-> 向机器人发送任何内容来记住它，然后在自定义的 Next.js 仪表板中搜索你的所有记忆。
+> 用“像发消息一样记录、像搜索一样找回”的方式构建低摩擦知识系统。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「向机器人发送任何内容来记住它，然后在自定义的 Next.js 仪表板中搜索你的所有记忆。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把随手想法、链接、提醒统一沉淀，降低遗忘成本。
+- 通过消息入口实现零门槛采集，不依赖复杂分类。
+- 可配合 Next.js 做统一检索面板。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | Telegram / iMessage / Discord | 日常输入入口 | OpenClaw Built-in |
+| 内置 | OpenClaw Memory | 长期记忆存储 | OpenClaw Built-in |
+| 外部（可选） | Next.js | 可视化检索界面 | Next.js |
 
-- `Telegram`
-- `Discord`
-- `Notion`
-- `GitHub`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「第二大脑」。
-
-任务目标：向机器人发送任何内容来记住它，然后在自定义的 Next.js 仪表板中搜索你的所有记忆。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Discord、Notion、GitHub、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的第二大脑助手。
+请把我接下来发的 5 条信息全部记录，并支持我问：
+“我刚才提到的书和链接是什么？”
+本轮只验证采集和检索，不搭建前端。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 远程访问和权限建议按最小授权配置。
+### 1) 采集方式（源案例）
 
-## 使用建议
+直接发消息给机器人：
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+```text
+Hey, remind me to read "Designing Data-Intensive Applications"
+Save this link: https://example.com/interesting-article
+Remember: John recommended the restaurant on 5th street
+```
 
-## CITATION
+### 2) 构建检索 UI 提示词（源案例）
+
+```text
+I want to build a second brain system where I can review all our notes,
+conversations, and memories. Please build that out with Next.js.
+
+Include:
+- A searchable list of all memories and conversations
+- Global search (Cmd+K) across everything
+- Ability to filter by date and type
+- Clean, minimal UI
+```
+
+## 成功标准
+
+- [ ] 记录动作足够低摩擦，能长期坚持。
+- [ ] 检索可快速找到历史信息。
+- [ ] 前端面板可按时间和类型过滤。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/second-brain.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/second-brain.md)

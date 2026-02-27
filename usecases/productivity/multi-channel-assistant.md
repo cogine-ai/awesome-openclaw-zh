@@ -1,63 +1,66 @@
 # 多渠道个人助理
 
-> 从单个 AI 助理路由任务到 Telegram、Slack、电子邮件和日历。
+> 一个对话入口，路由到 Telegram 话题、Slack、Google Workspace、Todoist、Asana。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「从单个 AI 助理路由任务到 Telegram、Slack、电子邮件和日历。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把跨平台的日常动作集中到统一指令入口。
+- 用话题路由减少上下文污染（配置/更新/内容/CRM/财务）。
+- 支持提醒类任务自动触发，减少手工跟进。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `gog` CLI | Gmail/Calendar/Drive 操作 | Google Workspace |
+| 外部（需配置） | Slack Bot | 团队协作渠道 | Slack API |
+| 外部（需配置） | Todoist / Asana | 任务与项目协作 | 官方 API |
+| 内置 | Telegram topics | 场景路由入口 | OpenClaw Built-in |
 
-- `gog`
+## 快速体验版（先跑一轮）
+
+```text
+你是我的多渠道助手。
+请先演示 5 条路由：
+1) "Add [task] to my todo" → Todoist
+2) "Create a card for [topic]" → Asana
+3) "Schedule [event]" → Calendar
+4) "Email [person]" → Gmail
+5) "Upload [file]" → Drive
+本轮只输出路由结果，不执行外部写操作。
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) Telegram 话题划分（源案例）
+
 - `config`
 - `updates`
 - `video-ideas`
 - `personal-crm`
 - `earnings`
 - `knowledge-base`
-- `Telegram`
-- `Slack`
-- `Todoist`
-- `Gmail`
-- `OpenClaw`
 
-## 可复制提示词
+### 2) 路由提示词（源案例）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「多渠道个人助理」。
-
-任务目标：从单个 AI 助理路由任务到 Telegram、Slack、电子邮件和日历。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：gog、config、updates、video-ideas、personal-crm、earnings）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+You are my multi-channel assistant. Route requests based on context...
 ```
 
-## 风险与边界
+### 3) 自动提醒（源案例）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+```text
+- Monday 6 PM: "🗑️ Trash day tomorrow"
+- Friday 3 PM: "✍️ Time to write the weekly company update"
+```
 
-## 使用建议
+## 成功标准
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- [ ] 单入口可覆盖主要工作流操作。
+- [ ] 路由稳定，无明显错发。
+- [ ] 自动提醒按时触发。
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/multi-channel-assistant.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-channel-assistant.md)

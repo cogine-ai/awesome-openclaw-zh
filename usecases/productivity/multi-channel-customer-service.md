@@ -1,57 +1,71 @@
-# 多渠道 AI 客户服务
+# 多渠道 AI 客服平台
 
-> 将 WhatsApp、Instagram、电子邮件和 Google 评价统一到一个 AI 驱动的收件箱中，实现 24/7 自动回复。
+> 把 WhatsApp、Instagram、邮件、评论统一进一个 AI 客服收敛层。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「将 WhatsApp、Instagram、电子邮件和 Google 评价统一到一个 AI 驱动的收件箱中，实现 24/7 自动回复。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把分散渠道统一到一处处理，缩短响应时间。
+- 常见问题自动回复，复杂问题升级人工。
+- 支持测试模式，先演练再上线真实通道。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需配置） | WhatsApp Business API | 客服消息接入 | Meta/360dialog |
+| 外部（需配置） | Instagram Graph API | IG 私信接入 | Meta |
+| 外部（需安装） | `gog` CLI | Gmail 接入 | Google Workspace |
+| 外部（需配置） | Google Business Profile API | 评论管理 | Google |
+| 内置 | 路由与分类能力 | FAQ/预约/投诉分流 | OpenClaw Built-in |
 
-- `gog`
-- `WhatsApp`
-- `Gmail`
-- `heartbeat`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「多渠道 AI 客户服务」。
-
-任务目标：将 WhatsApp、Instagram、电子邮件和 Google 评价统一到一个 AI 驱动的收件箱中，实现 24/7 自动回复。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：gog、WhatsApp、Gmail、heartbeat、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的客服助手。
+请先对 10 条模拟消息做分类演练：
+- FAQ
+- Appointment
+- Complaint
+- Review
+并给出对应回复草稿。
+本轮不发送到真实渠道。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 客服路由规则（源案例）
 
-## 使用建议
+```text
+1. Identify channel
+2. Check if test mode is enabled
+3. Classify intent (FAQ/Appointment/Complaint/Review)
+4. Respond from knowledge base or escalate to human
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 测试模式要求（源案例）
 
-## CITATION
+```text
+Test mode:
+- Prefix responses with [TEST]
+- Log but don't send to real channels
+```
+
+### 3) 心跳检查
+
+```text
+Every 30 minutes:
+- Check for unanswered messages > 5 min old
+- Alert if response queue is backing up
+- Log daily response metrics
+```
+
+## 成功标准
+
+- [ ] 多渠道消息可统一处理。
+- [ ] 80% 左右常见问题可自动闭环。
+- [ ] 超时与投诉可及时升级人工。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/multi-channel-customer-service.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-channel-customer-service.md)

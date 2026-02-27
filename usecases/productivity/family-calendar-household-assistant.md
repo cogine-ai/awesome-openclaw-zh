@@ -1,70 +1,69 @@
 # 家庭日历与家务助理
 
-> 将所有家庭日历聚合到早间简报中，监控消息以获取预约，并管理家庭库存。
+> 聚合多源家庭日程，并通过消息监听自动创建事件与家务提醒。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「将所有家庭日历聚合到早间简报中，监控消息以获取预约，并管理家庭库存。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 统一工作、家庭、学校、邮件附件等分散日历来源。
+- 自动识别消息中的“预约/承诺”并写入日历。
+- 支持家务库存问答与购物清单协同。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（按需） | Calendar API / `ical` | 聚合多日历源 | Google/Apple/CalDAV |
+| 外部（按需） | `imessage` | 被动监听预约类消息（macOS） | OpenClaw Skill |
+| 内置 | Telegram/Slack 通道 | 家庭共享通知与查询 | OpenClaw Built-in |
+| 内置 | 文件系统 | 库存文件维护（JSON） | OpenClaw Built-in |
+| 外部（可选） | OCR/视觉能力 | 识别纸质日历/库存照片 | 视觉模型 |
 
-- `ical`
-- `imessage`
-- `angiolillo`
-- `dns_snek`
-- `Telegram`
-- `Slack`
-- `Google Calendar`
-- `GitHub`
-- `heartbeat`
-- `OpenClaw`
-
-### 调度信息
-
-- 8:00
-- 1:30
-- 2:00
-- 3:00
-- 3:30
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「家庭日历与家务助理」。
-
-任务目标：将所有家庭日历聚合到早间简报中，监控消息以获取预约，并管理家庭库存。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：ical、imessage、angiolillo、dns_snek、Telegram、Slack）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的家庭协调助手。
+请先生成一份“明日家庭总览”演示，包含：
+1) 各日历来源事件聚合
+2) 冲突提示
+3) 需提前出发的行程建议
+本轮不自动写日历，只输出汇总。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 日历聚合规则
 
-## 使用建议
+```text
+On morning briefing (8:00 AM):
+1. Fetch my Google Work Calendar
+2. Fetch shared Family Google Calendar
+3. Fetch partner's calendar
+4. Check school calendar PDFs and extract events
+5. Check recent emails for event invitations
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 消息监听（源案例）
 
-## CITATION
+```text
+Every 15 minutes:
+1. Check new iMessages
+2. Detect appointment-like patterns
+3. Create calendar event + 30-min driving buffer before/after
+4. Send confirmation to family channel
+```
+
+### 3) 家庭库存文件
+
+- 文件示例：`~/household/inventory.json`
+- 记录字段：`item / quantity / location / threshold / updated_at`
+
+## 成功标准
+
+- [ ] 早间家庭日程汇总稳定送达。
+- [ ] 预约类消息可被识别并写入日历。
+- [ ] 库存查询与购物补货可闭环。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/family-calendar-household-assistant.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/family-calendar-household-assistant.md)

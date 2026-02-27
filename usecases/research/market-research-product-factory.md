@@ -1,51 +1,72 @@
 # 市场研究与产品工厂
 
-> 使用 Last 30 Days 技能从 Reddit 和 X 挖掘真实痛点，然后让 OpenClaw 构建解决它们的 MVP。
+> 用 Last 30 Days 技能从 Reddit / X 挖真实痛点，再直接推进 MVP。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「使用 Last 30 Days 技能从 Reddit 和 X 挖掘真实痛点，然后让 OpenClaw 构建解决它们的 MVP。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把“我该做什么产品”变成可执行流程，而不是凭感觉选题。
+- 输出可直接决策的研究结果：高频痛点、具体抱怨、现有方案缺口、机会点。
+- 研究后可以直接接一句“帮我做 MVP”，形成从研究到原型的闭环。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | Last 30 Days | 抓取近 30 天 Reddit / X 用户声音 | [matvanhorde/last-30-days](https://github.com/matvanhorde/last-30-days) |
+| 渠道 | Telegram / Discord | 接收周期性研究报告 | Telegram / Discord |
 
-- `Telegram`
-- `Discord`
-- `GitHub`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+先在一个细分主题上跑一次调研：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「市场研究与产品工厂」。
+Please use the Last 30 Days skill to research challenges people are
+having with [your topic here].
 
-任务目标：使用 Last 30 Days 技能从 Reddit 和 X 挖掘真实痛点，然后让 OpenClaw 构建解决它们的 MVP。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Discord、GitHub、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Organize the findings into:
+- Top pain points (ranked by frequency)
+- Specific complaints and feature requests
+- Gaps in existing solutions
+- Opportunities for a new product
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 安装技能
 
-## CITATION
+```text
+Install this skill: https://github.com/matvanhorde/last-30-days
+```
+
+### 2) 从研究推进到 MVP
+
+```text
+Build me an MVP that solves [pain point from research].
+Keep it simple — just the core functionality.
+Ship it as a web app I can share with people.
+```
+
+### 3) 每周自动情报（原文）
+
+```text
+Every Monday morning, use the Last 30 Days skill to research what
+people are saying about [your niche] on Reddit and X. Summarize the
+top opportunities and send them to my Telegram.
+```
+
+### 4) 示例链路（原文思路）
+
+- 调研主题：`OpenClaw`
+- 发现：配置难、技能发现难、成本敏感
+- 立即行动：做一个引导式配置向导 Web App
+
+## 成功标准
+
+- [ ] 每周都能得到结构化痛点榜单，而不是碎片信息。
+- [ ] 每次调研至少沉淀一个可执行的产品方向。
+- [ ] 从“发现问题”到“做出 MVP”的周期显著缩短。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/market-research-product-factory.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/market-research-product-factory.md)

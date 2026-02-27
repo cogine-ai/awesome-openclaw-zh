@@ -1,55 +1,65 @@
 # AWS 凭证扫描器
 
-> 查找暴露的 AWS 密钥
+> 扫描本地文件与代码仓库中的 AWS Key 暴露风险，并即时告警。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「查找暴露的 AWS 密钥」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 发现明文 `AKIA...`、`aws_access_key_id`、`aws_secret_access_key`。
+- 检查 `~/.aws/credentials` 等敏感文件权限是否过宽。
+- 把高危发现第一时间推送，缩短从暴露到处理的时间。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `filesystem` | 扫描文件内容 | OpenClaw Built-in |
+| 内置 | `telegram` | 风险告警 | OpenClaw Built-in |
 
-- `filesystem`
-- `telegram`
-- `Telegram`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「AWS 凭证扫描器」。
-
-任务目标：查找暴露的 AWS 密钥
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：filesystem、telegram、Telegram）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```javascript
+const patterns = [
+  /AKIA[0-9A-Z]{16}/,
+  /aws_access_key_id/i,
+  /aws_secret_access_key/i
+];
 ```
 
-## 风险与边界
+先用上述模式对常用目录做一次人工扫描。
 
-- 密钥与凭证不要放在公开文本或提示词中。
-- 远程访问和权限建议按最小授权配置。
+## 稳定自动版（可长期运行）
 
-## 使用建议
+### 1) 周度扫描提示词（原文）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+```text
+Weekly scan:
+1. Search home directory for AWS patterns
+2. Check ~/.aws/credentials permissions
+3. Search code repositories for hardcoded keys
+4. Identify plaintext storage
+5. Immediate alert for any findings
 
-## CITATION
+Remediation:
+- Move to aws-vault or similar
+- Rotate exposed keys
+- Update .gitignore
+- Enable CloudTrail
+```
+
+### 2) 建议补救顺序
+
+1. 立刻停用并轮换暴露密钥
+2. 清理仓库与历史记录
+3. 引入安全存储（如 `aws-vault`）
+4. 打开审计日志（CloudTrail）
+
+## 成功标准
+
+- [ ] 零明文 AWS 凭证暴露。
+- [ ] 周扫描持续执行。
+- [ ] 所有凭证使用受控存储方式。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/29-aws-credential-scanner.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/29-aws-credential-scanner.md)

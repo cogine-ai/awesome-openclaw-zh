@@ -1,65 +1,98 @@
 # 自托管知识库助手（Coeus）
 
-> 把资料持续沉淀到可检索知识库，支持长期复用。
+> 在本地把笔记、灵感、工作记录沉淀成可语义搜索的知识库。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「把资料持续沉淀到可检索知识库，支持长期复用。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把日常输入（`note:`、`idea:`、`standup:`）统一入库，不再散落在聊天和文件里。
+- 先走零成本的全文检索，再在结果不足时自动补语义检索，速度和召回率都兼顾。
+- 给每天/每周摘要提供缓存短摘要，减少上下文 token 消耗。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 依赖 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | 文件系统读写 | 保存 `schema.sql`、`state.json`、导出文件 | OpenClaw Built-in |
+| 外部（需安装） | Python 3.11+ | 运行 `coeus.py` | Python |
+| 外部（需安装） | SQLite 3.45.1+ + `vec0` 扩展 | FTS + 向量检索 | [asg017/sqlite-vec](https://github.com/asg017/sqlite-vec) |
+| 外部（需安装） | `torch`、`transformers`、`sentence-transformers` | 本地 embedding 与摘要处理 | PyPI |
 
-- `/usr/local/lib/sqlite3/vec0.so`
-- `coeus.py`
-- `research`
-- `idea`
-- `work_log`
-- `journal`
-- `note:`
-- `capture:`
-- `log:`
-- `remember:`
-- `kb:`
-- `standup:`
-- `subprocess`
-- `blocks`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+先确认本机向量扩展可用：
 
-```text
-你是我的 OpenClaw 助手，请帮我完成「自托管知识库助手（Coeus）」。
-
-任务目标：把资料持续沉淀到可检索知识库，支持长期复用。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：/usr/local/lib/sqlite3/vec0.so、coeus.py、research、idea、work_log、journal）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```bash
+sqlite3 :memory: ".load /usr/local/lib/sqlite3/vec0.so" "SELECT 'vec0 OK';"
 ```
 
-## 风险与边界
+然后最小化初始化并写入一条测试记录：
 
-- 密钥与凭证不要放在公开文本或提示词中。
+```bash
+mkdir -p ~/coeus && cd ~/coeus
+python3 -m venv venv
+source venv/bin/activate
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install transformers sentence-transformers --no-deps
 
-## 使用建议
+# 按原文准备 coeus.py 与 schema.sql 后执行
+python3 coeus.py capture "note: Testing Coeus setup"
+python3 coeus.py stats
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+## 稳定自动版（可长期运行）
 
-## CITATION
+### 1) 初始化目录与数据库
+
+```bash
+mkdir -p ~/coeus && cd ~/coeus
+
+# 把原文里的完整 schema.sql 保存到当前目录
+# 然后初始化数据库
+sqlite3 coeus.db << 'INIT'
+.load /usr/local/lib/sqlite3/vec0.so
+.read schema.sql
+INIT
+
+echo '{"capture_mode": false, "current_session_id": null, "last_capture_block_id": null}' > state.json
+mkdir -p exports
+```
+
+### 2) 约定采集触发词（与原文一致）
+
+- 显式前缀：`note:`、`capture:`、`log:`、`remember:`、`kb:`
+- 模板触发：`standup:`、`meeting [name]:`、`idea [project]:`
+- 批量模式：`start capturing` → 多条 `note:` → `stop capturing`
+
+### 3) 常用 CLI（每日可复用）
+
+```bash
+cd ~/coeus
+source venv/bin/activate
+
+python3 coeus.py capture "note: your content here"
+python3 coeus.py search "find container scaling"
+python3 coeus.py brief today
+python3 coeus.py stats
+```
+
+### 4) OpenClaw 执行提示词（落地版）
+
+```text
+你是我的知识库助手。
+请把我今天输入的 note:/idea:/standup: 内容按 Coeus 规范入库，并遵循以下规则：
+1. 先做全文检索（FTS），只有结果不足时再做语义检索。
+2. 输出优先使用 one-line summary，而不是整段原文。
+3. 给出：命中内容、来源、建议下一步。
+4. 不做删除操作；涉及覆盖写入时先让我确认。
+```
+
+## 成功标准
+
+- [ ] 日常记录能通过语义问题快速找回（不依赖原词复现）。
+- [ ] 每日/每周摘要优先走缓存摘要，token 消耗明显下降。
+- [ ] 新增内容可稳定自动入库，不需要手工搬运。
+
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [showcases/coeus-knowledge-base.md](https://github.com/digitalknk/openclaw-runbook/blob/main/showcases/coeus-knowledge-base.md)

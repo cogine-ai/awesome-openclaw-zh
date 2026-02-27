@@ -1,61 +1,59 @@
 # Git 历史清理器
 
-> 从历史中删除机密
+> 发现密钥误提交后，清理历史并配套轮换凭证，避免“删文件但仍可回溯”。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「从历史中删除机密」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 定位历史提交中的密码、API key、`.env` 泄露痕迹。
+- 用 BFG / 重写历史彻底清除敏感内容。
+- 配套团队协同动作（通知、强推、凭证轮换），减少二次事故。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `git` | 检测与清理历史 | OpenClaw Built-in |
 
-- `git`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+先做只读排查：
 
 ```bash
 git log --all --full-history -- .env
 git log --all -p | grep -i "password\|secret\|key"
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) 清理流程（原文）
+
+```bash
+bfg --delete-files .env
+bfg --replace-text passwords.txt
 git reflog expire --expire=now --all
 git gc --prune=now --aggressive
-git
 ```
 
-## 可复制提示词
+### 2) 执行提示词（原文）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「Git 历史清理器」。
-
-任务目标：从历史中删除机密
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：git）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+When secrets found in history:
+1. Identify all affected commits
+2. Notify team of upcoming history rewrite
+3. Run BFG Repo-Cleaner
+4. Force push to all remotes
+5. Rotate exposed credentials
+6. Update .gitignore
+7. Verify cleanup with git log
 ```
 
-## 风险与边界
+## 成功标准
 
-- 密钥与凭证不要放在公开文本或提示词中。
+- [ ] Git 历史中零敏感信息残留。
+- [ ] 暴露凭证全部轮换。
+- [ ] `.gitignore` 与提交流程可阻断同类问题复发。
 
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/33-git-history-cleaner.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/33-git-history-cleaner.md)

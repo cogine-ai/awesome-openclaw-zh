@@ -1,88 +1,85 @@
 # 智能任务管理系统
 
-> 自动拆解任务、安排优先级并跟踪进度。
+> 从任务输入到优先级排序、时间分配、进度跟踪和复盘的自动化闭环。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「自动拆解任务、安排优先级并跟踪进度。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 自动识别任务优先级，不再靠临时直觉排程。
+- 根据工作时段和专注窗口分配执行时间。
+- 可持续输出效率报告，形成“计划-执行-复盘”循环。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `task-manager` | 任务管理 | ClawHub |
+| 外部（需安装） | `calendar-sync` | 日历联动 | ClawHub |
+| 外部（需安装） | `priority-analyzer` | 优先级分析 | ClawHub |
+| 外部（需安装） | `time-estimator` | 任务时长估算 | ClawHub |
+| 内置 | `openclaw agent` | 计划生成、进度跟踪、日报 | OpenClaw Built-in |
 
-- `Telegram`
-- `Discord`
-- `Notion`
-- `GitHub`
-- `cron`
-- `OpenClaw`
-- `RSS`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+```text
+你是我的任务管理助手。
+我给你今天任务清单后，请输出：
+1) 优先级排序
+2) 时间安排（含固定会议）
+3) 今日提醒点
+本轮先做计划，不写入日历。
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) 安装技能（源案例）
 
 ```bash
-openclaw agent --message "请使用 rss-reader skill 收集 ~/.openclaw/info-sources.json 中配置的RSS源，保存到 $OUTPUT_DIR/rss-$DATE.json"
-openclaw agent --message "请收集GitHub今日Python热门项目，保存到 $OUTPUT_DIR/github-$DATE.json"
-openclaw agent --message "请搜索'OpenClaw AI工具'相关信息，最多10条结果，保存到 $OUTPUT_DIR/search-$DATE.json"
-openclaw agent --message "请合并 $OUTPUT_DIR/*-$DATE.json 中的所有信息并去重，保存到 $OUTPUT_DIR/merged-$DATE.json"
-openclaw agent --message "请分析 $OUTPUT_DIR/merged-$DATE.json 中的内容并评分，保存到 $OUTPUT_DIR/analyzed-$DATE.json"
-openclaw channels send feishu \
-crontab -e
-openclaw skills run brave-search \
-bash ~/.openclaw/scripts/content-creation.sh "OpenClaw自动化测试实战"
-openclaw agent --message "分析最近的技术热点，生成3个博客选题"
-bash ~/.openclaw/scripts/content-creation.sh "选题1"
+clawhub install task-manager
+clawhub install calendar-sync
+clawhub install priority-analyzer
+clawhub install time-estimator
+```
+
+### 2) 任务规则配置
+
+`~/.openclaw/task-rules.json`：
+
+```json
+{
+  "priority_rules": {
+    "urgent_keywords": ["紧急", "立即", "今天必须"],
+    "important_keywords": ["重要", "关键", "核心"],
+    "deadline_weight": 0.4,
+    "impact_weight": 0.3,
+    "effort_weight": 0.3
+  },
+  "time_rules": {
+    "work_hours": "09:00-18:00",
+    "focus_time": "09:00-11:00",
+    "meeting_time": "14:00-16:00",
+    "break_interval": 90
+  },
+  "automation": {
+    "auto_schedule": true,
+    "auto_reminder": true,
+    "auto_followup": true
+  }
+}
+```
+
+### 3) 效率报告（源案例）
+
+```bash
 openclaw agent --message "生成今日效率报告"
 ```
 
-### 调度信息
+## 成功标准
 
-- 08:00
-- 09:00
-- 18:00
-- 11:00
-- 14:00
-- 16:00
-- 15:00
-- 12:00
-- 13:00
-- 17:00
+- [ ] 任务完成率和时间利用率可见提升。
+- [ ] 优先级安排可解释、可复盘。
+- [ ] 每日效率报告可稳定生成。
 
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「智能任务管理系统」。
-
-任务目标：自动拆解任务、安排优先级并跟踪进度。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Discord、Notion、GitHub、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
-```
-
-## 风险与边界
-
-- 密钥与凭证不要放在公开文本或提示词中。
-
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/13-advanced-automation.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/13-advanced-automation.md)

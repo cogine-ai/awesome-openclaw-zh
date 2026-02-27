@@ -1,55 +1,62 @@
-# 个人知识库 (RAG)
+# 个人知识库（RAG）
 
-> 通过将 URL、推文和文章拖入聊天来构建可搜索的知识库。
+> 把你丢进频道的 URL 自动入库，再通过语义检索随时找回。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「通过将 URL、推文和文章拖入聊天来构建可搜索的知识库。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 文章、推文、YouTube 文本、PDF 可以统一沉淀，不再散在收藏夹。
+- 你提问时按语义检索返回“最相关片段 + 来源链接”。
+- 其他工作流（如选题、会议准备）可直接复用这套知识库。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `web_fetch` | 抓取 URL 内容 | OpenClaw Built-in |
+| 外部（需安装） | `knowledge-base` skill | 负责向量化与检索 | [clawhub.ai](https://clawhub.ai) |
+| 渠道 | Telegram 话题 / Slack 频道 | 作为入库入口与问答入口 | Telegram / Slack |
 
-- `web_fetch`
-- `Telegram`
-- `Slack`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+1. 建一个 `knowledge-base` 话题（Telegram 或 Slack）。
+2. 丢入 2-3 个 URL。
+3. 直接问：`What do I have about LLM memory?`
+
+## 稳定自动版（可长期运行）
+
+### 1) 复制原文提示词
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「个人知识库 (RAG)」。
+When I drop a URL in the "knowledge-base" topic:
+1. Fetch the content (article, tweet, YouTube transcript, PDF)
+2. Ingest it into the knowledge base with metadata (title, URL, date, type)
+3. Reply with confirmation: what was ingested and chunk count
 
-任务目标：通过将 URL、推文和文章拖入聊天来构建可搜索的知识库。
+When I ask a question in this topic:
+1. Search the knowledge base semantically
+2. Return top results with sources and relevant excerpts
+3. If no good matches, tell me
 
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：web_fetch、Telegram、Slack、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Also: when other workflows need research (e.g., video ideas, meeting prep), automatically query the knowledge base for relevant saved content.
 ```
 
-## 风险与边界
+### 2) 推荐输出格式（便于日后复用）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
+```markdown
+## 命中结果（Top 3）
+- 标题：...
+- 来源：...
+- 相关片段：...
+- 为什么相关：...
+```
 
-## 使用建议
+## 成功标准
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- [ ] URL 入库后能收到明确确认（含 chunk 数量）。
+- [ ] 同一问题可稳定返回来源与片段，而不是泛化回答。
+- [ ] 其他流程能复用知识库，而不是重复抓取同一素材。
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/knowledge-base-rag.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/knowledge-base-rag.md)

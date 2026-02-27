@@ -1,49 +1,78 @@
 # 知识图谱重建器
 
-> 夜间图重建
+> 每晚从当日日志提取实体和关系，重建可查询的知识图结构。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「夜间图重建」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把零散日志转为“实体-关系”结构，检索更快更准。
+- 每晚自动更新，避免知识图长期滞后。
+- 为“谁和谁相关、什么依赖什么”这类问题提供直接查询能力。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `memory` | 图谱存取与索引更新 | [clawhub.ai/skills/mem](https://clawhub.ai/skills/mem) |
+| 内置 | `filesystem` | 读取每日记忆文件 | OpenClaw Built-in |
 
-- `memory`
-- `filesystem`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「知识图谱重建器」。
-
-任务目标：夜间图重建
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：memory、filesystem）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的知识图谱助手。
+请读取今天的 memory 文件，提取：
+1) 实体（人/项目/概念）
+2) 关系（依赖/关联/参与）
+输出一份“新增节点 + 新增关系”预览，不做写入。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 图谱 Schema
 
-## CITATION
+```javascript
+const schema = {
+  entities: ['Person', 'Project', 'Concept'],
+  relations: ['works_on', 'knows', 'depends_on']
+};
+```
+
+### 2) 重建流程
+
+```javascript
+function rebuildGraph() {
+  const logs = readDailyLogs();
+  const entities = extractEntities(logs);
+  const relations = extractRelations(logs);
+  return { entities, relations };
+}
+```
+
+### 3) OpenClaw 执行提示词（自动版）
+
+```markdown
+## Knowledge Graph Rebuilder
+
+Every night:
+1. Read today's memory files
+2. Extract entities (people, projects, concepts)
+3. Identify relationships
+4. Merge into knowledge graph
+5. Update semantic indices
+6. Prune outdated connections
+
+Query capabilities:
+- "What projects depend on X?"
+- "Who knows about Y?"
+- "Related concepts to Z"
+```
+
+## 成功标准
+
+- [ ] 每晚重建稳定执行。
+- [ ] 新实体和新关系可持续增长。
+- [ ] 典型图谱查询可快速返回有效结果。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/40-knowledge-graph-rebuilder.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/40-knowledge-graph-rebuilder.md)

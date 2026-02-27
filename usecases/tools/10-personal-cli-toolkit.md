@@ -1,66 +1,94 @@
 # 个人 CLI 工具包
 
-> 代理使用的自定义命令
+> 给代理做一套“自己就能调用”的本地命令，减少重复提示词输入。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「代理使用的自定义命令」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把高频动作封装成短命令：状态看板、快速记录、网页抓取、日报回顾。
+- 降低上下文切换成本，让代理执行更快更稳定。
+- 通过模块化脚本持续扩展，形成你自己的 Agent CLI。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `nodejs` | 构建命令入口与子命令 | OpenClaw Built-in |
+| 内置 | `filesystem` | 读写记忆与抓取文件 | OpenClaw Built-in |
+| 内置 | `web_fetch` | 抓取目标页面 | OpenClaw Built-in |
+| 内置 | `git` | 看提交状态与历史 | OpenClaw Built-in |
 
-- `nodejs`
-- `filesystem`
-- `web_fetch`
-- `git`
-- `SKILL.md`
-- `molty`
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+### 1) 创建目录结构（原文）
+
+```text
+~/bin/
+├── molty
+├── molty-status.js
+├── molty-remember.js
+├── molty-scrape.js
+└── molty-recap.js
+```
+
+### 2) 安装并测试（原文）
 
 ```bash
-git
+chmod +x ~/bin/molty*
+echo 'export PATH="$HOME/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+molty status
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) 主入口（原文）
+
+```bash
+#!/usr/bin/env node
+
+const [,, cmd, ...args] = process.argv;
+
+const commands = {
+  status: () => require('./molty-status'),
+  remember: (note) => require('./molty-remember')(note.join(' ')),
+  scrape: (target) => require('./molty-scrape')(target),
+  recap: () => require('./molty-recap')
+};
+
+if (commands[cmd]) {
+  commands[cmd](args);
+} else {
+  console.log(`Usage: molty <command>
+
+Commands:
+  status              Show dashboard
+  remember "text"     Add timestamped note
+  scrape @username    Scrape X profile
+  recap               Show daily summary
+  `);
+}
+```
+
+### 2) 常用能力（原文）
+
+- `molty status`：汇总 crontab、git、memory、磁盘状态
+- `molty remember "..."`：追加时间戳笔记到当日 memory
+- `molty scrape @username`：抓取并保存页面结果
+- `molty recap`：输出当日记录摘要
+
+### 3) 抓取命令关键调用（原文）
+
+```bash
 openclaw web_fetch https://nitter.net/${username}
 ```
 
-## 可复制提示词
+## 成功标准
 
-```text
-你是我的 OpenClaw 助手，请帮我完成「个人 CLI 工具包」。
+- [ ] 高频动作都有对应短命令，减少重复输入。
+- [ ] 每日记录可快速写入与回看。
+- [ ] 新需求可以通过新增 `molty-<name>.js` 平滑扩展。
 
-任务目标：代理使用的自定义命令
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：nodejs、filesystem、web_fetch、git、SKILL.md、molty）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
-```
-
-## 风险与边界
-
-- 关键变更前先备份，确保可回滚。
-
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/10-personal-cli-toolkit.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/10-personal-cli-toolkit.md)

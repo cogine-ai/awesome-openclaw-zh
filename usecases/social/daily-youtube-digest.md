@@ -1,60 +1,83 @@
 # 每日 YouTube 摘要
 
-> 获取你关注频道的每日新视频摘要 —— 不错过你关注创作者的任何内容。
+> 按你关心的频道或关键词，每天自动拉新视频并提炼要点。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「获取你关注频道的每日新视频摘要 —— 不错过你关注创作者的任何内容。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 避免被 YouTube 推荐流淹没，稳定跟踪你真正关注的创作者。
+- 自动提取转录并生成重点摘要，节省看视频时间。
+- 支持“频道订阅模式”与“关键词监控模式”两种入口。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `youtube-full` | 拉取频道最新视频与转录 | [clawhub.ai/therohitdas/youtube-full](https://clawhub.ai/therohitdas/youtube-full) |
 
-- `channel/latest`
-- `channel/resolve`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+安装技能（原文）：
 
 ```bash
 npx clawhub@latest install youtube-full
 ```
 
-## 可复制提示词
+也可以直接让 OpenClaw 帮你安装：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「每日 YouTube 摘要」。
-
-任务目标：获取你关注频道的每日新视频摘要 —— 不错过你关注创作者的任何内容。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：channel/latest、channel/resolve、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Install the youtube-full skill and set it up for me
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 频道模式（原文）
 
-## 使用建议
+```text
+Every morning at 8am, fetch the latest videos from these YouTube channels and give me a digest with key insights from each:
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- @TED
+- @Fireship
+- @ThePrimeTimeagen
+- @lexfridman
 
-## CITATION
+For each new video (uploaded in the last 24-48 hours):
+1. Get the transcript
+2. Summarize the main points in 2-3 bullets
+3. Include the video title, channel name, and link
+
+If a channel handle doesn't resolve, search for it and find the correct one.
+Save my channel list to memory so I can add/remove channels later.
+```
+
+### 2) 关键词模式（原文）
+
+```text
+Every day, search YouTube for new videos about "OpenClaw" (or "Claude Code", "AI agents", etc).
+
+Maintain a file called seen-videos.txt with video IDs you've already processed.
+Only fetch transcripts for videos NOT in that file.
+After processing, add the video ID to seen-videos.txt.
+
+For each new video:
+1. Get the transcript
+2. Give me a 3-bullet summary
+3. Note anything relevant to my work
+
+Run this every morning at 9am.
+```
+
+### 3) 成本提示（原文）
+
+- `channel/latest`、`channel/resolve` 为 0 credits。
+- transcript 拉取每条消耗 1 credit。
+
+## 成功标准
+
+- [ ] 每天都能收到新增视频摘要。
+- [ ] 摘要带标题、频道、链接，便于二次查看。
+- [ ] 同一视频不会重复处理（关键词模式）。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/daily-youtube-digest.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/daily-youtube-digest.md)

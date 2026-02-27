@@ -1,78 +1,127 @@
 # 生产级安全加固包
 
-> 按最小权限和隔离原则配置运行环境，降低长期风险。
+> 用最小权限、成本保护与备份机制，把 OpenClaw 运行环境收敛到可控状态。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「按最小权限和隔离原则配置运行环境，降低长期风险。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 降低 API Key 泄露、误用高价模型、网关暴露、设备残留配对等高频风险。
+- 提供“先备份、再改造、边改边验”的安全加固路径。
+- 形成应急处置动作：密钥泄露、异常账单、紧急停机。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | OpenClaw 配置与设备管理命令 | 执行网关/设备/通道安全控制 | OpenClaw CLI |
+| 外部（系统） | `bash` / `git` / `chmod` / `tar` | 秘钥排查、权限收敛、备份恢复 | 系统工具 |
 
-- `openclaw.json`
-- `exec`
-- `.gitignore`
-- `logging.redactSensitive`
-- `Telegram`
-- `WhatsApp`
-- `Discord`
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+### 1) 先备份（原文）
 
 ```bash
-export ANTHROPIC_API_KEY="sk-ant-..."
-export OPENAI_API_KEY="sk-..."
+tar -czf ~/openclaw-backup-$(date +%Y%m%d).tar.gz ~/.openclaw/
+```
+
+### 2) 先做三项高价值检查
+
+```bash
+# 查历史是否泄露 key
 git log --all -p | grep -i "sk-ant-\|sk-\|api_key"
+
+# 检查网关监听
+netstat -an | grep 18789 | grep LISTEN
+
+# 查看已配对设备
+openclaw devices list
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) API Key 与配置隔离（原文）
+
+```json
+{
+  "env": {
+    "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
+    "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+    "BRAVE_API_KEY": "${BRAVE_API_KEY}",
+    "GATEWAY_TOKEN": "${GATEWAY_TOKEN}"
+  }
+}
+```
+
+### 2) 默认工具策略（原文）
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "tools": {
+        "allow": ["read", "write", "edit", "web_search", "web_fetch", "memory_search", "memory_get"],
+        "deny": ["exec", "process", "cron", "gateway", "nodes"]
+      }
+    }
+  }
+}
+```
+
+### 3) 成本保护（原文核心）
+
+- 在 provider 控制台设置硬上限与告警（50%、80%）。
+- 监控/cron/public agent 不使用高价模型（如 Opus）。
+- 仅把 Opus 给明确需要高质量推理的人工触发任务。
+
+### 4) 网关与权限（原文）
+
+```json
+{
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": { "mode": "token", "token": "${GATEWAY_TOKEN}" }
+  },
+  "logging": {
+    "redactSensitive": "tools"
+  }
+}
+```
+
+```bash
+chmod 700 ~/.openclaw
+chmod 600 ~/.openclaw/openclaw.json
+chmod 700 ~/.openclaw/credentials
+```
+
+### 5) 设备配对卫生（原文）
+
+```bash
 openclaw devices list
 openclaw devices remove <device-id>
 openclaw devices clear --yes
 openclaw devices clear --yes --pending
-find ~/.openclaw/memory -name "*.md" -mtime -30 -exec tar -rf "$BACKUP_DIR/memory.tar" {} \;
+```
+
+### 6) 备份与应急（原文）
+
+```bash
+# 停机开关
 openclaw gateway stop
+
+# 关闭高风险通道
 openclaw config set channels.telegram.enabled false
 openclaw config set channels.discord.enabled false
-openclaw.json
 ```
 
-## 可复制提示词
+## 成功标准
 
-```text
-你是我的 OpenClaw 助手，请帮我完成「生产级安全加固包」。
+- [ ] API Key 不硬编码，历史泄露可追溯并已轮换。
+- [ ] 默认策略阻断危险工具，按 agent 最小授权。
+- [ ] 网关仅本地监听，设备配对定期清理。
+- [ ] 备份与应急动作可在演练中跑通。
 
-任务目标：按最小权限和隔离原则配置运行环境，降低长期风险。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：openclaw.json、exec、.gitignore、logging.redactSensitive、Telegram、WhatsApp）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
-```
-
-## 风险与边界
-
-- 涉及删除、外发、改密等动作时，先确认再执行。
-- 关键变更前先备份，确保可回滚。
-
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [examples/security-hardening.md](https://github.com/digitalknk/openclaw-runbook/blob/main/examples/security-hardening.md)

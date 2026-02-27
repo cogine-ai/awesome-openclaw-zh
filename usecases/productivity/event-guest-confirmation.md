@@ -1,61 +1,71 @@
-# 活动嘉宾确认
+# 活动嘉宾确认（语音外呼）
 
-> 逐一呼叫活动嘉宾名单以确认出席、收集备注并编译摘要 —— 通过 AI 语音通话完全自动化。
+> 用 SuperCall 逐个电话确认嘉宾出席，并自动汇总 RSVP 结果。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「逐一呼叫活动嘉宾名单以确认出席、收集备注并编译摘要 —— 通过 AI 语音通话完全自动化。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把婚礼、聚会、活动前的“逐个确认”流程自动化。
+- 电话确认响应率通常高于纯文本消息。
+- 自动沉淀“确认/拒绝/未接通/备注”结果表。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `@xonder/supercall` | 批量语音呼叫与结果记录 | [clawhub.ai/xonder/supercall](https://clawhub.ai/xonder/supercall) |
+| 外部（需准备） | Twilio 号码 | 外呼线路 | Twilio |
+| 外部（需准备） | OpenAI Realtime Key | 通话语音模型 | OpenAI |
+| 外部（需安装） | ngrok | webhook 隧道 | ngrok |
 
-- `voice_call`
-- `GitHub`
-- `OpenClaw`
-
-### 命令片段
-
-```bash
-openclaw plugins install @xonder/supercall
-```
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「活动嘉宾确认」。
-
-任务目标：逐一呼叫活动嘉宾名单以确认出席、收集备注并编译摘要 —— 通过 AI 语音通话完全自动化。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：voice_call、GitHub、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的活动协调助手。
+请先用 3 位嘉宾做测试流程：
+1. 读取姓名+电话
+2. 以“Jamie, event coordinator”身份拨打
+3. 收集出席与备注（忌口/可带人/到场时间）
+4. 输出汇总（confirmed/declined/no-answer）
+本轮只做小样本测试。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 安装与准备
 
-## 使用建议
+- 安装：`openclaw plugins install @xonder/supercall`
+- 完成 SuperCall README 的配置步骤（Twilio、OpenAI、ngrok、hooks）。
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 执行提示词（源案例）
 
-## CITATION
+```text
+I need you to confirm attendance for my event. Here are the details:
+
+Event: Summer BBQ
+Date: Saturday, June 14th at 4 PM
+Location: 23 Oak Street
+
+Here is my guest list:
+<paste your guest list here>
+
+For each guest, use supercall to call them. Use the persona "Jamie, event coordinator
+for [your name]". The goal for each call is to confirm whether they're attending,
+and note any dietary restrictions, plus-ones, or other comments.
+
+After each call, log the result. Once all calls are done, give me a full summary:
+- Who confirmed
+- Who declined
+- Who didn't answer
+- Any notes or special requests from each guest
+```
+
+## 成功标准
+
+- [ ] 每位嘉宾都有明确状态记录。
+- [ ] 备注信息完整可用于后续安排。
+- [ ] 小样本测试通过后再放大到全量名单。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/event-guest-confirmation.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/event-guest-confirmation.md)

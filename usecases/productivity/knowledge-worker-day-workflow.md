@@ -1,85 +1,82 @@
 # 知识工作者全天工作流
 
-> 覆盖日报、资料、会议、复盘的一整天效率流程。
+> 以“晨报-资料整理-会议纪要-晚间复盘”构建可持续的一天效率闭环。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「覆盖日报、资料、会议、复盘的一整天效率流程。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 早上自动获取日程、待办和行业动态。
+- 会议后快速沉淀纪要并同步协作工具。
+- 晚上自动产出日报与知识归档，减少信息流失。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `openclaw schedule` | 晨报与晚报调度 | OpenClaw Built-in |
+| 外部（按需） | `web-clipper` / `notes-sync` | 资料抓取和备忘录同步 | ClawHub |
+| 内置 | 模板与同步能力 | 会议纪要模板、Notion/飞书同步 | OpenClaw Built-in |
 
-- `Notion`
-- `GitHub`
-- `OpenClaw`
-- `RSS`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+```text
+你是我的工作流助手。
+请先演示今天的一日流程输出：
+1) 早间简报（日程+待办+行业动态）
+2) 一条会议纪要模板示例
+3) 晚间日报示例
+本轮只生成样稿，不添加定时任务。
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) 早间简报
 
 ```bash
 openclaw schedule add "daily-report" \
-openclaw config set report.sources \
+  --time "07:00" \
+  --prompt "生成今日日报，包括：日程、待办、行业动态、建议"
+
+openclaw config set report.sources "calendar,todo,rss,notion"
 openclaw config set report.channel "feishu"
+```
+
+### 2) 资料整理与会议纪要
+
+```bash
+clawhub install web-clipper
+clawhub install notes-sync
 openclaw config set notes.default "备忘录/行业研究"
+
 openclaw template add "meeting-notes" \
+  --format "时间、参会人员、讨论要点、行动项、下次会议"
 openclaw config set sync.targets "notion,feishu"
 openclaw config set reminder.action-items true
+```
+
+### 3) 晚间复盘与归档
+
+```bash
 openclaw config set archive.rules '{
+  "会议纪要": "Notion/会议记录",
+  "行业研究": "备忘录/行业研究",
+  "项目文档": "Notion/项目管理",
+  "个人笔记": "备忘录/个人成长"
+}'
+
 openclaw schedule add "daily-summary" \
+  --time "19:00" \
+  --prompt "生成今日工作日报"
+
 openclaw config set knowledge.graph true
-openclaw schedule add "morning-report" \
-openclaw config set clipper.default "备忘录/行业研究"
 ```
 
-### 调度信息
+## 成功标准
 
-- 7:00
-- 09:00
-- 10:00
-- 14:00
-- 16:00
-- 17:00
-- 18:00
-- 07:00
-- 9:00
-- 12:00
+- [ ] 早间信息准备时间显著下降。
+- [ ] 会议纪要可在会后快速沉淀并可追踪行动项。
+- [ ] 晚间复盘持续产出，知识资产不丢失。
 
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「知识工作者全天工作流」。
-
-任务目标：覆盖日报、资料、会议、复盘的一整天效率流程。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Notion、GitHub、OpenClaw、RSS）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
-```
-
-## 风险与边界
-
-- 先在测试环境验证，再应用到生产或长期任务。
-
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/12-personal-productivity.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md)

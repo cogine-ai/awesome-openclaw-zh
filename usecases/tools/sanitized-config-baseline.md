@@ -1,72 +1,104 @@
 # 可公开配置基线模板
 
-> 通过脱敏配置建立团队基线，方便复制和协作。
+> 用脱敏后的 `openclaw.json` 建立团队统一基线，兼顾可复制、安全与成本可控。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「通过脱敏配置建立团队基线，方便复制和协作。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 快速拉起一套可共享配置，不暴露真实密钥。
+- 通过默认模型、上下文裁剪、并发限制控制成本与稳定性。
+- 在发布前跑完整安全检查，避免把高风险配置带到生产。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `openclaw doctor` | 配置校验与修复建议 | OpenClaw CLI |
+| 内置 | `openclaw security audit` | 安全审计 | OpenClaw CLI |
+| 外部（系统） | `chmod` / `netstat` / `grep` | 权限、监听、敏感信息检查 | 系统工具 |
 
-- `sanitized-config.json`
-- `agents.defaults.model`
-- `primary`
-- `fallbacks`
-- `memorySearch`
-- `text-embedding-3-small`
-- `contextPruning`
-- `cache-ttl`
-- `compaction.memoryFlush`
-- `softThresholdTokens`
-- `memory/YYYY-MM-DD.md`
-- `NO_FLUSH`
-- `heartbeat.model`
-- `127.0.0.1`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+### 1) 原文快速流程
+
+1. 复制 `sanitized-config.json` 到 `~/.openclaw/openclaw.json`。
+2. 替换所有 `YOUR_*` 占位符。
+3. 执行：
 
 ```bash
 openclaw doctor --fix
 openclaw security audit --deep
 ```
 
-## 可复制提示词
+## 稳定自动版（可长期运行）
 
-```text
-你是我的 OpenClaw 助手，请帮我完成「可公开配置基线模板」。
+### 1) 成本友好模型策略（原文重点）
 
-任务目标：通过脱敏配置建立团队基线，方便复制和协作。
+- 不把高价模型放在 `primary`。
+- `primary` 用高性价比模型，强模型放 `fallbacks` 或仅绑定特定 agent。
 
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：sanitized-config.json、agents.defaults.model、primary、fallbacks、memorySearch、text-embedding-3-small）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
+### 2) 记忆检索与上下文控制（原文示例）
 
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```json
+"memorySearch": {
+  "sources": ["memory", "sessions"],
+  "experimental": { "sessionMemory": true },
+  "provider": "openai",
+  "model": "text-embedding-3-small"
+},
+"contextPruning": {
+  "mode": "cache-ttl",
+  "ttl": "6h",
+  "keepLastAssistants": 3
+}
 ```
 
-## 风险与边界
+### 3) 自动压缩写入记忆（原文示例）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+```json
+"compaction": {
+  "mode": "default",
+  "memoryFlush": {
+    "enabled": true,
+    "softThresholdTokens": 40000,
+    "prompt": "Distill this session to memory/YYYY-MM-DD.md. Focus on decisions, state changes, lessons, blockers. If nothing worth storing: NO_FLUSH",
+    "systemPrompt": "Extract only what is worth remembering. No fluff."
+  }
+}
+```
 
-## 使用建议
+### 4) 安全基线（原文）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+```json
+"gateway": {
+  "bind": "loopback"
+},
+"logging": {
+  "redactSensitive": "tools"
+}
+```
 
-## CITATION
+```bash
+chmod 700 ~/.openclaw
+chmod 600 ~/.openclaw/openclaw.json
+chmod 700 ~/.openclaw/credentials
+netstat -an | grep 18789 | grep LISTEN
+```
+
+### 5) 上线前核查（原文）
+
+```bash
+openclaw doctor --fix
+openclaw security audit --deep
+grep -r "sk-" ~/.openclaw/
+```
+
+## 成功标准
+
+- [ ] 配置可公开分享但不暴露密钥。
+- [ ] 默认运行成本稳定可预测。
+- [ ] 网关与权限安全基线检查通过。
+
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [examples/config-example-guide.md](https://github.com/digitalknk/openclaw-runbook/blob/main/examples/config-example-guide.md)

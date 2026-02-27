@@ -1,85 +1,81 @@
 # 云端智能备忘录管理
 
-> 把碎片想法自动沉淀成可检索备忘录。
+> 每周自动整理备忘录，去重分类并提取待办，同时做每日滚动提醒。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「把碎片想法自动沉淀成可检索备忘录。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 解决备忘录“越记越乱、重要事项被淹没”的问题。
+- 每周自动把碎片笔记整理为“工作/学习/生活”三类结构。
+- 自动提取未完成事项并生成下周计划，减少遗漏。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 能力 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `openclaw schedule` | 配置每周整理与每日提醒 | OpenClaw Built-in |
+| 内置 | 消息推送通道（如飞书） | 发送整理结果与提醒 | OpenClaw Built-in |
+| 内置 | 备忘录读写能力 | 读取本周备忘录并做去重分类 | OpenClaw Built-in |
 
-- `Notion`
-- `GitHub`
-- `OpenClaw`
-- `RSS`
-
-### 命令片段
-
-```bash
-openclaw schedule add "daily-report" \
-openclaw config set report.sources \
-openclaw config set report.channel "feishu"
-openclaw config set notes.default "备忘录/行业研究"
-openclaw template add "meeting-notes" \
-openclaw config set sync.targets "notion,feishu"
-openclaw config set reminder.action-items true
-openclaw config set archive.rules '{
-openclaw schedule add "daily-summary" \
-openclaw config set knowledge.graph true
-openclaw schedule add "morning-report" \
-openclaw config set clipper.default "备忘录/行业研究"
-```
-
-### 调度信息
-
-- 7:00
-- 09:00
-- 10:00
-- 14:00
-- 16:00
-- 17:00
-- 18:00
-- 07:00
-- 9:00
-- 12:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「云端智能备忘录管理」。
-
-任务目标：把碎片想法自动沉淀成可检索备忘录。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Notion、GitHub、OpenClaw、RSS）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的备忘录助手。
+请先对我本周备忘录做一次试运行：
+1. 合并重复主题
+2. 按工作/学习/生活分类
+3. 提取未完成待办
+4. 生成下周计划
+本轮只输出结果，不写入定时任务。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### 1) 每周整理提示词（源案例）
 
-## 使用建议
+```text
+你：每周日晚上8点：
+1. 读取本周所有备忘录
+2. 智能去重（相同主题合并）
+3. 分类整理（工作/学习/生活）
+4. 提取未完成待办
+5. 生成下周计划
+6. 推送到飞书
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 调度命令（源案例）
 
-## CITATION
+```bash
+openclaw schedule add "weekly-notes-cleanup" \
+  --time "Sun 20:00" \
+  --prompt "整理本周备忘录：去重、分类、提取待办、生成下周计划"
+
+openclaw schedule add "daily-todo" \
+  --time "09:00" \
+  --prompt "生成今日待办清单"
+
+openclaw schedule add "todo-reminder" \
+  --time "15:00" \
+  --prompt "提醒未完成的高优先级任务"
+```
+
+### 3) 输出参考
+
+```text
+【本周备忘录整理】
+- 新增备忘录：45条
+- 去重后：28条
+- 重要事项：8条
+- 已完成：20条
+- 待处理：8条
+```
+
+## 成功标准
+
+- [ ] 每周都能产出结构化整理结果。
+- [ ] 待办项从备忘录中被稳定提取并跟进。
+- [ ] 重要事项不再被时间轴淹没。
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/12-personal-productivity.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md)

@@ -1,53 +1,60 @@
 # 网络延迟基准测试
 
-> 网格性能测试
+> 持续测量多代理网络延迟，提前识别拓扑与扩容瓶颈。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「网格性能测试」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 监控 P50/P95/P99 延迟，判断当前规模是否接近上限。
+- 跟踪节点数量与延迟关系，识别非线性劣化点。
+- 提前发现拓扑变化和异常波动，避免线上才暴露问题。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `web_fetch` | 拉取 mesh 状态 | OpenClaw Built-in |
+| 内置 | `system` | 记录与计算性能指标 | OpenClaw Built-in |
 
-- `web_fetch`
-- `system`
+## 快速体验版（先跑一轮）
 
-### 调度信息
-
-- 02:00
-
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「网络延迟基准测试」。
-
-任务目标：网格性能测试
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：web_fetch、system）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```javascript
+async function benchmarkMesh() {
+  const start = Date.now();
+  const responses = await Promise.all(nodes.map(n => ping(n)));
+  const latency = Date.now() - start;
+  return { latency, responses };
+}
 ```
 
-## 使用建议
+先手工执行一次，确认可拿到基础延迟数据。
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+## 稳定自动版（可长期运行）
 
-## CITATION
+### 1) 每日 02:00 基准任务（原文流程）
+
+```text
+Daily at 02:00:
+1. Query agent mesh status
+2. Measure P50/P95/P99 latency
+3. Track node count vs latency correlation
+4. Detect topology shifts
+5. Report anomalies
+```
+
+### 2) 指标建议（原文）
+
+- Coordination latency
+- Message throughput
+- Node churn rate
+- Regional cluster formation
+
+## 成功标准
+
+- [ ] 每日延迟数据稳定采集。
+- [ ] 每周能产出趋势判断。
+- [ ] 瓶颈与异常有明确记录。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/26-network-latency-benchmark.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/26-network-latency-benchmark.md)

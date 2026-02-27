@@ -1,48 +1,41 @@
 # 每日 Reddit 摘要
 
-> 根据你的偏好，总结你喜爱的 subreddit 的精选摘要。
+> 每天自动汇总你关注的 subreddit 高表现帖子，并持续学习你的阅读偏好。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「根据你的偏好，总结你喜爱的 subreddit 的精选摘要。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 自动抓取你关注社区的高质量帖子，节省刷帖时间。
+- 按你的喜好持续优化摘要（例如自动排除 meme）。
+- 只读模式更安全：不发帖、不点赞、不评论。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `reddit-readonly` | 读取 subreddit 内容与评论 | [clawhub.ai/buksan1950/reddit-readonly](https://clawhub.ai/buksan1950/reddit-readonly) |
 
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+安装 `reddit-readonly` 后，先手动让 OpenClaw 拉一次摘要。
+
+## 稳定自动版（可长期运行）
+
+把下面原文提示词直接发给 OpenClaw：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「每日 Reddit 摘要」。
-
-任务目标：根据你的偏好，总结你喜爱的 subreddit 的精选摘要。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+I want you to give me the top performing posts from the following subreddits.
+<paste the list here>
+Create a separate memory for the reddit processes, about the type of posts I like to see and every day ask me if I liked the list you provided. Save my preference as rules in the memory to use for a better digest curation. (e.g. do not include memes.)
+Every day at 5pm, run this process and give me the digest.
 ```
 
-## 使用建议
+## 成功标准
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- [ ] 每天 5pm 自动收到摘要。
+- [ ] 摘要内容会根据反馈逐步贴近你的偏好。
+- [ ] 全流程保持只读，不触发社交账号写操作。
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/daily-reddit-digest.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/daily-reddit-digest.md)

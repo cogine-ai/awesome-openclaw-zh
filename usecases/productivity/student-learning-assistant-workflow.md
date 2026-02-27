@@ -1,85 +1,81 @@
 # 学生学习助手工作流
 
-> 课程管理、复习规划、作业辅助的一体化学习流程。
+> 覆盖课程资料整理、作业辅助、复习规划和学习进度跟踪。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「课程管理、复习规划、作业辅助的一体化学习流程。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把课程资料、作业、论文笔记整理成统一学习库。
+- 在编程作业场景下提供分析、代码和优化建议。
+- 用固定提醒节奏推动复习计划执行。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `file-organizer` | 课程资料自动归类 | ClawHub |
+| 外部（需安装） | `paper-reader` | 论文阅读与笔记模板 | ClawHub |
+| 外部（需安装） | `code-helper` | 编程作业辅助 | ClawHub |
+| 外部（需安装） | `study-planner` / `flashcard-generator` | 复习计划与卡片生成 | ClawHub |
+| 外部（需安装） | `project-manager` / `calendar-sync` | 科研进度与时间管理 | ClawHub |
 
-- `Notion`
-- `GitHub`
-- `OpenClaw`
-- `RSS`
-
-### 命令片段
-
-```bash
-openclaw schedule add "daily-report" \
-openclaw config set report.sources \
-openclaw config set report.channel "feishu"
-openclaw config set notes.default "备忘录/行业研究"
-openclaw template add "meeting-notes" \
-openclaw config set sync.targets "notion,feishu"
-openclaw config set reminder.action-items true
-openclaw config set archive.rules '{
-openclaw schedule add "daily-summary" \
-openclaw config set knowledge.graph true
-openclaw schedule add "morning-report" \
-openclaw config set clipper.default "备忘录/行业研究"
-```
-
-### 调度信息
-
-- 7:00
-- 09:00
-- 10:00
-- 14:00
-- 16:00
-- 17:00
-- 18:00
-- 07:00
-- 9:00
-- 12:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「学生学习助手工作流」。
-
-任务目标：课程管理、复习规划、作业辅助的一体化学习流程。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Notion、GitHub、OpenClaw、RSS）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的学习助手。
+请先演示“机器学习课程”当天学习计划：
+1) 今日课程资料清单
+2) 一项作业拆解
+3) 晚间复习任务
+本轮不写配置。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### 学习助手配置脚本（源案例）
 
-## 使用建议
+```bash
+#!/bin/bash
+# 学生学习助手完整配置
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+# 1. 课程资料管理
+clawhub install file-organizer
+openclaw config set courses.path "~/课程资料"
+openclaw config set courses.auto-organize true
 
-## CITATION
+# 2. 论文阅读
+clawhub install paper-reader
+openclaw config set paper.language "中英文"
+openclaw config set paper.notes-template "标准模板"
+
+# 3. 作业辅助
+clawhub install code-helper
+openclaw config set homework.check true
+openclaw config set homework.optimize true
+
+# 4. 考试复习
+clawhub install study-planner
+clawhub install flashcard-generator
+openclaw config set study.daily-reminder true
+
+# 5. 科研项目
+clawhub install project-manager
+openclaw config set project.progress-tracking true
+openclaw config set project.milestone-alert true
+
+# 6. 时间管理
+clawhub install calendar-sync
+openclaw config set calendar.auto-create true
+
+echo "✅ 学生学习助手配置完成！"
+```
+
+## 成功标准
+
+- [ ] 课程资料和作业状态可视化。
+- [ ] 学习计划可每日执行并追踪进度。
+- [ ] 复习与作业提醒稳定触发。
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/12-personal-productivity.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md)

@@ -1,60 +1,80 @@
-# 动态仪表板
+# 动态仪表板（子代理并行）
 
-> 实时仪表板，并行从 API、数据库和社交媒体获取数据。
+> 每 15 分钟并行抓取多源数据并汇总成一条动态看板。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「实时仪表板，并行从 API、数据库和社交媒体获取数据。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 把 GitHub、社媒、市场、系统状态放进同一视图。
+- 用子代理并发抓取，降低串行轮询延迟。
+- 告警条件内置，指标异常可即时提醒。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | 子代理并发能力 | 并行采集各数据源 | OpenClaw Built-in |
+| 外部（按需） | `github` (gh CLI) | GitHub 指标 | GitHub CLI |
+| 外部（按需） | `bird` | X/Twitter 数据 | ClawHub / 社媒集成 |
+| 内置 | `web_search` / `web_fetch` | 外部 API 数据抓取 | OpenClaw Built-in |
+| 外部（需安装） | `postgres` | 历史指标存储 | PostgreSQL |
+| 内置 | Discord/Canvas | 看板分发与展示 | OpenClaw Built-in |
+| 内置 | `cron` | 周期调度 | OpenClaw Built-in |
 
-- `github`
-- `bird`
-- `web_search`
-- `web_fetch`
-- `postgres`
-- `Discord`
-- `GitHub`
-- `cron`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「动态仪表板」。
-
-任务目标：实时仪表板，并行从 API、数据库和社交媒体获取数据。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：github、bird、web_search、web_fetch、postgres、Discord）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的看板助手。
+请并行抓取 4 类指标（GitHub、社媒、市场、系统），
+输出一版 Dashboard 文本预览，并标记 1 个可配置告警条件。
+本轮不入库、不定时。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 指标库
 
-## 使用建议
+```sql
+CREATE TABLE metrics (
+  id SERIAL PRIMARY KEY,
+  source TEXT,
+  metric_name TEXT,
+  metric_value NUMERIC,
+  timestamp TIMESTAMPTZ DEFAULT NOW()
+);
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+CREATE TABLE alerts (
+  id SERIAL PRIMARY KEY,
+  source TEXT,
+  condition TEXT,
+  threshold NUMERIC,
+  last_triggered TIMESTAMPTZ
+);
+```
 
-## CITATION
+### 2) OpenClaw 执行提示词（源案例）
+
+```text
+You are my dynamic dashboard manager. Every 15 minutes, run a cron job to:
+
+1. Spawn sub-agents in parallel to fetch data from:
+   - GitHub: stars, forks, open issues, commits (past 24h)
+   - Twitter: mentions of "@username", sentiment analysis
+   - Polymarket: volume for tracked markets
+   - System: CPU, memory, disk usage via shell commands
+
+2. Each sub-agent writes results to the metrics database.
+3. Aggregate and format dashboard.
+4. Post to Discord #dashboard.
+5. Check alert conditions.
+```
+
+## 成功标准
+
+- [ ] 15 分钟节奏稳定刷新。
+- [ ] 各数据源并行抓取有效，延迟可控。
+- [ ] 告警命中时能立即通知。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/dynamic-dashboard.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/dynamic-dashboard.md)

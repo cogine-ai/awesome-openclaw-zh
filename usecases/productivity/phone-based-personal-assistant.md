@@ -1,50 +1,51 @@
 # 基于电话的个人助理
 
-> 通过电话访问你的 AI 智能体，为任何手机提供免提语音助手。
+> 用普通电话直接接入 OpenClaw，对语音查询和提醒场景更友好。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「通过电话访问你的 AI 智能体，为任何手机提供免提语音助手。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 在驾驶、行走等不方便打字场景下直接语音调用助手。
+- 无需依赖手机 App，任何可拨号设备都能用。
+- 可扩展到日程、工单、搜索等语音查询。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | ClawdTalk | 电话语音接入 OpenClaw | [github.com/team-telnyx/clawdtalk-client](https://github.com/team-telnyx/clawdtalk-client) |
+| 外部（需配置） | Telnyx | 电话网络连接 | [telnyx.com](https://telnyx.com/) |
+| 外部（按需） | Calendar / Jira / Web Search | 电话查询数据源 | 各系统 API |
 
-- `Google Calendar`
-- `GitHub`
-- `Web Search`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「基于电话的个人助理」。
-
-任务目标：通过电话访问你的 AI 智能体，为任何手机提供免提语音助手。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Google Calendar、GitHub、Web Search、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的电话助手。
+当我来电时：
+1) 先问候并询问需求
+2) 支持“今日日程 / Jira待办 / AI新闻”三类查询
+3) 用简短语音回复
+本轮只做对话脚本演练。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 通话提示词（源案例）
 
-## CITATION
+```text
+You are available via phone. When I call, greet me and ask how I can help.
+
+For calendar queries: "What's on my calendar today?"
+For Jira updates: "Show me my open tickets"
+For web search: "Search for latest news on AI agents"
+```
+
+## 成功标准
+
+- [ ] 电话接入稳定可用。
+- [ ] 常见语音查询可在通话内完成。
+- [ ] 免手操作场景下体验顺畅。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/phone-based-personal-assistant.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/phone-based-personal-assistant.md)

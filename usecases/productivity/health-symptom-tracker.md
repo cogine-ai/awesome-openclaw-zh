@@ -1,54 +1,58 @@
 # 健康与症状追踪器
 
-> 追踪食物摄入和症状以识别诱因，带有定期签到提醒。
+> 通过固定时段提醒 + 周报分析，找出饮食与症状的潜在关联。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「追踪食物摄入和症状以识别诱因，带有定期签到提醒。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 持续记录饮食和症状，解决“靠记忆回想不准”的问题。
+- 每周自动分析触发因素和时段模式。
+- 通过专门主题集中记录，降低漏记概率。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `cron` | 三次提醒 + 周分析触发 | OpenClaw Built-in |
+| 内置 | Telegram topic | 日常记录入口 | OpenClaw Built-in |
+| 内置 | 文件存储 | 日志保存 | OpenClaw Built-in |
 
-- `Telegram`
-- `cron`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「健康与症状追踪器」。
-
-任务目标：追踪食物摄入和症状以识别诱因，带有定期签到提醒。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的健康记录助手。
+请先基于今天的 3 条饮食/症状输入，
+按“时间-食物-症状”格式写入日志，并生成当日简报。
+本轮不做周分析。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
+### 执行提示词（源案例）
 
-## 使用建议
+```text
+When I message in the "health-tracker" topic:
+1. Parse the message for food items and symptoms
+2. Log to ~/clawd/memory/health-log.md with timestamp
+3. Confirm what was logged
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+Set up 3 daily reminders:
+- 8 AM: "🍳 Log your breakfast"
+- 1 PM: "🥗 Log your lunch"
+- 7 PM: "🍽️ Log your dinner and any symptoms"
 
-## CITATION
+Every Sunday, analyze the past week's log and identify patterns:
+- Which foods correlate with symptoms?
+- Are there time-of-day patterns?
+- Any clear triggers?
+```
+
+## 成功标准
+
+- [ ] 日志连续记录率可维持。
+- [ ] 周报能输出可解释的关联模式。
+- [ ] 可逐步形成个人触发因素清单。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/health-symptom-tracker.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/health-symptom-tracker.md)

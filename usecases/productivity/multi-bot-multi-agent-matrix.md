@@ -1,77 +1,61 @@
-# 多机器人多Agent矩阵
+# 多机器人多 Agent 矩阵
 
-> 多渠道机器人协同，按角色分工处理不同业务任务。
+> 多 Gateway + 多机器人并行部署，不同角色直接私聊对应机器人。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「多渠道机器人协同，按角色分工处理不同业务任务。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 避免单机器人里频繁切模型/切上下文。
+- 每个机器人绑定一个独立 Gateway，互不干扰。
+- 复杂任务可按角色拆分流转（主助理/内容/技术/资讯）。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | 多 Gateway 运行能力 | 独立代理实例 | OpenClaw Built-in |
+| 外部（需配置） | 飞书机器人应用 | 多入口对话 | 飞书开放平台 |
+| 内置 | 角色配置（SOUL/USER） | 定义每个 Agent 职责 | OpenClaw Built-in |
 
-- `Telegram`
-- `Notion`
-- `cron`
-- `OpenClaw`
-
-### 命令片段
-
-```bash
-openclaw ask "搜索过去24小时AI编程领域的热点，生成5个选题"
-openclaw ziliu publish "$draft_id" \
-curl -fsSL https://openclaw.example/install.sh | bash  # 替换为实际安装地址
-openclaw config set api.key "your-api-key"
-openclaw config set model "claude-opus-4"
-crontab -e
-openclaw run daily-topic-push
-openclaw ask "写一篇关于AI编程的文章"
-openclaw run publish-all "article-id"
-```
-
-### 调度信息
-
-- 0 8 * * 1
-- 每天
-- 定时
-- 每周
-- 每日
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「多机器人多Agent矩阵」。
-
-任务目标：多渠道机器人协同，按角色分工处理不同业务任务。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Notion、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的部署助手。
+请先给出 2 机器人版本（主助理+内容助手）的最小落地方案：
+1) 端口分配
+2) 角色职责
+3) 私聊使用方式
+本轮不启动全量 4 机器人。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
+### 1) 架构要点（源案例）
 
-## 使用建议
+- 创建 4 个飞书机器人应用。
+- 启动 4 个独立 Gateway（示例端口：`18789-18792`）。
+- 每个 Gateway 对应一个 Agent 和模型配置。
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 启动与检查
 
-## CITATION
+```bash
+./start-all-gateways.sh
+./check-gateways.sh
+```
+
+### 3) 使用方式（源案例）
+
+- 私聊“主助理”处理复杂任务。
+- 私聊“内容创作助手”处理写作任务。
+- 私聊“技术开发助手”处理代码问题。
+- 私聊“AI资讯助手”获取行业动态。
+
+## 成功标准
+
+- [ ] 各机器人职责稳定，不串上下文。
+- [ ] 某个 Gateway 故障不影响其他机器人。
+- [ ] 角色切换不再依赖手动命令。
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/15-solo-entrepreneur-cases.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/15-solo-entrepreneur-cases.md)

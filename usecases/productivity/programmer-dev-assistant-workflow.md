@@ -1,85 +1,63 @@
 # 程序员开发助手工作流
 
-> 从代码检索到Bug处理的日常开发支持方案。
+> 由 OpenClaw 负责调度，Claude Code 负责编码、测试、修复，形成研发闭环。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「从代码检索到Bug处理的日常开发支持方案。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 将开发任务拆解成“实现-测试-修复-回归”流水线。
+- 对中小任务可快速产出可运行版本。
+- 帮助开发者把精力从重复实现转到架构与验收。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `@anthropic-ai/claude-cli` | Claude Code 执行开发任务 | npm |
+| 外部（需安装） | `coding-agent` | OpenClaw 编程代理能力 | `clawhub install coding-agent` |
+| 内置 | OpenClaw 调度能力 | 任务分解与流程编排 | OpenClaw Built-in |
 
-- `Notion`
-- `GitHub`
-- `OpenClaw`
-- `RSS`
-
-### 命令片段
-
-```bash
-openclaw schedule add "daily-report" \
-openclaw config set report.sources \
-openclaw config set report.channel "feishu"
-openclaw config set notes.default "备忘录/行业研究"
-openclaw template add "meeting-notes" \
-openclaw config set sync.targets "notion,feishu"
-openclaw config set reminder.action-items true
-openclaw config set archive.rules '{
-openclaw schedule add "daily-summary" \
-openclaw config set knowledge.graph true
-openclaw schedule add "morning-report" \
-openclaw config set clipper.default "备忘录/行业研究"
-```
-
-### 调度信息
-
-- 7:00
-- 09:00
-- 10:00
-- 14:00
-- 16:00
-- 17:00
-- 18:00
-- 07:00
-- 9:00
-- 12:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「程序员开发助手工作流」。
-
-任务目标：从代码检索到Bug处理的日常开发支持方案。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Notion、GitHub、OpenClaw、RSS）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的开发助手。
+请调用 Claude Code 生成一个 React + TypeScript 待办应用，
+要求：增删改查 + localStorage。
+先给可运行版本，再输出测试清单。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### 1) 安装与配置
 
-## 使用建议
+```bash
+npm install -g @anthropic-ai/claude-cli
+clawhub install coding-agent
+openclaw config set coding.tool "claude-code"
+openclaw config set coding.model "claude-3-5-sonnet"
+openclaw config set coding.api-key "YOUR_ANTHROPIC_API_KEY"
+openclaw config set coding.workspace "~/projects"
+openclaw config set coding.auto-test true
+openclaw config set coding.auto-fix true
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 进阶提示词（源案例方向）
 
-## CITATION
+```text
+用 Claude Code 开发一个用户管理系统，要求自动测试并修复所有 Bug：
+1. 后端开发
+2. 前端开发
+3. 自动测试
+4. 自动修复
+5. 回归测试
+```
+
+## 成功标准
+
+- [ ] 可稳定执行“开发→测试→修复→回归”。
+- [ ] 修复过程有明确记录。
+- [ ] 人工审查和安全检查可顺利接管。
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/12-personal-productivity.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md)

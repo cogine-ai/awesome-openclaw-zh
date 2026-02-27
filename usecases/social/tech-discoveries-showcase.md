@@ -1,67 +1,74 @@
 # 每周技术发现精选
 
-> 自动追踪和筛选技术动态，输出可读性高的周报。
+> 每周自动汇总 newsletter、GitHub、HN、Reddit 的关键动态，输出可读周报。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「自动追踪和筛选技术动态，输出可读性高的周报。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 固定周节奏抓取信息，不再每天临时拼凑资讯。
+- 从“信息聚合”转为“高质量精选”（5-10 条）。
+- 按兴趣分类输出，直接推送到 Telegram/Discord/Slack/Email。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `cron.jobs` | 每周调度任务 | OpenClaw Built-in |
+| 内置 | `web_search` / `browser` / `message` / `email` | 抓取与分发 | OpenClaw Built-in |
+| 渠道 | Telegram / Discord / Slack / Email | 接收周报 | 用户自选 |
 
-- `cron.jobs`
-- `Telegram`
-- `Discord`
-- `Slack`
-- `Todoist`
-- `GitHub`
-- `Web Search`
-- `cron`
-- `OpenClaw`
-- `RSS`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+先手工触发一次（原文）：
 
 ```bash
 openclaw cron run tech-discoveries
 ```
 
-### 调度信息
+## 稳定自动版（可长期运行）
 
-- 0 8 * * 0
+### 1) 加入 cron.jobs（原文）
 
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「每周技术发现精选」。
-
-任务目标：自动追踪和筛选技术动态，输出可读性高的周报。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：cron.jobs、Telegram、Discord、Slack、Todoist、GitHub）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```json
+{
+  "name": "tech-discoveries",
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 8 * * 0",
+    "tz": "UTC"
+  },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Generate tech discoveries for [YOUR_INTERESTS]. Check: 1) Newsletter emails at [YOUR_EMAIL], 2) GitHub Trending for [YOUR_LANGUAGES], 3) Hacker News top stories, 4) Reddit [YOUR_SUBREDDITS]. Curate 5-10 items. For each: title, one-sentence summary, why relevant, link. Group by category. Deliver to [YOUR_CHANNEL]. Skip: crypto, generic AI hype."
+  },
+  "sessionTarget": "isolated"
+}
 ```
 
-## 使用建议
+### 2) 工具配置（原文）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+```yaml
+tools:
+  email: {}
+  web_search: {}
+  browser: {}
+  message: {}
+```
 
-## CITATION
+### 3) 占位符替换建议
+
+- `[YOUR_INTERESTS]`：例如 `SRE, homelab, 3D printing`
+- `[YOUR_EMAIL]`：newsletter 接收邮箱
+- `[YOUR_LANGUAGES]`：例如 `Go, Python, Rust`
+- `[YOUR_SUBREDDITS]`：例如 `r/homelab, r/selfhosted`
+- `[YOUR_CHANNEL]`：你要接收周报的渠道
+
+## 成功标准
+
+- [ ] 每周日固定收到精选。
+- [ ] 质量优先（5-10 条），而非堆量。
+- [ ] 与兴趣高度相关，噪音项可持续减少。
+
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [showcases/tech-discoveries.md](https://github.com/digitalknk/openclaw-runbook/blob/main/showcases/tech-discoveries.md)

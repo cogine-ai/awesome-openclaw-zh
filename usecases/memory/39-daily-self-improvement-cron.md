@@ -1,56 +1,72 @@
 # 每日自我改进定时任务
 
-> 每天进步 1%
+> 每天固定做 1 项能力升级，把“持续优化”变成系统行为。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「每天进步 1%」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 通过稳定节奏让能力持续复利，而不是偶发优化。
+- 从技能安装、MCP 接入、Bug 修复到流程优化都有可执行入口。
+- 每天有记录、每周可复盘，不再“感觉在进步”。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `cron` | 每日 06:00 触发改进任务 | OpenClaw Built-in |
+| 内置 | `filesystem` | 记录改进日志与 backlog | OpenClaw Built-in |
 
-- `cron`
-- `filesystem`
-- `Notion`
-- `GitHub`
-- `MCP`
-
-### 调度信息
-
-- 06:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「每日自我改进定时任务」。
-
-任务目标：每天进步 1%
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：cron、filesystem、Notion、GitHub、MCP）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的持续改进助手。
+请从改进待办里选 1 项今天可完成的动作，输出：
+1) 执行步骤
+2) 验证方式
+3) 记录模板
+本轮只给方案，不落地改动。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 改进队列示例
 
-## CITATION
+```javascript
+const improvements = [
+  { type: 'skill', name: 'web_search' },
+  { type: 'mcp', name: 'github-server' },
+  { type: 'bugfix', issue: '#123' },
+  { type: 'integration', service: 'notion' }
+];
+```
+
+### 2) OpenClaw 执行提示词（自动版）
+
+```markdown
+## Daily Self-Improvement Cron
+
+Every day at 06:00:
+1. Review improvement backlog
+2. Select 1 item for today
+3. Execute improvement
+4. Test thoroughly
+5. Document in memory/improvements.md
+6. Report to human
+
+Categories:
+- Install new skill
+- Add MCP server
+- Fix known bug
+- Integrate new service
+- Optimize existing workflow
+```
+
+## 成功标准
+
+- [ ] 每天完成 1 项可验证改进。
+- [ ] backlog 持续更新不堆积。
+- [ ] 周复盘能看见稳定增长曲线。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/39-daily-self-improvement-cron.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/39-daily-self-improvement-cron.md)

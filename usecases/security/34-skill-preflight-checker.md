@@ -1,62 +1,57 @@
-# 技能预检检查器
+# Skill 预检检查器
 
-> 安装前安全检查
+> 技能安装前做 90 秒预检，先拦截风险，再决定是否安装。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「安装前安全检查」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 安装前快速核验作者、安装脚本、可疑命令与权限边界。
+- 在容器里先跑一遍，降低本机被污染风险。
+- 把预检结果沉淀到 runbook，后续复用决策依据。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `filesystem` | 分析包文件与脚本 | OpenClaw Built-in |
+| 内置 | `docker` | 隔离安装测试 | OpenClaw Built-in |
 
-- `filesystem`
-- `docker`
-
-### 命令片段
+## 快速体验版（先跑一轮）
 
 ```bash
 npm view package-name author
 jq '.scripts' package.json
+grep -r "curl\|wget\|eval" node_modules/
 docker run --rm -v $(pwd):/app node:alpine npm install package-name
-docker
 ```
 
-## 可复制提示词
+## 稳定自动版（可长期运行）
+
+### 1) 安装前标准流程（原文）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「技能预检检查器」。
-
-任务目标：安装前安全检查
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：filesystem、docker）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Before installing any skill:
+1. Check author reputation on npm/Moltbook
+2. Read package.json scripts section
+3. Search for network/file access patterns
+4. Install in container first
+5. Monitor what files it touches
+6. Document in runbook
 ```
 
-## 风险与边界
+### 2) 红旗信号（原文）
 
-- 远程访问和权限建议按最小授权配置。
+- `postinstall` 脚本
+- 安装阶段主动外联
+- 读取 `~/.ssh`、`~/.env`
+- 未知作者、来源不明
 
-## 使用建议
+## 成功标准
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- [ ] 所有技能在安装前都走预检。
+- [ ] 主环境零恶意技能安装事件。
+- [ ] 预检记录可复盘、可追责。
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/34-skill-preflight-checker.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/34-skill-preflight-checker.md)

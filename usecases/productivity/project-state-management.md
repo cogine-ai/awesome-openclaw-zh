@@ -1,58 +1,86 @@
-# 项目状态管理
+# 项目状态管理（事件驱动）
 
-> 事件驱动的项目追踪，自动捕获上下文，取代静态看板。
+> 用事件日志替代手工 Kanban 拖拽，自动沉淀“进展、阻塞、决策、转向”。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「事件驱动的项目追踪，自动捕获上下文，取代静态看板。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 减少手动维护看板成本，让状态更新更自然。
+- 保留“为什么这样做”的上下文，便于后续复盘。
+- 将代码提交与项目状态关联，提升可追踪性。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `postgres` / SQLite | 存储项目与事件状态 | 数据库 |
+| 外部（按需） | `github` (gh CLI) | 关联提交与项目事件 | GitHub CLI |
+| 内置 | Discord / Telegram 通道 | 状态查询与日报分发 | OpenClaw Built-in |
+| 内置 | `cron` | 每日 standup 自动生成 | OpenClaw Built-in |
+| 内置 | 子代理能力 | 并行分析多个项目状态 | OpenClaw Built-in |
 
-- `postgres`
-- `github`
-- `Telegram`
-- `Discord`
-- `GitHub`
-- `cron`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「项目状态管理」。
-
-任务目标：事件驱动的项目追踪，自动捕获上下文，取代静态看板。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：postgres、github、Telegram、Discord、GitHub、cron）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的项目状态助手。
+我会输入“完成了什么/卡在哪里/决定了什么”，
+请转换成事件日志并输出当前项目状态快照。
+本轮不写数据库。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 状态库结构
 
-## 使用建议
+```sql
+CREATE TABLE projects (
+  id SERIAL PRIMARY KEY,
+  name TEXT UNIQUE,
+  status TEXT,
+  current_phase TEXT,
+  last_update TIMESTAMPTZ DEFAULT NOW()
+);
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  project_id INTEGER REFERENCES projects(id),
+  event_type TEXT,
+  description TEXT,
+  context TEXT,
+  timestamp TIMESTAMPTZ DEFAULT NOW()
+);
 
-## CITATION
+CREATE TABLE blockers (
+  id SERIAL PRIMARY KEY,
+  project_id INTEGER REFERENCES projects(id),
+  blocker_text TEXT,
+  status TEXT DEFAULT 'open',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  resolved_at TIMESTAMPTZ
+);
+```
+
+### 2) 事件驱动提示词（源案例）
+
+```text
+When I say:
+- "Finished [task]" → log progress
+- "Blocked on [issue]" → create blocker
+- "Decided to [decision]" → log decision
+- "Pivoting to [new approach]" → log pivot
+
+Every morning at 9 AM:
+1. Scan git commits from past 24h
+2. Link commits to projects
+3. Post standup summary (yesterday/today/blockers)
+```
+
+## 成功标准
+
+- [ ] 口头更新可自动转为结构化状态。
+- [ ] 阻塞项可集中跟踪。
+- [ ] 每日 standup 自动输出且可读。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/project-state-management.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/project-state-management.md)

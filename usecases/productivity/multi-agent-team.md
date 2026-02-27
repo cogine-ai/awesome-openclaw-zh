@@ -1,67 +1,81 @@
 # 多智能体专业团队
 
-> 通过单个 Telegram 聊天，将多个专业智能体（战略、开发、营销、业务）作为协调团队运行。
+> 为个人创业者搭一支“策略-业务-营销-开发”AI 小队，统一在一个聊天入口协作。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「通过单个 Telegram 聊天，将多个专业智能体（战略、开发、营销、业务）作为协调团队运行。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 按角色拆分上下文，避免单代理长期混杂导致性能下降。
+- 每个代理职责清晰，可并行处理任务。
+- 借助共享记忆文件让跨角色信息可追踪。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `telegram` | 统一对话入口 | OpenClaw Built-in |
+| 内置 | `sessions_spawn` / `sessions_send` | 多代理会话调度 | OpenClaw Built-in |
+| 内置 | 文件系统 | 共享记忆与私有上下文 | OpenClaw Built-in |
+| 外部（建议） | VPS 常驻环境 | 保证多代理持续在线 | 云主机 |
 
-- `telegram`
-- `sessions_spawn`
-- `sessions_send`
-- `Telegram`
-- `WhatsApp`
-- `Discord`
-- `GitHub`
-- `heartbeat`
-- `OpenClaw`
-
-### 调度信息
-
-- 8:00
-- 6:00
-- 9:00
-- 10:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「多智能体专业团队」。
-
-任务目标：通过单个 Telegram 聊天，将多个专业智能体（战略、开发、营销、业务）作为协调团队运行。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：telegram、sessions_spawn、sessions_send、Telegram、WhatsApp、Discord）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的团队编排助手。
+请先创建 2 个角色（策略 + 开发）的最小团队方案：
+1) 每个角色职责
+2) 共享文件结构
+3) Telegram 路由规则
+本轮不启动定时任务。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 团队结构（源案例）
 
-## 使用建议
+```text
+team/
+├── GOALS.md
+├── DECISIONS.md
+├── PROJECT_STATUS.md
+└── agents/
+    ├── milo/
+    ├── josh/
+    ├── marketing/
+    └── dev/
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) Telegram 路由
 
-## CITATION
+```text
+- @milo → Strategy agent
+- @josh → Business agent
+- @marketing → Marketing agent
+- @dev → Dev agent
+- @all → Broadcast to all agents
+- No tag → Milo default
+```
+
+### 3) 团队调度节奏（源案例）
+
+```text
+Daily:
+- 8:00 AM: Milo morning standup
+- 9:00 AM: Josh metrics
+- 10:00 AM: Marketing ideas
+- 6:00 PM: Milo recap
+
+Weekly:
+- Monday: weekly priorities
+- Friday: weekly metrics report
+```
+
+## 成功标准
+
+- [ ] 多代理角色边界清晰，输出风格稳定。
+- [ ] 共享记忆文件持续更新。
+- [ ] 关键日常任务可按时自动完成。
+
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/multi-agent-team.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-agent-team.md)

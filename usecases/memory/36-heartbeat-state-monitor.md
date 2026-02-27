@@ -1,50 +1,77 @@
 # 心跳状态监控器
 
-> 跟踪检查新鲜度
+> 专门监控“监控任务本身是否新鲜”，防止心跳任务静默失效。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「跟踪检查新鲜度」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 一眼看出哪些检查任务已经过期（stale）。
+- 发现超阈值任务后可立即触发补跑。
+- 给自动化系统加一层“监控监控器”的保险。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `filesystem` | 读取 `heartbeat-state.json` | OpenClaw Built-in |
+| 内置 | `system` | 时间差计算与阈值判断 | OpenClaw Built-in |
 
-- `filesystem`
-- `system`
-- `heartbeat`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「心跳状态监控器」。
-
-任务目标：跟踪检查新鲜度
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：filesystem、system、heartbeat）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的心跳状态检查助手。
+请读取 heartbeat-state.json，计算每个检查项距现在的分钟数，
+按 OK / STALE 输出状态清单。
+本轮只输出报告，不触发补跑。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 状态文件格式
 
-## CITATION
+```json
+{
+  "lastChecks": {
+    "email": "2026-02-19T08:00:00Z",
+    "calendar": "2026-02-19T08:30:00Z"
+  }
+}
+```
+
+### 2) 核心检查逻辑
+
+```javascript
+function checkFreshness() {
+  const state = JSON.parse(fs.readFileSync('heartbeat-state.json'));
+  const now = Date.now();
+
+  Object.entries(state.lastChecks).forEach(([check, time]) => {
+    const age = (now - new Date(time)) / 1000 / 60;
+    const status = age > 60 ? 'STALE' : 'OK';
+    console.log(`${status}: ${check} - ${age} min ago`);
+  });
+}
+```
+
+### 3) OpenClaw 执行提示词（自动版）
+
+```markdown
+## Heartbeat State Monitor
+
+Every heartbeat:
+1. Read heartbeat-state.json
+2. Calculate staleness for each check
+3. Display human-readable status
+4. Alert if any check > threshold
+5. Trigger overdue checks immediately
+```
+
+## 成功标准
+
+- [ ] 所有检查项都有新鲜度状态。
+- [ ] 过期项能被及时告警。
+- [ ] 告警后可触发补跑，不长期积压。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/36-heartbeat-state-monitor.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/36-heartbeat-state-monitor.md)
