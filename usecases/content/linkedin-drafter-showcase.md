@@ -1,64 +1,98 @@
 # LinkedIn 周更草稿助手
 
-> 按你的口吻自动生成周更内容草稿，减少写作启动成本。
+> 每周自动起草 2-3 条 LinkedIn 草稿，先入库待审，不自动发布。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「按你的口吻自动生成周更内容草稿，减少写作启动成本。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 从你最近一周真实工作记录里提炼“可发内容”，降低起稿门槛。
+- 固定节奏产出 2-3 条草稿，解决“有内容但总是拖着不发”。
+- 先草稿后人工审核，保证风格和质量底线。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `cron.jobs` | 定时触发每周草稿任务 | OpenClaw Built-in |
+| 内置 | `memory_search` | 从最近活动中提取素材 | OpenClaw Built-in |
+| 内置 | `notion` / `airtable` / `sheets` | 保存草稿数据库 | OpenClaw Built-in |
+| 内置 | `todoist`（可选） | 提取已完成任务作为素材 | OpenClaw Built-in |
 
-- `cron.jobs`
-- `VOICE.md`
-- `Notion`
-- `Todoist`
-- `GitHub`
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+先执行一次手动草稿：
+
+```text
+你是我的 OpenClaw 助手。
+请帮我做“LinkedIn 周更草稿助手”的预演版：
+1. 回顾我最近 7 天工作活动。
+2. 提炼 2 条可发主题。
+3. 生成 2 条 150-300 词草稿（不加 emoji，不加 em dash）。
+4. 本轮只输出草稿，不写入数据库、不发布。
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) Cron 配置
+
+```json
+{
+  "name": "linkedin-drafter",
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 10 * * 2",
+    "tz": "UTC"
+  },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Draft 2-3 LinkedIn posts. Review my recent activity from [YOUR_ACTIVITY_SOURCE]. Identify post-worthy insights. Draft in my voice: direct, no fluff, professional but human, no em dashes/emojis. Rotate topics: [YOUR_TOPIC_1], [YOUR_TOPIC_2], [YOUR_TOPIC_3]. Save drafts to [YOUR_DATABASE] with status 'Draft'."
+  },
+  "sessionTarget": "isolated"
+}
+```
+
+### 2) 本地测试命令
 
 ```bash
 openclaw cron run linkedin-drafter
 ```
 
-### 调度信息
-
-- 0 10 * * 2
-
-## 可复制提示词
+### 3) OpenClaw 执行提示词（自动版）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「LinkedIn 周更草稿助手」。
+你是我的 OpenClaw 助手，请执行“LinkedIn Drafter”。
 
-任务目标：按你的口吻自动生成周更内容草稿，减少写作启动成本。
+每周二 10:00 UTC：
+1. 从 [YOUR_ACTIVITY_SOURCE] 回顾最近 7 天活动。
+2. 识别值得分享的真实洞察。
+3. 生成 2-3 条 LinkedIn 草稿（150-300 words）。
+4. 轮换 [YOUR_TOPIC_1/2/3]。
+5. 将草稿写入 [YOUR_DATABASE]，状态为 Draft。
 
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：cron.jobs、VOICE.md、Notion、Todoist、GitHub、cron）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+写作规则：
+- 直接、专业、少废话
+- no em dashes, no emojis
+- 第一行要有 hook
+- 不写 hashtags
+- 不写“engage with this post”式句子
 ```
+
+### 4) Notion 表结构（示例）
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| Title | Title | 草稿主题 |
+| Content | Text | 正文草稿 |
+| Status | Select | Draft / Ready / Posted |
+| Topic | Select | 主题分类 |
+| Created | Date | 创建日期 |
+| Posted | Date | 实际发布时间 |
 
 ## 使用建议
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- 活动来源尽量真实（任务、提交、会议），草稿质量会明显更高。
+- 默认不要自动发布，保留人工审核缓冲。
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [showcases/linkedin-drafter.md](https://github.com/digitalknk/openclaw-runbook/blob/main/showcases/linkedin-drafter.md)

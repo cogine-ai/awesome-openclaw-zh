@@ -1,53 +1,71 @@
 # 加密幸运饼干
 
-> 区块链上的交易智慧
+> 生成“交易智慧短句”并做成可交互网页，再铭刻上链长期保存。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「区块链上的交易智慧」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 每周批量产出可分享的加密短句，用于社区互动和传播。
+- 自动生成带随机展示逻辑的网页，提高内容可玩性。
+- 上链后可形成长期可访问的 `.web3` 内容资产。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `bitcoin` | 提交链上铭文 | OpenClaw Built-in |
+| 内置 | `filesystem` | 管理 fortune 文案和页面文件 | OpenClaw Built-in |
 
-- `bitcoin`
-- `filesystem`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+先只做文案和页面，不上链：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「加密幸运饼干」。
-
-任务目标：区块链上的交易智慧
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：bitcoin、filesystem）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“加密幸运饼干”的预演版：
+1. 生成 10 条加密主题短句（交易、安全、市场心理）。
+2. 生成带随机展示逻辑的 HTML 页面。
+3. 本轮不要执行铭文，只输出页面内容和预估流程。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 文案库示例
 
-## 使用建议
+```javascript
+const fortunes = [
+  "HODL through the dip, profit comes to those who wait",
+  "Fear and greed index whispers: check before you trade",
+  "Your private keys are your true wallet, guard them well"
+];
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) OpenClaw 执行提示词（自动版）
 
-## CITATION
+```text
+你是我的 OpenClaw 助手，请执行“Crypto Fortune Cookie”。
+请使用内置 Skills：bitcoin、filesystem。
+
+每周执行：
+1. 生成 10 条新的 crypto fortunes。
+2. 组合 fortune 选择逻辑。
+3. 生成交互式 HTML 页面。
+4. 铭刻到 Bitcoin。
+5. 将域名分享到社区。
+
+Fortune themes:
+- Trading wisdom
+- Security reminders
+- Market psychology
+- Technical analysis
+```
+
+## 成功标准
+
+- [ ] 10 new fortunes weekly
+- [ ] Page interaction tracked
+- [ ] Community sharing
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/46-crypto-fortune-cookie.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/46-crypto-fortune-cookie.md)

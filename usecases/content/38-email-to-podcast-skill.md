@@ -1,57 +1,89 @@
-# 邮件转播客技能
+# 邮件转播客 Skill
 
-> 邮件音频转换的可重用技能
+> 把“任意邮件转音频”做成可复用 Skill，一次配置，多场景复用。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「邮件音频转换的可重用技能」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把邮件转音频能力模块化，不再每个场景重复开发。
+- 同一个 Skill 可复用在医学通讯、新闻摘要、工作邮件等场景。
+- 支持通过配置切换语音、长度、输出格式。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部 | [`email`](https://clawhub.ai/skills/agentmail-wrapper) | 读取邮件内容 | ClawHub |
+| 外部 | [`elevenlabs`](https://clawhub.ai/skills/beware-piper-tts) | 文本转语音 | ClawHub |
+| 内置 | `ffmpeg` | 音频处理与合并 | OpenClaw Built-in |
 
-- `email`
-- `elevenlabs`
-- `ffmpeg`
-- `Gmail`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
+先把结构搭起来，验证配置可读：
+
+```text
+你是我的 OpenClaw 助手。
+请帮我做“Email-to-Podcast Skill”的预演版：
+1. 创建 skills/email-podcast 目录结构。
+2. 生成 SKILL.md 和 config.json 初版。
+3. 用一封测试邮件跑通 process 流程（仅输出中间结果，不发音频）。
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) Skill 目录结构
+
+```text
+skills/
+└── email-podcast/
+    ├── SKILL.md
+    ├── index.js
+    └── config.json
+```
+
+### 2) SKILL.md 模板
+
+```markdown
+# Email to Podcast
+
+Converts emails to audio podcasts.
+
+## Configuration
+{
+  "voice": "Antoni",
+  "maxLength": 4000,
+  "outputFormat": "mp3"
+}
+
+## Usage
+email-podcast.process(email)
+```
+
+### 3) 安装命令
 
 ```bash
 npx molthub@latest install email-podcast
 ```
 
-## 可复制提示词
+### 4) OpenClaw 执行提示词（自动版）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「邮件转播客技能」。
+你是我的 OpenClaw 助手，请执行“Email-to-Podcast Skill”。
+请使用 Skills：email、elevenlabs、ffmpeg。
 
-任务目标：邮件音频转换的可重用技能
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：email、elevenlabs、ffmpeg、Gmail、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+执行目标：
+1. 把邮件读取与解析封装到 email-podcast Skill。
+2. 支持配置 voice / maxLength / outputFormat。
+3. 当文本超过 maxLength 时自动分片处理。
+4. 输出可复用接口：email-podcast.process(email)。
 ```
 
-## 使用建议
+## 成功标准
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- [ ] Reusable across projects
+- [ ] Configurable per use case
+- [ ] Published to ClawdHub
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/38-email-to-podcast-skill.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/38-email-to-podcast-skill.md)

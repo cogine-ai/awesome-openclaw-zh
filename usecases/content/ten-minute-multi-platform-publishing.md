@@ -1,77 +1,96 @@
 # 10分钟全平台内容发布
 
-> 把选题、成稿、分发整合为一个快节奏发布流程。
+> 把“选题→写作→分发”压缩到 10 分钟级别，同时保留人工审核关口。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「把选题、成稿、分发整合为一个快节奏发布流程。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 固定每天推送选题，降低“今天写什么”的决策成本。
+- 快速生成初稿并进入发布链路，显著缩短单篇产出时间。
+- 覆盖多平台分发流程，但保留人工审核避免自动误发。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `cron` | 定时推送选题与日志任务 | OpenClaw Built-in |
+| 内置 | `search` 能力 | 搜索 24 小时热点选题 | OpenClaw Built-in |
+| 内置 | `telegram` | 推送每日选题 | OpenClaw Built-in |
+| 外部 | 飞书 API / 字流 API | 草稿承载与多平台分发 | 第三方工具链 |
 
-- `Telegram`
-- `Notion`
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
-
-```bash
-openclaw ask "搜索过去24小时AI编程领域的热点，生成5个选题"
-openclaw ziliu publish "$draft_id" \
-curl -fsSL https://openclaw.example/install.sh | bash  # 替换为实际安装地址
-openclaw config set api.key "your-api-key"
-openclaw config set model "claude-opus-4"
-crontab -e
-openclaw run daily-topic-push
-openclaw ask "写一篇关于AI编程的文章"
-openclaw run publish-all "article-id"
-```
-
-### 调度信息
-
-- 0 8 * * 1
-- 每天
-- 定时
-- 每周
-- 每日
-
-## 可复制提示词
+先验证“选题→初稿”两步：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「10分钟全平台内容发布」。
-
-任务目标：把选题、成稿、分发整合为一个快节奏发布流程。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Notion、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“10分钟全平台内容发布”的预演版：
+1. 搜索过去24小时 AI 编程热点，生成 5 个选题。
+2. 我选 1 个后，5 分钟内生成一版初稿。
+3. 输出可发布版本与待核实点。
+4. 本轮不要自动发布。
 ```
+
+## 稳定自动版（可长期运行）
+
+### 1) 定时任务
+
+```bash
+# 每天早上9点推送选题
+0 9 * * * /usr/local/bin/openclaw run daily-topic-push
+
+# 每天晚上11点生成工作日志
+0 23 * * * /usr/local/bin/openclaw run daily-summary
+
+# 每周一早上8点生成周报
+0 8 * * 1 /usr/local/bin/openclaw run weekly-report
+```
+
+### 2) 选题推送脚本片段
+
+```bash
+# daily-topic-push.sh
+
+# 1. 搜索热点
+openclaw ask "搜索过去24小时AI编程领域的热点，生成5个选题"
+
+# 2. 推送到Telegram
+openclaw telegram send "今日选题推荐：\n\n[选题内容]"
+
+# 3. 记录日志
+echo "$(date): 选题推送完成" >> /var/log/openclaw/daily-push.log
+```
+
+### 3) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“10分钟全平台内容发布”。
+
+每日流程：
+1. 09:00 推送 5 个热点选题。
+2. 我选择题目后，生成初稿。
+3. 按固定风格规范优化标题、结构和结尾。
+4. 推送到飞书文档待审核。
+5. 审核通过后再进入多平台发布。
+
+铁规则：
+- 所有发布必须人工确认，禁止自动发布。
+- 不确定事实必须标注“待核实”。
+```
+
+## 成功标准
+
+| 指标 | 使用前 | 使用后 | 提升 |
+|---|---:|---:|---:|
+| 单篇耗时 | 3小时 | 10分钟 | 94.4% |
+| 每周产出 | 2-3篇 | 7篇 | 200%+ |
+| 平台覆盖 | 3-4个 | 14个 | 300%+ |
 
 ## 风险与边界
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
+- 所有内容发布前必须人工确认。
+- 涉及事实和数据时，若来源不确定必须标注待核实。
 
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/15-solo-entrepreneur-cases.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/15-solo-entrepreneur-cases.md)

@@ -1,84 +1,100 @@
 # 多语言翻译助手
 
-> 支持文档、对话、批量翻译的多语种工作流。
+> 覆盖单文档翻译、实时会议翻译和批量翻译，保持术语统一与格式保留。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「支持文档、对话、批量翻译的多语种工作流。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把“文档翻译 + 实时沟通 + 批量处理”放进一套统一流程。
+- 自动维护术语库，减少同一术语在不同文档里来回变形。
+- 支持格式保留与并行任务，适合跨国团队协作场景。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部 | `translator` | 通用多语言翻译 | ClawHub |
+| 外部 | `straker-verify` | 专业翻译与质量保证 | ClawHub |
+| 外部 | `japanese-translation-and-tutor` | 日英翻译与学习辅助 | ClawHub |
+| 外部 | `lyric-translator` | 歌词翻译场景 | ClawHub |
+| 外部 | `tamil-whatsapp` | WhatsApp 泰米尔语处理 | ClawHub |
+| 外部 | `language-learning` | 语言学习辅助 | ClawHub |
 
-- `test_output/chapters/architecture.png`
-- `WhatsApp`
-- `Discord`
-- `Notion`
-- `GitHub`
-- `heartbeat`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
-
-```bash
-git clone https://github.com/xianyu110/my-awesome-skills.git
-npx skills add https://github.com/xianyu110/my-awesome-skills --skill bananapro-image-gen
-bash test_chapters.sh
-OpenClaw ✓          ChatGPT ✗
-OpenClaw + DeepSeek: 5-30元/月
-npx clawhub@latest install fal-ai
-npx clawhub@latest install nvidia-image-gen
-npx clawhub@latest install pollinations
-npx clawhub@latest install venice-ai
-npx clawhub@latest install recraft
-openclaw config set banana.api-key "YOUR_API_KEY"
-openclaw config set gemini.api-key "YOUR_GEMINI_KEY"
-```
-
-### 调度信息
-
-- 0:30
-- 2:00
-- 5:00
-- 7:00
-- 12:00
-- 14:00
-- 15:00
-- 10:00
-- 10:02
-- 10:05
-
-## 可复制提示词
+先跑一个“单文档翻译 + 术语对照”：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「多语言翻译助手」。
-
-任务目标：支持文档、对话、批量翻译的多语种工作流。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：test_output/chapters/architecture.png、WhatsApp、Discord、Notion、GitHub、heartbeat）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“多语言翻译助手”的预演版：
+1. 把一份中文技术文档翻译成英文。
+2. 输出术语对照表（中文/英文/说明）。
+3. 评估准确性、流畅度、专业性。
+4. 本轮不做批量任务，只验证单文档质量。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 安装示例
 
-## CITATION
+```bash
+npx clawhub@latest install translator
+npx clawhub@latest install straker-verify
+npx clawhub@latest install japanese-translation-and-tutor
+npx clawhub@latest install lyric-translator
+npx clawhub@latest install tamil-whatsapp
+npx clawhub@latest install language-learning
+```
+
+### 2) 配置方法
+
+```bash
+# 1. 配置翻译引擎
+clawhub install translator
+openclaw config set translate.engine "deepl"
+openclaw config set translate.quality "high"
+
+# 2. 配置术语库
+openclaw config set translate.glossary "团队术语库.csv"
+openclaw config set translate.auto-update-glossary true
+
+# 3. 配置批量翻译
+openclaw config set translate.batch-size 10
+openclaw config set translate.parallel-tasks 3
+
+# 4. 配置格式保留
+openclaw config set translate.keep-format true
+openclaw config set translate.keep-links true
+```
+
+### 3) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“多语言翻译助手”。
+请使用 translator 相关 Skills。
+
+执行能力要求：
+1. 单文档翻译：保留格式并输出术语对照表。
+2. 实时会议翻译：中英双向，记录完整翻译日志。
+3. 批量翻译：支持多语言并行处理与进度汇报。
+4. 每次翻译后更新术语库。
+
+质量要求：
+- 准确翻译
+- 术语统一
+- 保持格式
+- 支持批量处理
+```
+
+## 成功标准
+
+| 任务类型 | 使用前 | 使用后 | 节省时间 | 提升比例 |
+|---|---:|---:|---:|---:|
+| 单文档翻译 | 120分钟 | 2分钟 | 118分钟 | 98.3% |
+| 实时翻译 | 人工翻译 | 自动 | 100% | 100% |
+| 批量翻译 | 2,400分钟 | 12.5分钟 | 2,387.5分钟 | 99.5% |
+| 平均 | 2,520分钟 | 14.5分钟 | 2,505.5分钟 | 99.4% |
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/14-creative-applications.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/14-creative-applications.md)

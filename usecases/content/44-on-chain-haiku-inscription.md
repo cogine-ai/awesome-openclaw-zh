@@ -1,52 +1,72 @@
 # 链上俳句铭文
 
-> 比特币上的加密诗歌
+> 夜间生成加密主题俳句并铭刻上链，形成可长期保留的创意页面。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「比特币上的加密诗歌」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把创意内容（俳句）和区块链永久存储结合，做成可分享作品。
+- 用固定约束（5-7-5、主题限定、页面大小）保证输出稳定。
+- 早上可直接查看铭文哈希和页面结果。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `bitcoin` | 发起铭文流程 | OpenClaw Built-in |
+| 内置 | `filesystem` | 保存俳句与页面文件 | OpenClaw Built-in |
 
-- `bitcoin`
-- `filesystem`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+先只生成内容，不上链：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「链上俳句铭文」。
-
-任务目标：比特币上的加密诗歌
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：bitcoin、filesystem）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“链上俳句铭文”的预演版：
+1. 生成 3-5 条加密主题俳句。
+2. 每条遵循 5-7-5 音节结构。
+3. 组装成一个 HTML 页面（<10KB）。
+4. 本轮只输出页面内容和上链计划，不执行 inscription。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 俳句素材示例
 
-## 使用建议
+```javascript
+const haikus = [
+  "Private keys sleep deep",
+  "Immutable blocks rise high",
+  "Trustless code runs true"
+];
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) OpenClaw 执行提示词（自动版）
 
-## CITATION
+```text
+你是我的 OpenClaw 助手，请执行“On-Chain Haiku Inscription”。
+请使用内置 Skills：bitcoin、filesystem。
+
+夜间任务流程：
+1. 生成 3-5 条 crypto-themed haikus。
+2. 组装为 HTML 页面。
+3. 通过 clawdbot 发起比特币铭文。
+4. 认领 .web3 域名。
+5. 记录 transaction hash。
+6. 将结果写入晨报。
+
+约束：
+- Traditional 5-7-5 syllables
+- Crypto/blockchain themes
+- Page <10KB
+```
+
+## 成功标准
+
+- [ ] 1 haiku set per week
+- [ ] All inscribed successfully
+- [ ] Domains registered
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/44-on-chain-haiku-inscription.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/44-on-chain-haiku-inscription.md)

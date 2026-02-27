@@ -1,61 +1,148 @@
 # 天气晨报
 
-> 每天上午 9 点通过 Telegram 发送天气
+> 每天 09:00 自动推送天气到 Telegram，包含早中晚夜四时段和异常天气提醒。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「每天上午 9 点通过 Telegram 发送天气」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 固定时间收到天气信息，不用每天手动打开天气 App。
+- 自动输出体感温度、湿度、风速等关键字段。
+- 极端天气自动提醒，通勤前更容易做出行决策。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `weather` | 获取天气预报数据 | OpenClaw Built-in |
+| 内置 | `telegram` | 推送晨报消息 | OpenClaw Built-in |
+| 内置 | `cron` | 每日定时执行 | OpenClaw Built-in |
 
-- `weather`
-- `telegram`
-- `cron`
-- `SKILL.md`
-- `Telegram`
+## 快速体验版（先跑一轮）
 
-### 调度信息
-
-- 9:00
-- 09:00
-
-## 可复制提示词
+先执行一次即时预报：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「天气晨报」。
-
-任务目标：每天上午 9 点通过 Telegram 发送天气
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：weather、telegram、cron、SKILL.md、Telegram）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“天气晨报”的预演版：
+1. 按我配置的经纬度拉取今天天气。
+2. 输出早晨/白天/傍晚/夜间四时段天气。
+3. 包含体感温度、湿度、风速。
+4. 本轮只生成消息文本，不发送到 Telegram。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 申请 API Key
 
-## 使用建议
+```text
+1. Visit https://yandex.ru/pogoda/b2b/smarthome
+2. Register for free API key (50 requests/day)
+3. Save key to environment: YANDEX_WEATHER_API_KEY
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 位置配置
 
-## CITATION
+```javascript
+const CONFIG = {
+  lat: 51.53,      // Your latitude
+  lon: 46.03,      // Your longitude
+  lang: "ru_RU",   // Output language
+  timezone: "Europe/Moscow"
+};
+```
+
+### 3) 解析与格式化示例
+
+```javascript
+const conditionMap = {
+  "clear": "ясно",
+  "overcast": "пасмурно",
+  "cloudy": "облачно",
+  "rain": "дождь",
+  "snow": "снег",
+  "partly-cloudy": "переменная облачность"
+};
+
+function formatWeather(data) {
+  const parts = data.forecasts[0].parts;
+  return `
+🌤️ Погода на сегодня:
+
+🌅 Утро: ${parts.morning.temp_avg}°C (${conditionMap[parts.morning.condition]})
+🌞 День: ${parts.day.temp_avg}°C (ощущается ${parts.day.feels_like}°C)
+🌆 Вечер: ${parts.evening.temp_avg}°C
+🌙 Ночь: ${parts.night.temp_avg}°C
+
+💧 Влажность: ${parts.day.humidity}%
+💨 Ветер: ${parts.day.wind_speed} м/с
+  `.trim();
+}
+```
+
+### 4) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“Weather Morning Report”。
+请使用内置 Skills：weather、telegram、cron。
+
+每天本地时间 09:00 执行：
+1. 使用配置经纬度调用 Yandex Weather API。
+2. 解析 morning/day/evening/night 四时段。
+3. 将 condition code 转换为俄语描述。
+4. 组装带 emoji 的天气消息。
+5. 发送到 Telegram。
+6. 把温度记录到 memory/weather-log.md。
+
+告警条件：
+- Temperature drops below -15°C
+- Wind speed > 15 m/s
+- Precipitation expected during commute hours
+```
+
+### 5) 调度配置
+
+```json
+{
+  "schedule": "0 9 * * *",
+  "timezone": "Europe/Moscow",
+  "task": "weather_report",
+  "action": "fetch_and_send_weather"
+}
+```
+
+### 6) Telegram 消息模板
+
+```markdown
+🌤️ Погода на {{date}}
+
+🌅 Утро: {{morning_temp}}°C ({{morning_condition}})
+🌞 День: {{day_temp}}°C (ощущается {{feels_like}}°C)
+🌆 Вечер: {{evening_temp}}°C
+🌙 Ночь: {{night_temp}}°C
+
+💧 Влажность: {{humidity}}%
+💨 Ветер: {{wind_speed}} м/с
+
+{{#alert}}
+⚠️ {{alert_message}}
+{{/alert}}
+```
+
+## 成功标准
+
+- [ ] Delivered at 09:00 ± 2 minutes
+- [ ] All 4 time periods included
+- [ ] Alerts sent for extreme weather
+- [ ] 30-day temperature trend available
+
+## API 限额
+
+| Tier | Requests/Day | Cost |
+|---|---:|---|
+| Free | 50 | $0 |
+| Standard | 1000 | $10/month |
+| Business | Unlimited | $50/month |
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/03-weather-morning-report.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/03-weather-morning-report.md)
