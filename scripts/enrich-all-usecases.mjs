@@ -4,10 +4,22 @@ import path from 'node:path';
 
 const root = process.cwd();
 const indexPath = path.join(root, 'resources', 'usecases-index.json');
+const templatePath = path.join(root, 'usecases', 'TEMPLATE.md');
 const cacheDir = path.join(root, 'resources', 'source-cache');
 fs.mkdirSync(cacheDir, { recursive: true });
 
+if (!fs.existsSync(indexPath)) {
+  console.error('Missing resources/usecases-index.json');
+  process.exit(1);
+}
+
 const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+const templateText = fs.existsSync(templatePath) ? fs.readFileSync(templatePath, 'utf8') : '';
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
+const LLM_ENABLED = OPENAI_API_KEY.length > 0 && process.env.NO_LLM !== '1';
+const MAX_SOURCE_CHARS = Number(process.env.MAX_SOURCE_CHARS || 14000);
 
 function encodePath(p) {
   return p.split('/').map(encodeURIComponent).join('/');
@@ -20,15 +32,12 @@ function cacheFileName(repo, sourcePath) {
 
 async function fetchSource(repo, sourcePath) {
   const c = cacheFileName(repo, sourcePath);
-  if (fs.existsSync(c)) {
-    return { ok: true, text: fs.readFileSync(c, 'utf8') };
-  }
+  if (fs.existsSync(c)) return { ok: true, text: fs.readFileSync(c, 'utf8') };
 
   const url = `https://raw.githubusercontent.com/${repo}/main/${encodePath(sourcePath)}`;
   const res = await fetch(url);
-  if (!res.ok) {
-    return { ok: false, text: '', error: `${res.status} ${res.statusText}` };
-  }
+  if (!res.ok) return { ok: false, text: '', error: `${res.status} ${res.statusText}` };
+
   const text = await res.text();
   fs.writeFileSync(c, text, 'utf8');
   return { ok: true, text };
@@ -36,6 +45,10 @@ async function fetchSource(repo, sourcePath) {
 
 function uniq(arr) {
   return [...new Set(arr.filter(Boolean))];
+}
+
+function cleanLine(s) {
+  return s.replace(/^[-*]\s+/, '').replace(/^\d+\.\s+/, '').trim();
 }
 
 function extractCommands(text) {
@@ -56,237 +69,372 @@ function extractCommands(text) {
       }
       continue;
     }
-
     if (!inFence) continue;
 
-    const cmdLike = /^(openclaw|npm|pnpm|yarn|npx|curl|wget|bash|sh|python|node|docker|git|tailscale|crontab|ssh|scp|export)\b/i.test(line);
     const shellLang = /^(bash|sh|shell|zsh|console|terminal)?$/i.test(fenceLang);
-    const noisy = /[：。！？【】《》“”]/.test(line) || /^openclaw[:：]/i.test(line);
-    if (cmdLike && shellLang && !noisy) {
-      out.push(line);
-    }
+    if (!shellLang) continue;
+
+    const cmdLike = /^(openclaw|npm|pnpm|yarn|npx|curl|wget|bash|sh|python|node|docker|git|tailscale|crontab|ssh|scp|export|jq|awk|sed|find|rg)\b/i.test(line);
+    const noisy = /[：。！？【】《》“”]|^openclaw[:：]/.test(line);
+    if (!cmdLike || noisy) continue;
+
+    // Keep exact command line but avoid broken JSON snippets or pure braces.
+    if (/^[{}\[\]",']+$/.test(line)) continue;
+    out.push(line);
   }
 
-  // Also catch inline command patterns outside fences
-  for (const m of text.matchAll(/`([^`\n]{3,120})`/g)) {
+  for (const m of text.matchAll(/`([^`\n]{3,140})`/g)) {
     const v = m[1].trim();
     if (/^(openclaw|npm|pnpm|npx|docker|git|tailscale|crontab|ssh)\b/i.test(v) && !/[：。！？【】《》“”]/.test(v)) {
       out.push(v);
     }
   }
 
-  return uniq(out).slice(0, 10);
+  return uniq(out).slice(0, 12);
 }
 
 function extractSkillsAndTools(text) {
   const out = [];
 
-  // backtick tokens often represent skill names / tool names
   for (const m of text.matchAll(/`([^`\n]{2,60})`/g)) {
     const v = m[1].trim();
-    if (/^[a-zA-Z0-9_./:-]+$/.test(v) && v.length <= 40) {
-      out.push(v);
-    }
+    if (/^[a-zA-Z0-9_./:-]+$/.test(v) && v.length <= 40) out.push(v);
   }
 
-  // links with skill-like names
-  const known = [
+  const keywords = [
     'Telegram', 'WhatsApp', 'Discord', 'Slack', 'Notion', 'Todoist', 'n8n',
     'Google Calendar', 'Gmail', 'GitHub', 'Web Search', 'filesystem',
-    'cron', 'heartbeat', 'OpenClaw', 'Tailscale', 'WireGuard', 'ZeroTier'
+    'cron', 'heartbeat', 'OpenClaw', 'Tailscale', 'WireGuard', 'ZeroTier',
+    'RSS', 'MCP'
   ];
-  for (const k of known) {
+
+  for (const k of keywords) {
     const re = new RegExp(k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
     if (re.test(text)) out.push(k);
   }
 
-  // remove obvious noise
   const blacklist = new Set(['text', 'json', 'yaml', 'md', 'README', 'SOUL.md', 'AGENTS.md']);
-  const filtered = uniq(out).filter((x) => !blacklist.has(x));
-
-  return filtered.slice(0, 12);
+  return uniq(out).filter((x) => !blacklist.has(x)).slice(0, 14);
 }
 
 function extractSchedule(text) {
   const out = [];
-
-  // cron-like
-  for (const m of text.matchAll(/\b(?:\d+|\*)\s+(?:\d+|\*|\*\/\d+)\s+\*\s+\*\s+(?:\d+|\*|[0-7]-[0-7])\b/g)) {
-    out.push(m[0]);
-  }
-
-  // times
+  for (const m of text.matchAll(/\b(?:\d+|\*)\s+(?:\d+|\*|\*\/\d+)\s+\*\s+\*\s+(?:\d+|\*|[0-7]-[0-7])\b/g)) out.push(m[0]);
   for (const m of text.matchAll(/\b\d{1,2}:\d{2}\b/g)) out.push(m[0]);
-
-  // CN time words
   for (const m of text.matchAll(/每天|每周|每小时|夜间|晨间|定时|每日/g)) out.push(m[0]);
-
-  return uniq(out).slice(0, 8);
+  return uniq(out).slice(0, 10);
 }
 
-function extractRiskHints(text) {
+function extractRiskLines(text) {
   const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
   const sections = [];
-  let currentHeading = '__intro__';
+  let heading = '__intro__';
   let bucket = [];
   for (const l of lines) {
     if (/^#{1,6}\s+/.test(l)) {
-      sections.push({ heading: currentHeading, lines: bucket });
-      currentHeading = l.replace(/^#{1,6}\s+/, '').trim();
+      sections.push({ heading, lines: bucket });
+      heading = l.replace(/^#{1,6}\s+/, '').trim();
       bucket = [];
     } else {
       bucket.push(l);
     }
   }
-  sections.push({ heading: currentHeading, lines: bucket });
+  sections.push({ heading, lines: bucket });
 
-  const riskSections = sections.filter((s) => /(risk|security|安全|风险|注意|边界|troubleshooting|warning|guardrail)/i.test(s.heading));
-  const targetLines = (riskSections.length ? riskSections.flatMap((s) => s.lines) : lines);
+  const riskSections = sections.filter((s) => /(risk|security|安全|风险|注意|边界|warning|troubleshooting|guardrail)/i.test(s.heading));
+  const target = riskSections.length ? riskSections.flatMap((s) => s.lines) : lines;
+
   const out = [];
-  const re = /(risk|security|安全|权限|边界|warning|注意|confirm|确认|漏洞|泄露|密码|secret|credential|key|token|ssh|acl|least|minimal)/i;
-  for (const l of targetLines) {
-    if (re.test(l) && l.length >= 8 && l.length <= 180 && !l.startsWith('#') && !l.startsWith('|') && !l.startsWith('```')) {
-      out.push(l.replace(/^[-*]\s+/, '').replace(/^\d+\.\s+/, ''));
-    }
-    if (out.length >= 5) break;
+  const re = /(risk|security|安全|权限|边界|warning|注意|confirm|确认|漏洞|泄露|密码|secret|credential|key|token|ssh|acl|least|minimal|backup|restore)/i;
+  for (const l of target) {
+    if (!re.test(l)) continue;
+    if (l.startsWith('#') || l.startsWith('|') || l.startsWith('```')) continue;
+    const c = cleanLine(l);
+    if (c.length < 8 || c.length > 180) continue;
+    out.push(c);
+    if (out.length >= 8) break;
   }
   return uniq(out);
 }
 
-function summarizeRiskChinese(risks) {
-  const text = risks.join(' ');
+function extractBenefitLines(text) {
+  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
   const out = [];
-  if (/confirm|确认/i.test(text)) out.push('涉及高风险动作时需要二次确认后再执行。');
-  if (/password|secret|credential|token|key|apikey|密钥|凭证|密码/i.test(text)) out.push('密钥和凭证不要明文写入提示词或仓库文件。');
-  if (/ssh/i.test(text)) out.push('远程访问建议使用 SSH Key，并避免口令直连。');
-  if (/acl|permission|least|minimal|权限|最小/i.test(text)) out.push('权限按最小授权原则配置，先收敛再放开。');
-  if (/prompt|injection|注入/i.test(text)) out.push('接收外部内容时要防提示词注入，先校验再执行。');
-  if (/backup|restore|备份/i.test(text)) out.push('执行关键变更前先备份，便于回滚。');
-  if (out.length === 0 && risks.length > 0) out.push('原文提到需先做安全检查，并在测试环境验证。');
-  if (out.length === 0) out.push('原文未单列风险项，默认使用最小权限和二次确认。');
+  const re = /(pain|problem|benefit|value|效率|提升|节省|场景|收益|目标|what it does|introduction|overview)/i;
+  for (const l of lines) {
+    if (l.startsWith('#') || l.startsWith('|') || l.startsWith('```')) continue;
+    if (!re.test(l)) continue;
+    const c = cleanLine(l);
+    if (c.length >= 12 && c.length <= 180) out.push(c);
+    if (out.length >= 4) break;
+  }
+  return uniq(out);
+}
+
+function extractActionLines(text) {
+  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
+  const out = [];
+  const re = /(setup|quick start|how to|步骤|配置|workflow|执行|daily|weekly|monitor|schedule|集成|自动)/i;
+  for (const l of lines) {
+    if (l.startsWith('#') || l.startsWith('|') || l.startsWith('```')) continue;
+    const c = cleanLine(l);
+    if (!re.test(c)) continue;
+    if (c.length >= 10 && c.length <= 180) out.push(c);
+    if (out.length >= 6) break;
+  }
+  return uniq(out);
+}
+
+function summarizeBenefitsChinese(item, ev) {
+  const out = [];
+  out.push(`你可以先把「${item.desc}」做成一个可重复执行的小流程。`);
+  if (ev.schedule.length) out.push('这个场景适合加上定时执行，减少手动重复操作。');
+  if (ev.skills.length) out.push('可结合现有技能与渠道，把结果直接推送到你常用入口。');
+  if (ev.actions.length) out.push('建议先跑最小闭环，再按实际反馈逐步扩展。');
+  return uniq(out).slice(0, 3);
+}
+
+function summarizeRisksChinese(lines) {
+  if (!lines.length) return [];
+  const text = lines.join(' ').toLowerCase();
+  const out = [];
+  if (/confirm|确认|destructive|danger/.test(text)) out.push('涉及删除、外发、改密等动作时，先确认再执行。');
+  if (/password|secret|credential|token|key|apikey|密钥|凭证|密码/.test(text)) out.push('密钥与凭证不要放在公开文本或提示词中。');
+  if (/ssh|tailscale|wireguard|zerotier|acl|permission|least|minimal|权限|最小/.test(text)) out.push('远程访问和权限建议按最小授权配置。');
+  if (/backup|restore|回滚|rollback/.test(text)) out.push('关键变更前先备份，确保可回滚。');
+  if (!out.length) out.push('先在测试环境验证，再应用到生产或长期任务。');
   return uniq(out).slice(0, 4);
 }
 
-function chineseUsageTips(desc, hasCmd, hasSkills) {
-  const tips = [
-    '先手动跑通一次，再开自动化。',
-    '先用一个渠道验证结果，再扩到多个渠道。',
-    '遇到高风险动作（删除/外发/改密）先要求确认。'
+function buildPrompt(item, sourceText, ev) {
+  const truncated = sourceText.slice(0, MAX_SOURCE_CHARS);
+
+  return {
+    system: `你是严谨的文档编辑。目标是把来源文档改写成中文用户可读案例。
+规则：
+1) 不能编造来源没有的信息。
+2) 不要出现“原文未提供/原文未单列/保持原文/非技术版”等元话术。
+3) 如果某章节没有证据，直接省略该章节。
+4) 命令与skills必须逐字保留，不要改写命令。
+5) 说明性文字全部用中文。`,
+    user: `请根据下面输入生成一个 Markdown 案例页。
+
+【标题】${item.title}
+【一句话目标】${item.desc}
+
+【模板】
+${templateText}
+
+【可用证据(JSON)】
+${JSON.stringify(ev, null, 2)}
+
+【来源原文（截断）】
+${truncated}
+
+【输出要求】
+- 只输出 Markdown 正文，不要解释过程。
+- 必须包含：
+  - 一级标题（案例标题）
+  - 引用式一句话目标
+  - 可复制提示词代码块
+  - CITATION章节
+- 可选章节（有证据才写）：
+  - 这个案例能帮你做什么
+  - 开始前准备
+    - 技能与工具
+    - 命令片段
+    - 调度信息
+  - 风险与边界
+  - 使用建议
+- 提示词不要出现“来自来源案例”等措辞。`,
+  };
+}
+
+async function callOpenAIForMarkdown(item, sourceText, ev) {
+  const { system, user } = buildPrompt(item, sourceText, ev);
+
+  const body = {
+    model: OPENAI_MODEL,
+    input: [
+      { role: 'system', content: system },
+      { role: 'user', content: user }
+    ],
+    temperature: 0.2,
+  };
+
+  const res = await fetch('https://api.openai.com/v1/responses', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(`OpenAI API ${res.status}: ${t.slice(0, 300)}`);
+  }
+
+  const data = await res.json();
+  const text = data.output_text || '';
+  if (!text.trim()) throw new Error('Empty output_text from OpenAI');
+  return text.trim() + '\n';
+}
+
+function formatDeterministic(item, ev) {
+  const sections = [];
+
+  sections.push(`# ${item.title}`);
+  sections.push('');
+  sections.push(`> ${item.desc}`);
+  sections.push('');
+
+  const benefitLines = summarizeBenefitsChinese(item, ev);
+  if (benefitLines.length) {
+    sections.push('## 这个案例能帮你做什么');
+    sections.push('');
+    for (const b of benefitLines) sections.push(`- ${b}`);
+    sections.push('');
+  }
+
+  const hasPrep = ev.skills.length || ev.commands.length || ev.schedule.length;
+  if (hasPrep) {
+    sections.push('## 开始前准备');
+    sections.push('');
+
+    if (ev.skills.length) {
+      sections.push('### 技能与工具');
+      sections.push('');
+      for (const s of ev.skills) sections.push(`- \`${s}\``);
+      sections.push('');
+    }
+
+    if (ev.commands.length) {
+      sections.push('### 命令片段');
+      sections.push('');
+      sections.push('```bash');
+      for (const c of ev.commands) sections.push(c);
+      sections.push('```');
+      sections.push('');
+    }
+
+    if (ev.schedule.length) {
+      sections.push('### 调度信息');
+      sections.push('');
+      for (const s of ev.schedule) sections.push(`- ${s}`);
+      sections.push('');
+    }
+  }
+
+  sections.push('## 可复制提示词');
+  sections.push('');
+
+  const skillHint = ev.skills.length ? ev.skills.slice(0, 6).join('、') : '你已启用的相关技能';
+  sections.push('```text');
+  sections.push(`你是我的 OpenClaw 助手，请帮我完成「${item.title}」。`);
+  sections.push('');
+  sections.push(`任务目标：${item.desc}`);
+  sections.push('');
+  sections.push('请按这个顺序执行：');
+  sections.push('1. 先给出今天可落地的最小版本（3-5步）。');
+  sections.push('2. 直接产出第一版结果，不要只讲思路。');
+  sections.push('3. 如果缺少信息，把问题集中放在最后让我一次补全。');
+  sections.push(`4. 使用我已启用的技能（优先：${skillHint}）。`);
+  sections.push('5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。');
+  sections.push('');
+  sections.push('输出格式：');
+  sections.push('## 今日执行计划');
+  sections.push('## 立即可执行动作');
+  sections.push('## 第一版结果');
+  sections.push('## 我需要补充的信息');
+  sections.push('## 风险提醒');
+  sections.push('```');
+  sections.push('');
+
+  const riskLines = summarizeRisksChinese(ev.risks);
+  if (riskLines.length) {
+    sections.push('## 风险与边界');
+    sections.push('');
+    for (const r of riskLines) sections.push(`- ${r}`);
+    sections.push('');
+  }
+
+  sections.push('## 使用建议');
+  sections.push('');
+  sections.push('- 先手动跑通一次，再设置自动化。');
+  sections.push('- 先用一个渠道验证结果，再扩到更多渠道。');
+  sections.push('- 关键动作建议保留确认步骤。');
+  sections.push('');
+
+  sections.push('## CITATION');
+  sections.push('');
+  sections.push(`- 来源仓库： [${item.sourceRepo}](https://github.com/${item.sourceRepo})`);
+  sections.push(`- 原始条目： [${item.sourcePath}](https://github.com/${item.sourceRepo}/blob/main/${item.sourcePath})`);
+  sections.push('');
+
+  return sections.join('\n');
+}
+
+function postClean(text) {
+  let out = text;
+  const banned = [
+    '（保持原文）', '（非技术版）', '来自来源案例', '来源关键动作',
+    '原文未提供', '原文未单列', '原文未给出', '原文未明确'
   ];
-  if (hasCmd) tips.unshift('如果要执行命令，先在测试环境验证命令输出。');
-  if (hasSkills) tips.unshift('先确认你已安装对应技能，再复制提示词。');
-  return tips.slice(0, 4);
+  for (const b of banned) {
+    out = out.replaceAll(b, '');
+  }
+  // Clean accidental double spaces and duplicate blank lines
+  out = out.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n');
+  return out.trim() + '\n';
 }
 
-function renderCase(item, extracted) {
-  const { commands, skills, schedule, risks } = extracted;
-  const riskSummary = summarizeRiskChinese(risks);
-
-  const cmdBlock = commands.length
-    ? `\n### 原文命令片段（保持原文）\n\n\`\`\`bash\n${commands.join('\n')}\n\`\`\`\n`
-    : `\n### 原文命令片段（保持原文）\n\n- 原文未提供可直接执行的命令片段。\n`;
-
-  const skillsBlock = skills.length
-    ? skills.map((s) => `- \`${s}\``).join('\n')
-    : '- 原文未明确列出固定 skills/tools。';
-
-  const scheduleBlock = schedule.length
-    ? schedule.map((s) => `- ${s}`).join('\n')
-    : '- 原文未给出固定调度频率。';
-
-  const riskBlock = riskSummary.map((r) => `- ${r}`).join('\n');
-
-  const tips = chineseUsageTips(item.desc, commands.length > 0, skills.length > 0)
-    .map((x) => `- ${x}`).join('\n');
-
-  const skillText = skills.length ? skills.slice(0, 6).join('、') : '你已启用的相关技能';
-
-  const prompt = `你是我的 OpenClaw 助手，请帮我完成「${item.title}」。
-
-任务目标：${item.desc}
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：${skillText}）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒`;
-
-  return `# ${item.title}
-
-> ${item.desc}
-
-## 这个案例能帮你做什么
-
-这个案例适合想快速把「${item.desc}」落地的人。
-你可以先跑一个最小版本，确认有效后再加自动化频率。
-
-## 开始前准备
-
-### 原文提到的技能/工具（保持原文）
-${skillsBlock}
-${cmdBlock}
-### 原文提到的调度信息（保持原文）
-${scheduleBlock}
-
-## 推荐使用方式（非技术版）
-
-1. 先把渠道连通（例如 Telegram / 飞书 / 邮箱中的一个）。
-2. 复制提示词先手动跑通，确认结果格式符合你的使用习惯。
-3. 再逐步增加自动化频率，避免一开始任务过多难排错。
-
-## 可复制提示词
-
-\`\`\`text
-${prompt}
-\`\`\`
-
-## 风险与边界
-
-${riskBlock}
-
-## 使用小贴士
-
-${tips}
-
-## CITATION
-
-- 来源仓库： [${item.sourceRepo}](https://github.com/${item.sourceRepo})
-- 原始条目： [${item.sourcePath}](https://github.com/${item.sourceRepo}/blob/main/${item.sourcePath})
-`;
-}
-
-let okCount = 0;
-let failCount = 0;
+let sourceOk = 0;
+let sourceFail = 0;
+let llmOk = 0;
+let llmFail = 0;
 
 for (const item of index) {
   const fetched = await fetchSource(item.sourceRepo, item.sourcePath);
-  const localAbs = path.join(root, item.localPath);
-  fs.mkdirSync(path.dirname(localAbs), { recursive: true });
+  const abs = path.join(root, item.localPath);
+  fs.mkdirSync(path.dirname(abs), { recursive: true });
 
   if (!fetched.ok) {
-    failCount += 1;
-    fs.writeFileSync(localAbs, `# ${item.title}\n\n> ${item.desc}\n\n## CITATION\n\n- 来源仓库： [${item.sourceRepo}](https://github.com/${item.sourceRepo})\n- 原始条目： [${item.sourcePath}](https://github.com/${item.sourceRepo}/blob/main/${item.sourcePath})\n\n> 说明：源文件暂不可拉取（${fetched.error}），为避免幻觉，本页未补充推断性细节。\n`, 'utf8');
+    sourceFail += 1;
+    const fallback = `# ${item.title}\n\n> ${item.desc}\n\n## CITATION\n\n- 来源仓库： [${item.sourceRepo}](https://github.com/${item.sourceRepo})\n- 原始条目： [${item.sourcePath}](https://github.com/${item.sourceRepo}/blob/main/${item.sourcePath})\n`;
+    fs.writeFileSync(abs, fallback, 'utf8');
     continue;
   }
 
-  okCount += 1;
-  const text = fetched.text;
-  const extracted = {
-    commands: extractCommands(text),
-    skills: extractSkillsAndTools(text),
-    schedule: extractSchedule(text),
-    risks: extractRiskHints(text),
+  sourceOk += 1;
+
+  const sourceText = fetched.text;
+  const evidence = {
+    commands: extractCommands(sourceText),
+    skills: extractSkillsAndTools(sourceText),
+    schedule: extractSchedule(sourceText),
+    risks: extractRiskLines(sourceText),
+    benefits: extractBenefitLines(sourceText),
+    actions: extractActionLines(sourceText),
   };
 
-  fs.writeFileSync(localAbs, renderCase(item, extracted), 'utf8');
+  let md = '';
+  if (LLM_ENABLED) {
+    try {
+      md = await callOpenAIForMarkdown(item, sourceText, evidence);
+      llmOk += 1;
+    } catch (err) {
+      llmFail += 1;
+      md = formatDeterministic(item, evidence);
+      console.error(`[LLM-FALLBACK] ${item.localPath}: ${String(err.message || err)}`);
+    }
+  } else {
+    md = formatDeterministic(item, evidence);
+  }
+
+  md = postClean(md);
+  fs.writeFileSync(abs, md, 'utf8');
 }
 
-console.log(`Enriched files. source_ok=${okCount}, source_fail=${failCount}`);
+console.log(`Done. source_ok=${sourceOk}, source_fail=${sourceFail}, llm_enabled=${LLM_ENABLED}, llm_ok=${llmOk}, llm_fail=${llmFail}`);

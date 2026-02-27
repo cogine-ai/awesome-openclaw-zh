@@ -4,12 +4,14 @@
 
 ## 这个案例能帮你做什么
 
-这个案例适合想快速把「从部署到安全收口的一体化流程，适合长期在线运行。」落地的人。
-你可以先跑一个最小版本，确认有效后再加自动化频率。
+- 你可以先把「从部署到安全收口的一体化流程，适合长期在线运行。」做成一个可重复执行的小流程。
+- 这个场景适合加上定时执行，减少手动重复操作。
+- 可结合现有技能与渠道，把结果直接推送到你常用入口。
 
 ## 开始前准备
 
-### 原文提到的技能/工具（保持原文）
+### 技能与工具
+
 - `gateway.trusted_proxies_missing`
 - `fs.credentials_dir.perms_readable`
 - `0.0.0.0`
@@ -22,8 +24,10 @@
 - `agent-prompts.md`
 - `cron`
 - `heartbeat`
+- `OpenClaw`
+- `Tailscale`
 
-### 原文命令片段（保持原文）
+### 命令片段
 
 ```bash
 ssh user@your-vps-ip
@@ -36,16 +40,13 @@ openclaw security audit --deep
 openclaw gateway restart
 git add .gitignore openclaw.json
 git commit -m "config: baseline"
+git commit -am "config: before model update"
+git commit -am "config: switched to Gemini 3 Flash"
 ```
 
-### 原文提到的调度信息（保持原文）
+### 调度信息
+
 - 0 2 * * 0
-
-## 推荐使用方式（非技术版）
-
-1. 先把渠道连通（例如 Telegram / 飞书 / 邮箱中的一个）。
-2. 复制提示词先手动跑通，确认结果格式符合你的使用习惯。
-3. 再逐步增加自动化频率，避免一开始任务过多难排错。
 
 ## 可复制提示词
 
@@ -71,15 +72,15 @@ git commit -m "config: baseline"
 
 ## 风险与边界
 
-- 密钥和凭证不要明文写入提示词或仓库文件。
-- 远程访问建议使用 SSH Key，并避免口令直连。
+- 密钥与凭证不要放在公开文本或提示词中。
+- 远程访问和权限建议按最小授权配置。
+- 关键变更前先备份，确保可回滚。
 
-## 使用小贴士
+## 使用建议
 
-- 先确认你已安装对应技能，再复制提示词。
-- 如果要执行命令，先在测试环境验证命令输出。
-- 先手动跑通一次，再开自动化。
-- 先用一个渠道验证结果，再扩到多个渠道。
+- 先手动跑通一次，再设置自动化。
+- 先用一个渠道验证结果，再扩到更多渠道。
+- 关键动作建议保留确认步骤。
 
 ## CITATION
 
