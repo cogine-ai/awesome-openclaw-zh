@@ -1,63 +1,143 @@
 # GitHub Issue 优先级排序器
 
-> 按紧急程度排序问题
+> 自动扫描多个仓库 Issue，按紧急程度排序并输出晨间处理清单。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「按紧急程度排序问题」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把“无序 issue 堆积”变成“按优先级处理队列”。
+- 自动识别长期无人跟进的 stale issue。
+- 每天固定推送前 10 条关键 issue 给团队快速决策。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部 | [`github`](https://clawhub.ai/skills/git) | 读取仓库 issue 数据 | ClawHub |
+| 内置 | `web_fetch` | 获取 issue 详情 | OpenClaw Built-in |
+| 内置 | `telegram` | 推送优先级日报 | OpenClaw Built-in |
 
-- `github`
-- `web_fetch`
-- `telegram`
-- `config/repos.json`
-- `SKILL.md`
-- `Telegram`
-- `GitHub`
-- `cron`
+## 快速体验版（先跑一轮）
 
-### 调度信息
-
-- 08:00
-
-## 可复制提示词
+先在单仓库演示排序：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「GitHub Issue 优先级排序器」。
-
-任务目标：按紧急程度排序问题
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：github、web_fetch、telegram、config/repos.json、SKILL.md、Telegram）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“GitHub Issue 优先级排序器”的预演版：
+1. 拉取一个仓库的 open issues。
+2. 计算每个 issue 的优先级分数。
+3. 输出 top 10 列表（含原因）。
+4. 标记 7 天以上无活动且无人认领的 issue。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 仓库配置 `config/repos.json`
 
-## 使用建议
+```json
+{
+  "repositories": [
+    {
+      "owner": "myorg",
+      "repo": "backend-api",
+      "priority_labels": ["security", "critical", "bug"],
+      "stale_days": 7
+    },
+    {
+      "owner": "myorg",
+      "repo": "frontend-app",
+      "priority_labels": ["ux", "performance"],
+      "stale_days": 14
+    }
+  ]
+}
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 优先级评分算法
 
-## CITATION
+```javascript
+function calculatePriority(issue) {
+  let score = 0;
+
+  const daysOld = (Date.now() - new Date(issue.created_at)) / 86400000;
+  score += Math.min(daysOld * 2, 20);
+
+  const weights = {
+    "security": 50,
+    "critical": 40,
+    "bug": 20,
+    "enhancement": 10,
+    "documentation": 5
+  };
+  issue.labels.forEach(l => score += weights[l.name] || 0);
+
+  score += issue.comments * 3;
+
+  const urgent = ["crash", "broken", "urgent", "down", "error"];
+  if (urgent.some(w => issue.title.toLowerCase().includes(w))) {
+    score += 30;
+  }
+
+  return score;
+}
+```
+
+### 3) stale issue 检测
+
+```javascript
+async function findStaleIssues(repo, days) {
+  const since = new Date(Date.now() - days * 86400000).toISOString();
+
+  const issues = await github.listIssues({
+    owner: repo.owner,
+    repo: repo.repo,
+    state: "open",
+    since: since
+  });
+
+  return issues.filter(i =>
+    !i.assignee &&
+    new Date(i.updated_at) < new Date(since)
+  );
+}
+```
+
+### 4) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“GitHub Issue Prioritizer”。
+请使用 Skills：github、web_fetch、telegram。
+
+每天 08:00：
+1. 拉取配置仓库的 open issues。
+2. 计算优先级分数。
+3. 识别 stale issue（超过阈值无活动）。
+4. 分类输出：Critical / High / Medium / Low。
+5. 推送 top 10 到 Telegram。
+
+每周日：
+- 输出 stale issue 关闭建议。
+- 统计平均响应时间趋势。
+```
+
+### 5) 调度配置
+
+```json
+{
+  "schedule": "0 8 * * *",
+  "timezone": "America/New_York",
+  "task": "github_issue_digest",
+  "repos": ["backend-api", "frontend-app", "docs"]
+}
+```
+
+## 成功标准
+
+- [ ] Critical issues flagged within 24h of creation
+- [ ] Stale issues identified weekly
+- [ ] Average response time tracked
+- [ ] Human reviews digest within 2 hours
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/07-github-issue-prioritizer.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/07-github-issue-prioritizer.md)

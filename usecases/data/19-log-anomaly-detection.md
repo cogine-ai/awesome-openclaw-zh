@@ -1,54 +1,64 @@
 # 日志异常检测
 
-> 统计错误检测
+> 用统计方式持续盯日志，发现错误激增时快速告警。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「统计错误检测」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 自动比较当前错误率和历史基线，及早发现异常。
+- 区分 warning 与 urgent，减少无效报警。
+- 让夜间问题在影响用户前被提前捕获。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `filesystem` | 读取与分析日志文件 | OpenClaw Built-in |
+| 内置 | `telegram` | 发送异常告警 | OpenClaw Built-in |
 
-- `filesystem`
-- `telegram`
-- `Telegram`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「日志异常检测」。
-
-任务目标：统计错误检测
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：filesystem、telegram、Telegram）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“日志异常检测”的预演版：
+1. 读取最近30分钟日志。
+2. 统计 ERROR 类型频率。
+3. 与近24小时基线比较。
+4. 输出 warning/critical 判定和样例错误。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### 1) 异常检测逻辑
 
-## 使用建议
+```javascript
+function detectAnomaly(lines) {
+  const errorRate = lines.filter(l => l.includes('ERROR')).length / lines.length;
+  const baseline = getBaseline(); // Historical average
+  return errorRate > baseline * 2;
+}
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) OpenClaw 执行提示词（自动版）
 
-## CITATION
+```text
+你是我的 OpenClaw 助手，请执行“Log Anomaly Detection”。
+
+每 30 分钟执行：
+1. 读取最近日志。
+2. 按错误类型统计频率。
+3. 对比滚动24小时基线。
+4. 超过2倍基线：warning。
+5. 超过5倍基线：立即告警。
+6. 告警中附带样例错误消息。
+```
+
+## 成功标准
+
+- [ ] Anomalies detected within 30 min
+- [ ] False positive rate <10%
+- [ ] Zero missed critical errors
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/19-log-anomaly-detection.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/19-log-anomaly-detection.md)

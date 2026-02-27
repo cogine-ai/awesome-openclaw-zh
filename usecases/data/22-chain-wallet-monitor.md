@@ -1,50 +1,66 @@
 # 链上钱包监控器
 
-> 链上变动警报
+> 定时巡检重点地址，发现大额转账与合约交互时立即提醒。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「链上变动警报」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 7x24 监控关键钱包，不错过夜间大额异动。
+- 按阈值筛选告警，减少无效噪音。
+- 自动记录链上动作，便于复盘。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部 | [`web3`](https://clawhub.ai/skills/claw-fi) | 查询链上交易与交互 | ClawHub |
+| 内置 | `telegram` | 推送实时告警 | OpenClaw Built-in |
 
-- `web3`
-- `telegram`
-- `Telegram`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「链上钱包监控器」。
-
-任务目标：链上变动警报
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：web3、telegram、Telegram）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“链上钱包监控器”的预演版：
+1. 监控1个测试钱包10分钟。
+2. 检查新交易与合约交互。
+3. 按阈值判断是否触发告警。
+4. 输出一份简版监控日志。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 钱包配置
 
-## CITATION
+```javascript
+const wallets = [
+  { address: "0x...", label: "Whale A", threshold: 1000 }
+];
+```
+
+### 2) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“Chain Wallet Monitor”。
+
+每 10 分钟执行：
+1. 查询监控钱包新交易。
+2. 检测超过阈值的转账。
+3. 识别新的合约交互。
+4. 标记治理投票行为。
+5. 发现大额动作立即告警。
+
+Thresholds:
+- Whale wallets: 1000 ETH
+- Portfolio: 10% of holdings
+- Known entities: any movement
+```
+
+## 成功标准
+
+- [ ] Detection within 10 minutes
+- [ ] False positive rate <5%
+- [ ] All movements logged
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/22-chain-wallet-monitor.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/22-chain-wallet-monitor.md)

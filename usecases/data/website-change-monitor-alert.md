@@ -1,49 +1,99 @@
 # 网站更新监控通知
 
-> 自动监控目标网站变化并在有更新时提醒。
+> 监控目标网站关键内容变化，有更新就即时推送提醒。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「自动监控目标网站变化并在有更新时提醒。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 自动比较最新页面内容和上次缓存，快速发现更新。
+- 首次运行自动初始化缓存，后续只在变化时提醒。
+- 可用于官网新闻、公告页、文档更新页监控。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `openclaw message send` | 发送通知消息 | OpenClaw Built-in |
+| 外部 | `curl` | 拉取目标页面内容 | Shell 工具 |
 
-- `Telegram`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「网站更新监控通知」。
-
-任务目标：自动监控目标网站变化并在有更新时提醒。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“网站更新监控通知”的预演版：
+1. 监控 https://www.anthropic.com/news 的首条 h2 内容。
+2. 若无缓存则初始化缓存。
+3. 若内容变化则生成通知消息。
+4. 本轮只输出消息内容，不实际发送。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 监控脚本
 
-## CITATION
+```bash
+#!/bin/bash
+# OpenClaw 网站监控脚本
+# 监控指定网站的内容变化，发现更新时通知
+
+# 配置
+WEBSITE_URL="https://www.anthropic.com/news"
+CACHE_FILE="$HOME/.openclaw/cache/website-monitor.txt"
+OPENCLAW_BIN="openclaw"
+CHANNEL="telegram"
+
+# 创建缓存目录
+mkdir -p "$(dirname "$CACHE_FILE")"
+
+# 获取网站内容
+CURRENT_CONTENT=$(curl -s "$WEBSITE_URL" | grep -oP '<h2.*?</h2>' | head -n 1)
+
+# 检查是否有缓存
+if [ -f "$CACHE_FILE" ]; then
+    CACHED_CONTENT=$(cat "$CACHE_FILE")
+
+    # 比较内容
+    if [ "$CURRENT_CONTENT" != "$CACHED_CONTENT" ]; then
+        echo "发现更新！"
+
+        # 提取标题
+        TITLE=$(echo "$CURRENT_CONTENT" | sed 's/<[^>]*>//g')
+
+        # 发送通知
+        MESSAGE="🔔 网站更新通知
+
+网站：$WEBSITE_URL
+最新内容：$TITLE
+
+请访问网站查看详情。"
+
+        $OPENCLAW_BIN message send --channel "$CHANNEL" --message "$MESSAGE"
+
+        # 更新缓存
+        echo "$CURRENT_CONTENT" > "$CACHE_FILE"
+    else
+        echo "无更新"
+    fi
+else
+    # 首次运行，创建缓存
+    echo "$CURRENT_CONTENT" > "$CACHE_FILE"
+    echo "初始化缓存"
+fi
+```
+
+### 2) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“网站更新监控通知”。
+
+执行规则：
+1. 拉取目标网站首条 h2。
+2. 与缓存值比较。
+3. 有变化则发送 Telegram 通知并更新缓存。
+4. 无变化则仅记录“无更新”。
+5. 首次运行时先初始化缓存，不发告警。
+```
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [examples/automation/website-monitor.sh](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/examples/automation/website-monitor.sh)

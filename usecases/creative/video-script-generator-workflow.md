@@ -1,84 +1,74 @@
 # 视频脚本生成工作流
 
-> 短视频与长视频脚本自动生成，支持系列化输出。
+> 覆盖短视频与长视频脚本，支持系列选题批量生成。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「短视频与长视频脚本自动生成，支持系列化输出。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 从“没灵感”到“可拍摄脚本”形成固定流程。
+- 统一脚本结构和钩子逻辑，提高内容吸引力。
+- 支持批量生成系列脚本，适合稳定更新账号。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 能力 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `script` 配置能力 | 按平台生成脚本 | OpenClaw Built-in |
+| 外部 | `video-agent` / `sora-video-gen` / `veo3-video-gen` / `tube-cog` / `video-cog` / `youtube-title-generator` | 视频相关扩展能力 | ClawHub |
 
-- `test_output/chapters/architecture.png`
-- `WhatsApp`
-- `Discord`
-- `Notion`
-- `GitHub`
-- `heartbeat`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
-
-```bash
-git clone https://github.com/xianyu110/my-awesome-skills.git
-npx skills add https://github.com/xianyu110/my-awesome-skills --skill bananapro-image-gen
-bash test_chapters.sh
-OpenClaw ✓          ChatGPT ✗
-OpenClaw + DeepSeek: 5-30元/月
-npx clawhub@latest install fal-ai
-npx clawhub@latest install nvidia-image-gen
-npx clawhub@latest install pollinations
-npx clawhub@latest install venice-ai
-npx clawhub@latest install recraft
-openclaw config set banana.api-key "YOUR_API_KEY"
-openclaw config set gemini.api-key "YOUR_GEMINI_KEY"
-```
-
-### 调度信息
-
-- 0:30
-- 2:00
-- 5:00
-- 7:00
-- 12:00
-- 14:00
-- 15:00
-- 10:00
-- 10:02
-- 10:05
-
-## 可复制提示词
+先做 60 秒短视频脚本：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「视频脚本生成工作流」。
-
-任务目标：短视频与长视频脚本自动生成，支持系列化输出。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：test_output/chapters/architecture.png、WhatsApp、Discord、Notion、GitHub、heartbeat）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“视频脚本生成工作流”的预演版：
+1. 主题：OpenClaw，平台：抖音，时长：60秒。
+2. 按“开场-痛点-解决方案-效果展示-结尾”输出完整脚本。
+3. 给出拍摄建议和BGM建议。
+4. 本轮只生成脚本，不做批量系列。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) OpenClaw 配置
 
-## CITATION
+```bash
+# 1. 配置脚本生成
+openclaw config set script.platform "douyin,bilibili"
+openclaw config set script.style "professional"
+
+# 2. 配置内容优化
+openclaw config set script.optimize true
+openclaw config set script.add-hooks true
+
+# 3. 配置批量生成
+openclaw config set script.batch-mode true
+openclaw config set script.series-planning true
+```
+
+### 2) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“视频脚本生成工作流”。
+
+执行流程：
+1. 根据平台（抖音/B站）和时长生成脚本结构。
+2. 短视频优先突出钩子、节奏和转化引导。
+3. 长视频输出完整章节脚本和演示段落。
+4. 批量模式下按系列主题一次生成多期脚本。
+5. 输出脚本质量评分与拍摄建议。
+```
+
+## 成功标准
+
+| 任务类型 | 使用前 | 使用后 | 节省时间 | 提升比例 |
+|---|---:|---:|---:|---:|
+| 短视频脚本 | 60分钟 | 5分钟 | 55分钟 | 91.7% |
+| 长视频脚本 | 180分钟 | 15分钟 | 165分钟 | 91.7% |
+| 系列规划 | 300分钟 | 20分钟 | 280分钟 | 93.3% |
+| 平均 | 540分钟 | 40分钟 | 500分钟 | 92.6% |
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/14-creative-applications.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/14-creative-applications.md)

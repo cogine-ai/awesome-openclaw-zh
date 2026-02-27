@@ -1,53 +1,71 @@
 # 安全 CTF 课程
 
-> 培训挑战准备
+> 每周自动产出 CTF 训练题、解题文档和学习进度跟踪。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「培训挑战准备」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 自动跟踪最新漏洞和题型方向，保持训练内容不过时。
+- 按类别批量生成挑战题与解法。
+- 把训练过程沉淀成可复用课程目录。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部 | [`web_search`](https://clawhub.ai/skills/searching-assistant) | 检索最新 CVE 与资料 | ClawHub |
+| 内置 | `filesystem` | 组织课程目录与解题文件 | OpenClaw Built-in |
 
-- `web_search`
-- `filesystem`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「安全 CTF 课程」。
-
-任务目标：培训挑战准备
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：web_search、filesystem）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“安全 CTF 课程”的预演版：
+1. 研究最近安全漏洞主题。
+2. 生成每个类别2道训练题（含解法）。
+3. 输出 week-01 目录结构。
+4. 本轮只做样例，不做完整周课发布。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### 1) 课程目录结构
 
-## 使用建议
+```text
+ctf/
+├── week-01/
+│   ├── web-security/
+│   ├── crypto/
+│   └── forensics/
+└── solutions/
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) OpenClaw 执行提示词（自动版）
 
-## CITATION
+```text
+你是我的 OpenClaw 助手，请执行“Security CTF Curriculum”。
+
+每周执行：
+1. 研究最新 CVEs。
+2. 每个类别设计 5 道挑战题。
+3. 编写标准解法。
+4. 对题目难度进行测试。
+5. 发布到课程目录。
+
+类别轮换：
+- Web security
+- Cryptography
+- Forensics
+- Reverse engineering
+- Binary exploitation
+```
+
+## 成功标准
+
+- [ ] Weekly curriculum published
+- [ ] Challenges tested
+- [ ] Progress tracked
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/43-security-ctf-curriculum.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/43-security-ctf-curriculum.md)

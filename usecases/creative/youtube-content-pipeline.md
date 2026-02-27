@@ -1,58 +1,73 @@
 # YouTube 内容流水线
 
-> 为 YouTube 频道自动化视频创意发掘、研究和追踪。
+> 自动化 YouTube 选题发现、去重研究和任务分发，减少重复选题和信息延迟。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「为 YouTube 频道自动化视频创意发掘、研究和追踪。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 每小时自动扫描 AI 热点，及时推送“可拍选题”到 Telegram。
+- 基于 90 天选题历史 + 语义去重，避免反复被推同类题。
+- 当你在 Slack 丢链接时，自动补研究并创建 Asana 任务。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `web_search` | 抓取网页热点信息 | OpenClaw Built-in |
+| 外部 | `x-research-v2`（或自建X检索） | X/Twitter 趋势追踪 | ClawHub |
+| 外部 | `knowledge-base` | RAG 检索历史知识 | ClawHub |
+| 外部 | Asana（或 Todoist） | 生成视频任务卡片 | 第三方集成 |
+| 外部 | `gog` CLI | 拉取 YouTube Analytics | 工具链 |
+| 外部 | Telegram topic / Slack | 选题推送与触发入口 | 第三方平台 |
 
-- `web_search`
-- `gog`
-- `Telegram`
-- `Slack`
-- `Todoist`
-- `cron`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-## 可复制提示词
+先验证“热点→去重→推送”：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「YouTube 内容流水线」。
-
-任务目标：为 YouTube 频道自动化视频创意发掘、研究和追踪。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：web_search、gog、Telegram、Slack、Todoist、cron）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“YouTube 内容流水线”的预演版：
+1. 搜索过去24小时AI热点（Web+X）。
+2. 与我最近90天视频主题做去重检查。
+3. 输出3个“新颖且可拍”的选题并附来源。
+4. 本轮只输出到聊天，不写数据库、不发Asana。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### 1) 选题库数据库（SQLite）
+
+```sql
+CREATE TABLE pitches (
+  id INTEGER PRIMARY KEY,
+  timestamp TEXT,
+  topic TEXT,
+  embedding BLOB,
+  sources TEXT
+);
+```
+
+### 2) OpenClaw 执行提示词（自动版）
+
+```text
+Run an hourly cron job to:
+1. Search web and X/Twitter for breaking AI news
+2. Check against my 90-day YouTube catalog (fetch from YouTube Analytics via gog)
+3. Check semantic similarity against all past pitches in the database
+4. If novel, pitch the idea to my Telegram "video ideas" topic with sources
+
+Also: when I share a link in Slack #ai_trends, automatically:
+1. Research the topic
+2. Search X for related posts
+3. Query my knowledge base
+4. Create an Asana card in Video Pipeline with a full outline
+```
 
 ## 使用建议
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- 先把 90 天视频目录补齐，再启用“语义去重”，效果更稳定。
+- Telegram 只收“已去重且可拍”的候选，避免推送噪音。
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/youtube-content-pipeline.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/youtube-content-pipeline.md)

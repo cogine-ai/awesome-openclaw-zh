@@ -1,84 +1,130 @@
 # AI绘画生产工作流
 
-> 从想法到配图的批量化创作流程，适合内容团队。
+> 把“想法到配图”做成可复用流程，支持手机下发、语音修改和批量出图。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「从想法到配图的批量化创作流程，适合内容团队。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 在一个入口里完成绘图、改图、批量生成，减少来回切工具。
+- 更适合教程配图、白板总结图、社媒配图等高频内容场景。
+- 通过批量参数和自动同步配置，稳定提升出图效率。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部 | `bananapro-image-gen` | Gemini 图像生成主流程 | xianyu110/my-awesome-skills |
+| 外部 | `banana-pro` | OpenClaw 图像能力扩展 | ClawHub |
+| 外部 | `fal-ai` / `nvidia-image-gen` / `pollinations` / `venice-ai` / `recraft` | 备选绘图能力 | ClawHub |
 
-- `test_output/chapters/architecture.png`
-- `WhatsApp`
-- `Discord`
-- `Notion`
-- `GitHub`
-- `heartbeat`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 命令片段
-
-```bash
-git clone https://github.com/xianyu110/my-awesome-skills.git
-npx skills add https://github.com/xianyu110/my-awesome-skills --skill bananapro-image-gen
-bash test_chapters.sh
-OpenClaw ✓          ChatGPT ✗
-OpenClaw + DeepSeek: 5-30元/月
-npx clawhub@latest install fal-ai
-npx clawhub@latest install nvidia-image-gen
-npx clawhub@latest install pollinations
-npx clawhub@latest install venice-ai
-npx clawhub@latest install recraft
-openclaw config set banana.api-key "YOUR_API_KEY"
-openclaw config set gemini.api-key "YOUR_GEMINI_KEY"
-```
-
-### 调度信息
-
-- 0:30
-- 2:00
-- 5:00
-- 7:00
-- 12:00
-- 14:00
-- 15:00
-- 10:00
-- 10:02
-- 10:05
-
-## 可复制提示词
+先跑一张图 + 一次改图：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「AI绘画生产工作流」。
-
-任务目标：从想法到配图的批量化创作流程，适合内容团队。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：test_output/chapters/architecture.png、WhatsApp、Discord、Notion、GitHub、heartbeat）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 助手。
+请帮我做“AI绘画生产工作流”的预演版：
+1. 生成一张“可爱的小龙虾，赛博朋克风格”的图片。
+2. 再按“更酷一点，增加机械感”修改一次。
+3. 输出最终图和提示词优化结果。
+4. 本轮只做单图演示，不做批量任务。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 1) 安装 `bananapro-image-gen`
 
-## CITATION
+```bash
+# 方式1：GitHub安装（推荐）
+git clone https://github.com/xianyu110/my-awesome-skills.git
+cp -r my-awesome-skills/.claude/skills/bananapro-image-gen ~/.openclaw/skills/
+cd ~/.openclaw/skills/bananapro-image-gen
+pip3 install -r requirements.txt
+
+# 方式2：npx安装
+npx skills add https://github.com/xianyu110/my-awesome-skills --skill bananapro-image-gen
+```
+
+### 2) 验证安装
+
+```bash
+ls ~/.openclaw/skills/bananapro-image-gen
+```
+
+### 3) API 配置
+
+```bash
+nano ~/.openclaw/openclaw.json
+```
+
+```json
+{
+  "api": {
+    "gemini": {
+      "apiKey": "your-api-key-here",
+      "baseUrl": "https://apipro.maynor1024.live",
+      "model": "gemini-3-pro-image-preview"
+    }
+  }
+}
+```
+
+### 4) OpenClaw 参数配置（批量模式）
+
+```bash
+# 1. 安装Banana Pro Skills
+clawhub install banana-pro
+openclaw config set banana.api-key "YOUR_API_KEY"
+
+# 2. 配置Gemini API（Banana Pro需要）
+openclaw config set gemini.api-key "YOUR_GEMINI_KEY"
+openclaw config set gemini.model "gemini-2.0-flash-exp"
+
+# 3. 配置图片保存
+openclaw config set image.save-path "~/Pictures/OpenClaw"
+openclaw config set image.auto-sync true
+openclaw config set image.sync-to "feishu,notion"
+
+# 4. 配置批量处理
+openclaw config set image.batch-size 10
+openclaw config set image.parallel-tasks 3
+
+# 5. 配置提示词优化
+openclaw config set image.prompt-enhance true
+openclaw config set image.prompt-language "en"
+```
+
+### 5) 批量生成测试
+
+```bash
+cd ~/.openclaw/skills/bananapro-image-gen
+bash test_chapters.sh
+```
+
+### 6) OpenClaw 执行提示词（自动版）
+
+```text
+你是我的 OpenClaw 助手，请执行“AI绘画生产工作流”。
+请使用 bananapro-image-gen 与 banana-pro。
+
+执行流程：
+1. 接收主题并自动优化提示词。
+2. 生成目标风格图片（默认 1K）。
+3. 支持语音/文本二次修改。
+4. 批量任务按 image.batch-size 和 image.parallel-tasks 执行。
+5. 自动保存并同步到配置目标（feishu/notion）。
+```
+
+## 成功标准
+
+| 任务类型 | 使用前 | 使用后 | 节省时间 | 提升比例 |
+|---|---:|---:|---:|---:|
+| 单张绘画 | 5分钟 | 30秒 | 4.5分钟 | 90% |
+| 修改图片 | 3分钟 | 20秒 | 2.7分钟 | 88.9% |
+| 批量生成 | 50分钟 | 5分钟 | 45分钟 | 90% |
+| 风格转换 | 10分钟 | 40秒 | 9.3分钟 | 93.3% |
+| 平均 | 68分钟 | 6.5分钟 | 61.5分钟 | 90.4% |
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/14-creative-applications.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/14-creative-applications.md)

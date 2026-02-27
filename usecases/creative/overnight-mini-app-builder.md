@@ -1,57 +1,90 @@
 # 目标驱动的自主任务
 
-> 倾泻你的目标，让智能体自主生成、安排并完成每日任务 —— 包括在一夜之间构建惊喜的迷你应用。
+> 一次性输入长期目标，让 Agent 每天自动拆任务并执行，包含“夜间惊喜 Mini App”模式。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「倾泻你的目标，让智能体自主生成、安排并完成每日任务 —— 包括在一夜之间构建惊喜的迷你应用。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 先由 Agent 帮你拆目标，再由 Agent 执行任务，不再停留在待办清单。
+- 每天自动生成 4-5 个可落地任务（研究、写作、构建、分析等）。
+- 可选搭建 Kanban 看板，追踪 Agent 每日执行状态。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `sessions_spawn` / `sessions_send` | 自主任务执行与委派 | OpenClaw Built-in |
+| 外部 | Telegram / Discord | 接收任务结果和进度 | 第三方集成 |
+| 外部 | Next.js（可选） | 任务看板展示 | 开发框架 |
 
-- `sessions_spawn`
-- `sessions_send`
-- `Telegram`
-- `Discord`
-- `GitHub`
-- `OpenClaw`
+## 快速体验版（先跑一轮）
 
-### 调度信息
-
-- 8:00
-
-## 可复制提示词
+先做“一天任务”试运行：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「目标驱动的自主任务」。
+你是我的 OpenClaw 助手。
+我会给你一组长期目标。
+请你：
+1. 基于这些目标自动生成今天的4个可执行任务。
+2. 每个任务给出预计产出和完成标准。
+3. 先执行其中2个任务并汇报结果。
+4. 本轮不做夜间 mini-app，只验证任务拆解质量。
+```
 
-任务目标：倾泻你的目标，让智能体自主生成、安排并完成每日任务 —— 包括在一夜之间构建惊喜的迷你应用。
+## 稳定自动版（可长期运行）
 
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：sessions_spawn、sessions_send、Telegram、Discord、GitHub、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
+### 1) 目标脑暴输入（原文方式）
 
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+```text
+Here are my goals and missions. Remember all of this:
+
+Career:
+- Grow my YouTube channel to 100k subscribers
+- Launch my SaaS product by Q3
+- Build a community around AI education
+
+Personal:
+- Read 2 books per month
+- Learn Spanish
+
+Business:
+- Scale revenue to $10k/month
+- Build partnerships with 5 companies in my space
+- Automate as much of my workflow as possible
+
+Use this context for everything you do going forward.
+```
+
+### 2) 每日自主任务提示词
+
+```text
+Every morning at 8:00 AM, come up with 4-5 tasks that you can complete
+on my computer today that bring me closer to my goals.
+
+Then schedule and complete those tasks yourself. Examples:
+- Research competitors and write analysis reports
+- Draft video scripts based on trending topics
+- Build new features for my apps
+- Write and schedule social media content
+- Research potential business partnerships
+- Build me a surprise mini-app MVP that gets me closer to one of my goals
+
+Track all tasks on a Kanban board. Update the board as you complete them.
+```
+
+### 3) 可选：Next.js Kanban 看板
+
+```text
+Build me a Kanban board in Next.js where I can see all the tasks you're
+working on. Show columns for To Do, In Progress, and Done. Update it
+in real-time as you complete tasks.
 ```
 
 ## 使用建议
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+- 目标输入越具体，Agent 自动拆解出的任务越可执行。
+- 夜间 mini-app 建议明确“做 MVP，不要过度设计”。
 
-## CITATION
+## 引用来源
 
 - 来源仓库： [hesamsheikh/awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases)
 - 原始条目： [usecases/overnight-mini-app-builder.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/overnight-mini-app-builder.md)
