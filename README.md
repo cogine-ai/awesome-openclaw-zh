@@ -8,6 +8,7 @@
 - 案例覆盖广（已收录 143 个）
 - 复制提示词即可上手
 - 以真实社区用法为核心
+- 每个案例都包含来源对齐信息（场景/动作/工具/边界）
 
 ## 新手先看（3步）
 
@@ -51,6 +52,11 @@
 - [模型、渠道、技能怎么选](./resources/02-model-channel-skill-guide.md)
 - [低成本稳定运行（精简版）](./playbooks/01-low-cost-stable-run.md)
 - [安全与权限边界（非技术版）](./playbooks/02-safe-usage-boundary.md)
+
+## 质量与对齐
+
+- [10个案例差异分析（来源 vs 模板）](./resources/06-gap-analysis-10-cases.md)
+- [案例模板（增强版）](./usecases/TEMPLATE.md)
 
 ## 投稿与共建
 

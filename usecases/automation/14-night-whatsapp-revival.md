@@ -2,46 +2,78 @@
 
 > 回复消息，恢复冷淡友谊
 
-## 你可以拿它做什么
-
-这个案例的目标很直接：**回复消息，恢复冷淡友谊**。
-
-如果你是第一次用 OpenClaw，建议先看 [5分钟快速上手](../../quickstart/00-5min-quickstart.md)。
-
-## 3 步快速开始
-
-1. 打开 OpenClaw（Web 控制台或你常用的聊天渠道，如 Telegram / 微信 / 飞书）。
-2. 把下面的提示词直接发给你的 OpenClaw。
-3. 根据你的实际信息替换方括号内容（如 [城市]、[邮箱]、[项目名]）。
-
-## 复制即用提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「夜间 WhatsApp 复兴」。
-
-目标：回复消息，恢复冷淡友谊
-
-请按这个结构执行：
-1. 先用不超过 3 句话告诉我今天要做什么
-2. 再输出可直接执行的步骤（从现在开始）
-3. 需要我确认的地方，集中放到最后并给出默认建议
-4. 输出尽量简洁、可直接复制
-
-我的背景信息（按需补充）：
-- 城市/时区：[你的城市]
-- 常用渠道：[Telegram/飞书/微信/邮箱]
-- 关注主题：[例如 AI、产品、运营、家庭日程]
-```
-
-## 适合人群
-
-- 想用 OpenClaw 快速见到结果的非技术用户
-- 想把重复事务自动化的内容创作者、运营、独立开发者
-- 想要一个可持续迭代工作流的个人或小团队
-
-## 来源
+## 来源与对齐
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/14-night-whatsapp-revival.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/14-night-whatsapp-revival.md)
-- 本仓库首页： [awesome-openclaw-zh](../../README.md)
+- 对齐原则：本页仅使用来源可见信息提炼，不臆造未出现配置
 
+## 源头里这个案例是怎么做的
+
+### 场景/痛点（来源提炼）
+- Automated scanning of WhatsApp for unread messages and stale conversations. Replies to unreads, revives cold friendships with check-in messages, and maintains human's social connections while they sleep.
+- **Why it matters**: Relationships require maintenance. Automated replies prevent messages from being forgotten and keep connections warm.
+- **Real-world example**: Agent scans every 5 minutes, replies to work messages with acknowledgment, sends "how are you" to friends with 7+ day silence.
+
+### 核心动作（来源提炼）
+- # Night WhatsApp Revival
+- ## Introduction
+- Automated scanning of WhatsApp for unread messages and stale conversations. Replies to unreads, revives cold friendships with check-in messages, and maintains human's social connections while they sleep.
+- **Why it matters**: Relationships require maintenance. Automated replies prevent messages from being forgotten and keep connections warm.
+- **Real-world example**: Agent scans every 5 minutes, replies to work messages with acknowledgment, sends "how are you" to friends with 7+ day silence.
+- ## Skills You Need
+
+### 技能/工具/渠道（来源提炼）
+- whatsapp
+- memory
+- WhatsApp
+
+### 风险与边界（来源提炼）
+- 源头未明确列出风险条目，默认采用最小权限与二次确认。
+
+## 快速开始（贴近来源的最小闭环）
+
+1. 准备来源里提到的核心输入（账号、渠道、数据源、任务目标）。
+2. 先在单次会话里手动跑通一次，不要直接上全自动。
+3. 结果符合预期后，再增加定时/自动化频率。
+
+## 可复制提示词（增强版）
+
+```text
+你是我的 OpenClaw 助手，现在执行案例「夜间 WhatsApp 复兴」。
+
+目标（来自来源案例）：回复消息，恢复冷淡友谊
+来源关键动作：# Night WhatsApp Revival；## Introduction；Automated scanning of WhatsApp for unread messages and stale conversations. Replies to unreads, revives cold friendships with check-in messages, and maintains human's social connections while they sleep.
+优先工具/渠道：whatsapp、memory、WhatsApp
+来源节奏信息：every 5 minutes；Every 5 minutes
+
+请按下面流程输出并执行：
+1. 先给出“最小可运行版本（MVP）”执行计划（3-5条）
+2. 立刻产出第一版结果（不要只讲思路）
+3. 缺失的信息统一放到“待我补充信息”里，不要中断整体流程
+4. 若涉及高风险操作（删除、外发、改密、生产写操作），先暂停并请求确认
+
+输出格式：
+## 今日执行计划
+## 立即可执行动作
+## 第一版结果
+## 待我补充信息
+## 风险与边界
+```
+
+## 可选补充信息（提高效果）
+
+- 你的常用渠道：[Telegram/飞书/微信/邮箱]
+- 你的时区与执行时间：[例如 UTC+8，每天 09:00]
+- 你最在意的结果指标：[例如 节省时间、回复率、发布频次]
+
+## 效果检查（非技术版）
+
+- [ ] Response time <1 hour for work
+- [ ] No friendship stale >14 days
+- [ ] Zero inappropriate auto-replies
+
+## 参考来源
+
+- [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
+- [usecases/14-night-whatsapp-revival.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/14-night-whatsapp-revival.md)
