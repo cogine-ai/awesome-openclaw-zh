@@ -1,58 +1,89 @@
-# 天气穿衣建议
+# 天气穿搭顾问
 
-> 基于天气和日程的穿搭建议
+> 每天早上结合天气 + 日程给出可直接照穿的穿搭建议。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「基于天气和日程的穿搭建议」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把“今天穿什么”从临场纠结，变成固定时间收到建议。
+- 同时考虑温度、降雨、风力和当天场景（开会/通勤/居家）。
+- 支持基于你反馈持续调整，减少“今天穿错了”的概率。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `Weather` | 获取天气、降雨、风力 | OpenClaw Built-in |
+| 外部（需安装） | `Calendar Skill` | 读取当日日程语境 | [clawhub.ai/skills/calendar](https://clawhub.ai/skills/calendar) |
+| 外部（需安装） | `Memory/Notes Skill` | 记住你的穿衣偏好 | [clawhub.ai/skills/mem](https://clawhub.ai/skills/mem) |
+| 内置 | Telegram 通道 | 推送建议 | OpenClaw Built-in |
 
-- `Telegram`
-
-### 调度信息
-
-- 0 19 * * 0
-- 7:15
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「天气穿衣建议」。
-
-任务目标：基于天气和日程的穿搭建议
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的穿搭助手。
+请根据我今天所在城市天气和日程，输出：
+1) 上装/下装/鞋子/外套/配件建议
+2) 为什么这么搭
+3) 雨天或大风提醒
+本轮按“通勤 + 办公室”场景给出。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
-- 远程访问和权限建议按最小授权配置。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my Personal Outfit Advisor. Every morning, check the weather and my schedule, then recommend what I should wear today.
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+DAILY TASK (7:15 AM):
+1. Get weather data for [YOUR CITY]
+2. Check calendar context (in-person meetings, outdoor plans, video calls)
+3. Send outfit recommendation via Telegram:
 
-## CITATION
+👔 Today's Outfit Recommendation
+🌤️ Weather Forecast
+📅 Today's Context
+👕 Recommended Outfit (Top / Bottom / Shoes / Layers / Accessories)
+💡 Styling Notes
+⚠️ Weather Alert
+
+OUTFIT LOGIC RULES:
+- Rain: umbrella or waterproof jacket, avoid suede shoes
+- Wind: avoid flowy items, add layers
+- Sun/heat: breathable fabrics, lighter colors
+- Formality follows calendar context (client meeting > office day > WFH)
+
+Always mention umbrella if rain chance > 40%.
+```
+
+### 调度配置
+
+```json
+{
+  "schedule": "15 7 * * *",
+  "name": "Daily Outfit Advisor",
+  "prompt": "[paste the prompt template above here]",
+  "timezone": "Your/Timezone"
+}
+```
+
+可选周预览：
+
+```json
+{
+  "schedule": "0 19 * * 0",
+  "name": "Weekly Wardrobe Preview",
+  "prompt": "Send weekly weather and wardrobe planning summary"
+}
+```
+
+## 成功标准
+
+- [ ] 每天 7:15 前收到建议。
+- [ ] 当天穿搭与天气变化匹配。
+- [ ] 正式度与当天日程匹配，不再“场景错位”。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/58-weather-outfit-advisor.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/58-weather-outfit-advisor.md)

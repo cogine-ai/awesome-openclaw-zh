@@ -1,54 +1,75 @@
-# Trello/Notion 整理
+# Trello / Notion 看板自动整理
 
-> 夜间清理看板晨间状态报告
+> 每晚自动清理看板状态，第二天早上给你一条结构化摘要。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「夜间清理看板晨间状态报告」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 自动归档已完成卡片，避免看板长期膨胀。
+- 自动标记逾期和长期停滞任务，提前暴露风险。
+- 统一标签与列状态，减少团队协作中的“脏看板”问题。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `Browser Control` | 自动化 Trello/Notion 页面操作 | OpenClaw Built-in |
+| 内置 | `Web Fetch` | 通过 API 读取看板数据 | OpenClaw Built-in |
+| 内置 | Telegram 通道 | 发送晨间状态摘要 | OpenClaw Built-in |
 
-- `Telegram`
-- `Notion`
-- `cron`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「Trello/Notion 整理」。
-
-任务目标：夜间清理看板晨间状态报告
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Notion、cron）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的看板整理助手。
+请按以下规则对当前看板做“演练输出”（不真实修改）：
+1) Done 超过 3 天的卡片移到 Archive
+2) 逾期卡加 🔴 标记
+3) In Progress 超过 7 天无更新的卡片标记 stale
+并输出明早摘要模板。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
-- 远程访问和权限建议按最小授权配置。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my project board organizer. Every night at 11 PM:
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+Board structure:
+- 📥 Inbox (new tasks)
+- 🔄 In Progress
+- 👀 Review
+- ✅ Done
+- 📦 Archive
 
-## CITATION
+Nightly cleanup tasks:
+1. Archive completed: Move cards in "Done" for 3+ days to "Archive"
+2. Flag overdue: Add 🔴 label to any card past its due date
+3. Stale detection: If card is "In Progress" for 7+ days with no activity, add comment
+4. Inbox triage: If cards stay in Inbox for 2+ days, remind me
+5. Label cleanup: Ensure all cards have at least one label (High/Medium/Low)
+
+Morning report (7 AM via Telegram):
+- Cards archived
+- Overdue flagged
+- Stale cards
+- Inbox items needing attention
+- Active tasks by column
+
+Board URL: [YOUR_TRELLO_OR_NOTION_URL]
+```
+
+### 调度配置
+
+- 夜间清理：`11 PM`
+- 早间报告：`7 AM`
+
+## 成功标准
+
+- [ ] 看板长期保持可读、可执行状态。
+- [ ] 逾期项在 24 小时内可见。
+- [ ] Done 列不再长期堆积。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/66-trello-notion-organizer.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/66-trello-notion-organizer.md)

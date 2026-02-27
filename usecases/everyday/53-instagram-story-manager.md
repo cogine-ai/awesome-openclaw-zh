@@ -1,53 +1,67 @@
-# Instagram 故事管理
+# Instagram Story 管理助手
 
-> 自动发布故事并管理互动
+> 用代理接管日常 Story 发布与互动回复，保持账号持续活跃。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「自动发布故事并管理互动」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 按内容队列每天定时发布 1-2 条 Story。
+- 自动处理 Story 回复和 DM，遇到垃圾信息自动标记。
+- 每周输出表现摘要（浏览量、增长、表现最佳内容）。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `Browser Control` | 自动化 Instagram 页面操作 | OpenClaw Built-in |
+| 外部（可选） | `Image Generation` | 生成 Story 视觉素材 | [clawhub.ai/skills/qwen-image-skill](https://clawhub.ai/skills/qwen-image-skill) |
 
-- `cron`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「Instagram 故事管理」。
-
-任务目标：自动发布故事并管理互动
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 Instagram 运营助手。
+请基于 /workspace/instagram/queue/ 里的素材，生成今天要发的 1 条 Story 文案，
+并给出对应 hashtag 和 location tag 建议。
+本轮只输出发布建议，不执行实际发布。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my Instagram manager. Your responsibilities:
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+1. **Daily Stories**: Post 1-2 stories per day from my content queue.
+   - Use the images/templates I provide in /workspace/instagram/queue/
+   - Add relevant hashtags and location tags
 
-## CITATION
+2. **Engagement**: Check story replies and DMs twice daily.
+   - Reply to genuine messages with friendly, on-brand responses
+   - Heart-react to compliments
+   - Flag spam or inappropriate messages for my review
+
+3. **Analytics**: Every Sunday, send me a summary:
+   - Story views this week vs last week
+   - Top performing content
+   - Follower growth
+
+Never post anything controversial. When unsure, ask me first.
+My brand voice: [friendly/professional/casual — pick one]
+```
+
+### 调度配置
+
+- Story 发布：每天 `9 AM`、`6 PM`
+- 互动巡检：每天 `12 PM`、`8 PM`
+- 周报：每周日 `10 AM`
+
+## 成功标准
+
+- [ ] 每天稳定发布，连续性不掉线。
+- [ ] Story 回复在 4 小时内被处理。
+- [ ] 周报能明确给出增长和高表现内容。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/53-instagram-story-manager.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/53-instagram-story-manager.md)

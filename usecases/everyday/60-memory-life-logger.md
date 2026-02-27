@@ -1,60 +1,106 @@
-# 生活记忆管理
+# 生活记忆记录器
 
-> 不再忘记生日、偏好和承诺
+> 把日常对话里的关键信息沉淀为长期记忆，并在关键时点提醒你。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「不再忘记生日、偏好和承诺」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 记住“人和关系”的细节（偏好、生日、承诺、后续事项）。
+- 自动生成每周回顾和事件提醒，降低遗忘带来的关系成本。
+- 通过结构化存储和检索，随时问“我对这个人知道什么”。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `Memory/Notes Skill` | 长期记忆存储与检索 | [clawhub.ai/skills/mem](https://clawhub.ai/skills/mem) |
+| 内置 | Telegram 通道 | 录入记忆、确认与检索交互 | OpenClaw Built-in |
+| 内置 | AI/NLP 能力 | 从自然语言中抽取事实与行动项 | OpenClaw Built-in |
+| 内置 | 文件存储 | 保存结构化记忆文件 | OpenClaw Built-in |
 
-- `/memory/life-memories/follow-ups.json`
-- `/memory/life-memories/master-index.json`
-- `Telegram`
-
-### 调度信息
-
-- 0 19 * * 0
-- 10:00
-- 7:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「生活记忆管理」。
-
-任务目标：不再忘记生日、偏好和承诺
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：/memory/life-memories/follow-ups.json、/memory/life-memories/master-index.json、Telegram）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的生活记忆助手。
+我会给你几条“人物-事件”输入，请你提取：
+1) 人物事实
+2) 日期事件
+3) 后续跟进事项
+并按人名组织输出，不做自动提醒。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my Life Memory Assistant. Your job is to help me remember important details about people, conversations, and life events.
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+Memory categories:
+- 👤 People Facts
+- 📅 Dates & Events
+- 💼 Professional Context
+- 🔗 Relationships & Connections
+- 🎯 Commitments & Follow-ups
 
-## CITATION
+Storage:
+- `/memory/life-memories/people/[person-name].json`
+- `/memory/life-memories/upcoming-events.json`
+- `/memory/life-memories/follow-ups.json`
+- `/memory/life-memories/master-index.json`
+
+When I add memories:
+1. Extract facts, dates, commitments, context
+2. Save structured records
+3. Confirm what was saved
+
+Privacy & ethics:
+1. Consent first
+2. Flag sensitive info for confirmation (health, financial, conflicts)
+3. Support "Forget that" immediate deletion
+4. Never share one person's info with another
+```
+
+### 调度配置
+
+```json
+{
+  "schedule": "0 22 * * *",
+  "name": "Daily Memory Processing",
+  "prompt": "Process today's memories and send confirmation summary"
+}
+```
+
+```json
+{
+  "schedule": "0 19 * * 0",
+  "name": "Weekly Memory Review",
+  "prompt": "Generate weekly memory review with upcoming events and insights"
+}
+```
+
+```json
+{
+  "schedule": "0 20 28-31 * *",
+  "name": "Monthly Memory Consolidation",
+  "prompt": "If last day of month, consolidate and clean up memory files"
+}
+```
+
+```json
+{
+  "schedule": "0 9 * * *",
+  "name": "Birthday Reminder Check",
+  "prompt": "Check for birthdays coming up in next 7 days and send reminders"
+}
+```
+
+## 成功标准
+
+- [ ] 能稳定回答“我对某人知道什么”。
+- [ ] 生日/承诺/跟进项可提前提醒。
+- [ ] 敏感信息有二次确认，不误存。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/60-memory-life-logger.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/60-memory-life-logger.md)

@@ -1,54 +1,71 @@
 # 智能日历提醒
 
-> 带准备建议的上下文提醒
+> 不只提前响铃，而是提前 2 小时给你“会什么、带什么、何时出发”。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「带准备建议的上下文提醒」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 每 30 分钟巡检日历，在关键事件前主动提醒。
+- 将提醒从“时间提示”升级为“上下文 + 准备清单 + 路程建议”。
+- 自动识别冲突、天气与出行风险，减少迟到与漏准备。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `Calendar Access` | 读取 Google Calendar / Outlook | [clawhub.ai/skills/calendar](https://clawhub.ai/skills/calendar) |
+| 内置 | `Weather` | 天气和雨具提示 | OpenClaw Built-in |
+| 内置 | Telegram 通道 | 发送提醒消息 | OpenClaw Built-in |
 
-- `Telegram`
-- `Google Calendar`
-- `heartbeat`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「智能日历提醒」。
-
-任务目标：带准备建议的上下文提醒
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Google Calendar、heartbeat、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的智能日历助手。
+请读取我未来 2 小时内的日程，按以下结构输出提醒：
+📅 事件名称
+📍 地点/会议链接
+📋 准备要点
+⏱️ 建议出发时间
+若检测到日程冲突，请单独标记。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my smart calendar assistant. Check my calendar every 30 minutes during waking hours (8 AM - 10 PM).
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+For each upcoming event in the next 2 hours:
 
-## CITATION
+1. **Context**: What is this meeting about? Who's attending?
+2. **Preparation**: What should I review or bring?
+   - If it's a client meeting → remind me of last interaction
+   - If it's a doctor appointment → remind me to bring insurance card
+   - If it's a dinner → check the restaurant and suggest what to wear
+3. **Logistics**:
+   - How long to get there? (check traffic if it's in-person)
+   - Is it raining? Should I bring an umbrella?
+4. **Conflicts**: Flag if two events overlap
+
+Send reminders via Telegram. Format:
+📅 [Event] in 2 hours
+📍 [Location/Link]
+📋 [Prep notes]
+⏱️ [Leave by X:XX to arrive on time]
+```
+
+### 调度配置
+
+- Heartbeat：`8 AM - 10 PM` 每 `30` 分钟检查一次
+- 提醒时间：事件开始前 `2` 小时
+
+## 成功标准
+
+- [ ] 不再漏会。
+- [ ] 会前准备信息完整可执行。
+- [ ] 路程与天气提示能降低迟到风险。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/55-calendar-smart-reminder.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/55-calendar-smart-reminder.md)

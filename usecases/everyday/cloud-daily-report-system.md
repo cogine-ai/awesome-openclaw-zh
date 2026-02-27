@@ -1,85 +1,80 @@
 # 云端智能日报系统
 
-> 在云端固定时间推送个性化日报，适合长期运营。
+> 在云上定时抓取多源信息，自动生成并推送结构化日报。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「在云端固定时间推送个性化日报，适合长期运营。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 每天固定时段自动产出“可直接阅读”的行业日报。
+- 覆盖搜索、社区更新、博客、论文等多源信息，不依赖单一 RSS。
+- 通过技能组合把“手工搜集+整理+推送”变成长期自动流程。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `find-skills` | 自动发现可用技能并按需安装 | [github.com/vercel-labs/skills/tree/main/skills/find-skills](https://github.com/vercel-labs/skills/tree/main/skills/find-skills) |
+| 外部（需安装） | `proactive-agent` | 在可自动化场景下主动发起建议 | [github.com/leomariga/ProactiveAgent](https://github.com/leomariga/ProactiveAgent) |
+| 内置 | 定时任务调度 | 固定时间生成日报 | OpenClaw Built-in |
+| 内置 | 飞书推送能力 | 下发日报到团队渠道 | OpenClaw Built-in |
 
-- `Notion`
-- `GitHub`
-- `OpenClaw`
-- `RSS`
-
-### 命令片段
-
-```bash
-openclaw schedule add "daily-report" \
-openclaw config set report.sources \
-openclaw config set report.channel "feishu"
-openclaw config set notes.default "备忘录/行业研究"
-openclaw template add "meeting-notes" \
-openclaw config set sync.targets "notion,feishu"
-openclaw config set reminder.action-items true
-openclaw config set archive.rules '{
-openclaw schedule add "daily-summary" \
-openclaw config set knowledge.graph true
-openclaw schedule add "morning-report" \
-openclaw config set clipper.default "备忘录/行业研究"
-```
-
-### 调度信息
-
-- 7:00
-- 09:00
-- 10:00
-- 14:00
-- 16:00
-- 17:00
-- 18:00
-- 07:00
-- 9:00
-- 12:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「云端智能日报系统」。
-
-任务目标：在云端固定时间推送个性化日报，适合长期运营。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Notion、GitHub、OpenClaw、RSS）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的云端日报助手。
+请生成一份“AI 行业日报”样稿，来源包含：
+1) 行业动态搜索
+2) OpenClaw 社区更新（GitHub）
+3) 技术博客精选
+4) 学术论文速递
+输出为 Markdown，按主题分组并附原文链接。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### 1) Skills 安装
 
-## 使用建议
+```bash
+npx clawhub@latest install find-skills
+npx clawhub@latest install proactive-agent
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) 对话式安装（源案例给法）
 
-## CITATION
+```text
+你：帮我安装这里面的Skills：
+https://github.com/vercel-labs/skills/tree/main/skills/find-skills
+https://github.com/leomariga/ProactiveAgent
+```
+
+### 3) 日报任务提示词
+
+```text
+你：每天早上9点，搜索以下内容并生成日报：
+1. AI行业最新动态（百度搜索）
+2. OpenClaw社区更新（GitHub）
+3. 技术博客精选（自定义RSS源）
+4. 学术论文速递（百度学术）
+
+格式要求：
+- Markdown格式
+- 分类整理
+- 附带原文链接
+- 推送到飞书
+```
+
+### 4) 使用提醒
+
+- `proactive-agent` 安装时可能出现 VirusTotal 警告提示（源文档已说明该现象）。
+- 时区需要与云端环境一致，否则日报触发时间会偏移。
+- 推送渠道（如飞书）需提前配置可用。
+
+## 成功标准
+
+- [ ] 每天 9:00 左右稳定收到日报。
+- [ ] 日报包含多源信息并附可追溯链接。
+- [ ] 结构清晰，可直接转发给团队使用。
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/12-personal-productivity.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md)

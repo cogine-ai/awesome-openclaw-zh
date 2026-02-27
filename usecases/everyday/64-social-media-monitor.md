@@ -1,56 +1,75 @@
-# 社交媒体监控
+# 社媒提及监控
 
-> 跨平台追踪提及和情感
+> 自动巡检 X/Twitter、Reddit 等平台，按情绪和风险等级推送摘要。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「跨平台追踪提及和情感」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 快速发现品牌/产品/个人名相关提及，减少手工搜索。
+- 自动标注正负面，优先把需要处理的内容挑出来。
+- 符合危机条件时即时告警，不等日终总结。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `Web Search` | 跨平台检索关键词 | [clawhub.ai/skills/searching-assistant](https://clawhub.ai/skills/searching-assistant) |
+| 内置 | `Browser Control` | 访问平台结果页与上下文 | OpenClaw Built-in |
+| 内置 | Telegram 通道 | 发送日报与即时告警 | OpenClaw Built-in |
 
-- `Telegram`
-- `Web Search`
-- `cron`
-- `heartbeat`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「社交媒体监控」。
-
-任务目标：跨平台追踪提及和情感
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Web Search、cron、heartbeat、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的社媒监控助手。
+请用我给的 3 个关键词，抓取今天提及并输出：
+- 平台 + 链接
+- 作者 + 粉丝量
+- 提及原文
+- 情绪：正向/中性/负向
+本轮先做一次性扫描，不定时。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my social media monitoring agent. Track mentions of these keywords:
+- [Your name or brand]
+- [Your product name]
+- [Your company name]
+- [Competitor names — optional]
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+Platforms to check:
+- X/Twitter
+- Reddit
+- Hacker News (if tech-related)
 
-## CITATION
+Schedule: Check twice daily (12 PM and 6 PM)
+
+For each mention found:
+- Platform and link
+- Author and their follower count
+- Full text of the mention
+- Sentiment: 🟢 Positive | 🟡 Neutral | 🔴 Negative
+
+ALERT immediately if:
+- A negative mention gets 50+ likes/retweets
+- Someone influential (10k+ followers) mentions us
+- A potential PR crisis is brewing
+```
+
+### 调度配置
+
+- 常规巡检：`12 PM`、`6 PM`
+- 危机告警：Heartbeat 实时检测
+
+## 成功标准
+
+- [ ] 关键提及不漏检。
+- [ ] 负面内容能在小时级被发现。
+- [ ] 日报可直接指导当日互动动作。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/64-social-media-monitor.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/64-social-media-monitor.md)

@@ -1,60 +1,93 @@
-# 多源新闻摘要
+# 新闻摘要聚合器
 
-> 多源汇总零重复
+> 自动汇总多源新闻、去重分组，并每天推送一页可读晨报。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「多源汇总零重复」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 省去反复刷多个站点的成本，统一在 Telegram 获取今日重点。
+- 同事件去重，避免“同一新闻看三遍”。
+- 按主题优先级输出，先看你最关心的类别。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `RSS Reader Skill` | 拉取 RSS 新闻源 | [clawhub.ai/skills/hacker-news](https://clawhub.ai/skills/hacker-news) |
+| 内置 | `Web Fetch` | 抓取站点头条与正文片段 | OpenClaw Built-in |
+| 内置 | AI 分析能力 | 去重、聚类、摘要与优先级排序 | OpenClaw Built-in |
+| 外部（需安装） | `Memory/Notes Skill` | 记录你已看过内容与偏好 | [clawhub.ai/skills/mem](https://clawhub.ai/skills/mem) |
+| 内置 | Telegram 通道 | 发送日报 | OpenClaw Built-in |
 
-- `/memory/news-sources.json`
-- `Telegram`
-- `cron`
-- `RSS`
-
-### 调度信息
-
-- 0 18 * * 5
-- 7:45
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「多源新闻摘要」。
-
-任务目标：多源汇总零重复
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：/memory/news-sources.json、Telegram、cron、RSS）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的新闻编辑。
+请从我给定 3 个 RSS 源抓取今天新闻，完成：
+1) 去重
+2) 按 世界/商业科技/政治/科学/文化 分类
+3) 每条输出标题 + 2 句摘要 + 来源链接
+总长度控制在 5 分钟可读。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my Personal News Curator. Every day, gather news from my favorite sources, remove duplicates, and send me one clean digest.
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+DAILY TASK (7:45 AM):
+1. Fetch from RSS + selected websites
+2. Deduplicate stories (same event reported by multiple sources = one entry)
+3. Categorize by priority:
+   🌍 World
+   💼 Business/Tech
+   🏛️ Politics
+   🧪 Science
+   🎭 Culture
+   ⚽ Sports (optional)
+4. For each story output:
+   - Headline
+   - 2-3 sentence summary
+   - Why it matters
+   - Source link
+5. Send Telegram digest
 
-## CITATION
+RULES:
+- Include source for every story
+- Never editorialize, stick to facts
+- Keep digest within Telegram-friendly length
+- If too many stories, prioritize and append "+ [X] more stories"
+```
+
+### 调度配置
+
+```json
+{
+  "schedule": "45 7 * * *",
+  "name": "Daily News Digest",
+  "prompt": "[paste the prompt template above here]",
+  "timezone": "Your/Timezone"
+}
+```
+
+可选周报：
+
+```json
+{
+  "schedule": "0 18 * * 5",
+  "name": "Weekly News Review",
+  "prompt": "Generate weekly news review with top stories and trends"
+}
+```
+
+## 成功标准
+
+- [ ] 每天 7:45 前收到日报。
+- [ ] 5 分钟内读完且信息完整。
+- [ ] 关键新闻覆盖率稳定，重复率明显下降。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/59-news-digest-aggregator.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/59-news-digest-aggregator.md)

@@ -1,51 +1,72 @@
-# 旅行行程规划
+# 旅行行程规划助手
 
-> 一条消息生成完整行程
+> 输入目的地和预算，输出按天可执行的完整行程方案。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「一条消息生成完整行程」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 快速完成“机酒行吃玩”全链路行程草案。
+- 每日安排包含时间、费用、交通与餐饮建议，直接可用。
+- 自动补齐签证、天气、货币、通讯等出发前清单。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `Web Search` | 搜索景点、价格、评论与交通 | [clawhub.ai/skills/searching-assistant](https://clawhub.ai/skills/searching-assistant) |
+| 内置 | `Web Fetch` | 抓取攻略与预订站点细节 | OpenClaw Built-in |
+| 内置 | Telegram 通道 | 下发行程和行前提醒 | OpenClaw Built-in |
 
-- `Telegram`
-- `Web Search`
-- `cron`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「旅行行程规划」。
-
-任务目标：一条消息生成完整行程
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Web Search、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的旅行规划助手。
+请基于“目的地 + 天数 + 预算 + 兴趣”输出 2 天样例行程，
+每一天包含：上午/中午/下午/晚上安排、预计花费、交通建议。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### OpenClaw 执行提示词（自动版）
 
-## CITATION
+```text
+You are my travel planning agent. When I tell you about an upcoming trip:
+
+Gather this info:
+- Destination
+- Dates (or number of days)
+- Budget
+- Travelers
+- Interests
+- Travel style
+- Must-see places
+
+Then create itinerary:
+✈️ Trip to [Destination] | [Dates]
+📋 Pre-Trip Checklist (visa, vaccines, currency, weather, SIM)
+🗓️ Day-by-day plan:
+- Morning / Lunch / Afternoon / Dinner / Evening
+- Transport tips
+- Estimated day cost
+
+Also include:
+- Local customs
+- Tourist traps to avoid
+- Money-saving tips
+- Useful apps
+```
+
+### 调度配置
+
+- 按需触发：收到旅行需求后生成
+- 可选提醒：出发前 7 天与 1 天各提醒一次检查清单
+
+## 成功标准
+
+- [ ] 10 分钟内生成完整行程草案。
+- [ ] 预算估算与实际偏差控制在 20% 左右。
+- [ ] 行程可直接执行，无需大量二次补充。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/70-travel-itinerary-planner.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/70-travel-itinerary-planner.md)

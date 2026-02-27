@@ -1,59 +1,62 @@
 # 邮件通讯转播客
 
-> 将通讯转为通勤音频
+> 把每天收件箱里的重点通讯自动转成 3-5 分钟通勤音频。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「将通讯转为通勤音频」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 自动筛选最近 24 小时的 newsletter，不再“收藏后永远不看”。
+- 先生成口语化播客稿，再转语音推送到 Telegram/Signal。
+- 每天固定时段推送，通勤、做饭、运动时可直接收听。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `TTS / ElevenLabs` | 文本转语音 | [clawhub.ai/skills/beware-piper-tts](https://clawhub.ai/skills/beware-piper-tts) |
+| 外部（需安装） | `Email Access` | 读取邮件（Gmail/Outlook） | [clawhub.ai/skills/agentmail-wrapper](https://clawhub.ai/skills/agentmail-wrapper) |
+| 内置 | Telegram/Signal 消息通道 | 下发语音结果 | OpenClaw Built-in |
 
-- `Telegram`
-- `Gmail`
-- `cron`
-- `OpenClaw`
-
-### 调度信息
-
-- 7:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「邮件通讯转播客」。
-
-任务目标：将通讯转为通勤音频
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Gmail、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的个人播客制作助手。
+请从我最近 24 小时邮件里挑选最有价值的 3-5 条 newsletter，
+写一份 3-5 分钟可朗读脚本（口语化、无广告、无营销段落），
+本轮只输出脚本，不做语音转换。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 密钥与凭证不要放在公开文本或提示词中。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my personal podcast producer. Every morning at 7 AM:
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+1. Check my email for newsletters received in the last 24 hours
+2. Pick the most interesting 3-5 stories
+3. Write a conversational podcast script (3-5 minutes reading time)
+4. Convert to audio using TTS
+5. Send the audio to me via Telegram
 
-## CITATION
+Style: Warm, conversational, like a friend catching you up over coffee.
+Keep it under 5 minutes. Skip ads and promotional content.
+```
+
+### 调度配置
+
+```text
+Schedule: 0 7 * * *
+Action: Check email → Generate script → TTS → Send audio
+```
+
+## 成功标准
+
+- [ ] 音频在通勤前送达。
+- [ ] 覆盖当天最相关的 3-5 条信息。
+- [ ] 时长控制在 5 分钟内。
+- [ ] 听完后能直接掌握重点，不需要再回看原邮件。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/51-email-to-podcast-commute.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/51-email-to-podcast-commute.md)

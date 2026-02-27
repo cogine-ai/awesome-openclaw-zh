@@ -1,88 +1,95 @@
-# VPS部署与加固流程
+# VPS 部署与加固流程
 
-> 从部署到安全收口的一体化流程，适合长期在线运行。
+> 按“先打通 Tailscale，再封公网 SSH”的顺序部署 OpenClaw，避免把自己锁在门外。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「从部署到安全收口的一体化流程，适合长期在线运行。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 在 VPS 上快速完成 OpenClaw 基线部署并做首轮安全加固。
+- 降低公网暴露面，把 SSH 通道收敛到 Tailscale 私网。
+- 建立“改配置前后可对比、可回滚”的运维习惯。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `openclaw doctor` | 配置体检与常见问题修复 | OpenClaw CLI |
+| 内置 | `openclaw security audit` | 深度安全扫描 | OpenClaw CLI |
+| 外部（需安装） | Tailscale | 私网 SSH 通道 | [Tailscale](https://tailscale.com/) |
+| 外部（推荐） | `git` | 跟踪配置并可回滚 | Git |
 
-- `gateway.trusted_proxies_missing`
-- `fs.credentials_dir.perms_readable`
-- `0.0.0.0`
-- `minimal`
-- `session_status`
-- `coding`
-- `messaging`
-- `full`
-- `heartbeat-example.md`
-- `agent-prompts.md`
-- `cron`
-- `heartbeat`
-- `OpenClaw`
-- `Tailscale`
+## 快速体验版（先感受效果）
 
-### 命令片段
+先完成最关键的安全顺序验证：
 
 ```bash
 ssh user@your-vps-ip
 curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up --ssh=true
 tailscale ip -4
 ssh user@100.64.1.2
-ssh user@your-public-vps-ip
+```
+
+确认上面最后一条成功后，再去防火墙封公网 `22`。
+
+## 稳定自动版（可长期运行）
+
+### 1) OpenClaw 首次体检
+
+```bash
 openclaw doctor --fix
 openclaw security audit --deep
+```
+
+### 2) 权限与监听面收敛
+
+```bash
+chmod 700 ~/.openclaw
+chmod 600 ~/.openclaw/openclaw.json
+chmod 700 ~/.openclaw/credentials
+
+netstat -an | grep 18789 | grep LISTEN
+```
+
+目标是 `127.0.0.1:18789`，而不是 `0.0.0.0:18789`。
+
+`openclaw.json` 示例：
+
+```json
+"gateway": {
+  "bind": "loopback"
+}
+```
+
+```bash
 openclaw gateway restart
+```
+
+### 3) 最小权限工具策略（示例）
+
+```json
+"tools": {
+  "profile": "minimal",
+  "deny": ["exec"],
+  "allow": ["web_search", "web_fetch", "read"]
+}
+```
+
+### 4) 配置 Git 化（可回滚）
+
+```bash
+cd ~/.openclaw && git init
+printf 'agents/*/sessions/\nagents/*/agent/*.jsonl\n*.log\n' > .gitignore
 git add .gitignore openclaw.json
 git commit -m "config: baseline"
-git commit -am "config: before model update"
-git commit -am "config: switched to Gemini 3 Flash"
 ```
 
-### 调度信息
+## 成功标准
 
-- 0 2 * * 0
+- [ ] 公网 SSH 已关闭，Tailscale SSH 可稳定连接。
+- [ ] `openclaw security audit --deep` 无 critical 问题。
+- [ ] 关键配置有 git 提交记录，故障时可快速回滚。
 
-## 可复制提示词
-
-```text
-你是我的 OpenClaw 助手，请帮我完成「VPS部署与加固流程」。
-
-任务目标：从部署到安全收口的一体化流程，适合长期在线运行。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：gateway.trusted_proxies_missing、fs.credentials_dir.perms_readable、0.0.0.0、minimal、session_status、coding）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
-```
-
-## 风险与边界
-
-- 密钥与凭证不要放在公开文本或提示词中。
-- 远程访问和权限建议按最小授权配置。
-- 关键变更前先备份，确保可回滚。
-
-## 使用建议
-
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
-
-## CITATION
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [examples/vps-setup.md](https://github.com/digitalknk/openclaw-runbook/blob/main/examples/vps-setup.md)

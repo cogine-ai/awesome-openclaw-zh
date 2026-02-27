@@ -1,53 +1,72 @@
-# 预约预订助手
+# 预约与订位助手
 
-> 不只找服务还直接预约
+> 你只提需求，代理完成搜索、比价、下单确认并同步日历。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「不只找服务还直接预约」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 将“找店 + 问档期 + 填信息 + 记录确认号”变成一次请求。
+- 输出可比较的 Top 3 选项，减少来回切换页面。
+- 预订完成后自动补齐地址、联系方式和变更信息。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `Web Search` | 搜索服务商与可预约时段 | [clawhub.ai/skills/searching-assistant](https://clawhub.ai/skills/searching-assistant) |
+| 内置 | `Browser Control` | 填表与下单操作 | OpenClaw Built-in |
+| 内置 | `Web Fetch` | 读取商家详情和条款 | OpenClaw Built-in |
 
-- `Telegram`
-- `Web Search`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「预约预订助手」。
-
-任务目标：不只找服务还直接预约
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Web Search、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的预约助手。
+请在 [YOUR CITY/AREA] 帮我找“周五晚餐 2 人位”，
+先给 Top 3（评分、价格区间、可预约时间、距离），
+本轮不执行预订。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my booking assistant. When I ask you to book something:
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+1. **Search**: Find available options near [YOUR CITY/AREA]
+2. **Compare**: Show me top 3 options with:
+   - Name, rating, price range
+   - Available times that match my request
+   - Distance from my location
+3. **Book**: Once I pick one, complete the reservation:
+   - Fill out online booking forms via browser
+   - If no online booking, provide the phone number and a script I can use
+4. **Confirm**: Add the appointment to my calendar with:
+   - Location and address
+   - Confirmation number
+   - Contact info for changes/cancellation
 
-## CITATION
+Types of bookings I'll ask for:
+- Restaurant reservations
+- Doctor/dentist appointments
+- Hair salon appointments
+- Home services (plumber, electrician, cleaner)
+- Car service/mechanic
+
+Always confirm with me before finalizing any booking.
+```
+
+### 调度配置
+
+- 按需触发：收到预约请求时执行
+- 不做自动定时任务
+
+## 成功标准
+
+- [ ] 10 分钟内产出可选方案并完成预约。
+- [ ] 最终确认信息完整可追踪。
+- [ ] 无需反复来回沟通档期。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/63-booking-appointment-agent.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/63-booking-appointment-agent.md)

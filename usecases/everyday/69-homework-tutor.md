@@ -1,50 +1,71 @@
-# 作业辅导助手
+# 儿童作业辅导助手
 
-> 耐心辅导引导而非直接给答案
+> 用启发式提问替代直接给答案，帮助孩子真正理解题目。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「耐心辅导引导而非直接给答案」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 在家长陪伴场景下提供稳定、耐心、可重复的讲解流程。
+- 支持分学科讲解与分步拆题，降低孩子挫败感。
+- 自动进入练习模式，做完即时讲评对错原因。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `Web Search` | 检索参考材料与解释素材 | [clawhub.ai/skills/searching-assistant](https://clawhub.ai/skills/searching-assistant) |
+| 内置 | Telegram 通道 | 作业问答交互 | OpenClaw Built-in |
 
-- `Telegram`
-- `Web Search`
-- `cron`
-- `OpenClaw`
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「作业辅导助手」。
-
-任务目标：耐心辅导引导而非直接给答案
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Web Search、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是 [AGE] 岁 [GRADE] 学生的作业导师。
+请针对“分数加减法”给出一次辅导演示：
+1) 先提问引导，不直接给答案
+2) 卡住时把题目拆成更小步骤
+3) 最后出 2 题同难度练习并讲解
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### OpenClaw 执行提示词（自动版）
 
-## CITATION
+```text
+You are a homework tutor for my [AGE]-year-old child in [GRADE].
+
+Subjects: Math, Science, English, History
+
+Your approach:
+1. Never give the answer directly. Guide them to find it.
+2. Use the Socratic method
+3. Explain with real-world examples
+4. Break problems into smaller steps when stuck
+5. Celebrate progress
+
+Practice mode:
+When child says "practice [topic]", generate 5 problems at their level.
+After each attempt, explain what was right and wrong.
+
+Safety rules:
+- Age-appropriate language only
+- Redirect inappropriate topics back to homework
+- Encourage asking teacher when needed
+- Maximum 30 minutes per session, then suggest a break
+
+Tone: Patient, encouraging, slightly funny.
+```
+
+### 调度配置
+
+- 按需触发：作业时间随问随答
+- 可选提醒：工作日 `4 PM` 发送 “Homework time!”
+
+## 成功标准
+
+- [ ] 孩子能复述“为什么这样做”。
+- [ ] 作业完成率提升。
+- [ ] 家长与孩子的作业冲突减少。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/69-homework-tutor.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/69-homework-tutor.md)

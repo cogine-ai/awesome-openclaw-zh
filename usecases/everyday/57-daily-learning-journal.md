@@ -1,62 +1,103 @@
-# 每日学习日记
+# 每日学习日志
 
-> 晚间问答追踪个人成长
+> 每晚 5 分钟复盘学习，周报和月报自动生成。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「晚间问答追踪个人成长」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 固定提问框架，降低“想写复盘但不知道写什么”的阻力。
+- 自动落盘到结构化日志，方便后续检索与长期追踪。
+- 每周/每月自动汇总学习模式，帮助你看到真实进展。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `Memory/Notes Skill` | 保存日志与汇总 | [clawhub.ai/skills/mem](https://clawhub.ai/skills/mem) |
+| 内置 | Telegram 通道 | 每日提问与反馈 | OpenClaw Built-in |
+| 内置 | 文件存储 | 写入日/周/月日志文件 | OpenClaw Built-in |
+| 内置 | AI 分析能力 | 生成周报、月报与学习模式洞察 | OpenClaw Built-in |
 
-- `/memory/learning-journal/YYYY-MM-DD.md`
-- `Telegram`
-- `cron`
-
-### 调度信息
-
-- 0 19 * * 0
-- 8:00
-- 7:00
-- 9:30
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「每日学习日记」。
-
-任务目标：晚间问答追踪个人成长
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：/memory/learning-journal/YYYY-MM-DD.md、Telegram、cron）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的学习日志助手。
+请先发我今晚的 4 个复盘问题：
+1) 今天学到了什么
+2) 今天遇到什么挑战
+3) 今天最值得肯定的进展
+4) 明天准备做什么改进
+我回复后，请按固定格式生成当天日志。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
-- 密钥与凭证不要放在公开文本或提示词中。
+### OpenClaw 执行提示词（自动版）
 
-## 使用建议
+```text
+You are my Learning Journal Assistant. Your job is to help me reflect on what I learned today and track my progress over time.
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+DAILY PROMPT (Sent via Telegram at 8:00 PM):
+1) What did you learn today?
+2) What challenged you?
+3) What are you proud of?
+4) What will you do differently tomorrow?
 
-## CITATION
+When I reply:
+1. Extract my answers
+2. Save to `/memory/learning-journal/YYYY-MM-DD.md`
+3. Reply: "✅ Journal entry saved! Great work reflecting today."
+4. Track keywords (skills, topics, emotions, progress signals)
+
+Daily file format:
+# Learning Journal — [Date]
+## What I Learned Today
+## What Challenged Me
+## What I'm Proud Of
+## Tomorrow's Intention
+```
+
+### 调度配置
+
+```json
+{
+  "schedule": "0 20 * * *",
+  "name": "Daily Learning Journal Prompt",
+  "prompt": "Send daily learning journal prompt via Telegram"
+}
+```
+
+```json
+{
+  "schedule": "0 19 * * 0",
+  "name": "Weekly Learning Summary",
+  "prompt": "Generate and send weekly learning report"
+}
+```
+
+```json
+{
+  "schedule": "0 20 28-31 * *",
+  "name": "Monthly Learning Reflection",
+  "prompt": "If last day of month, generate monthly learning summary"
+}
+```
+
+### 建议目录结构
+
+```text
+/memory/learning-journal/
+  /daily/
+  /weekly/
+  /monthly/
+```
+
+## 成功标准
+
+- [ ] 每周至少形成 5 条有效日志。
+- [ ] 周报能提炼出明确的学习主题与模式。
+- [ ] 月报能反映连续进步而非碎片记录。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/57-daily-learning-journal.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/57-daily-learning-journal.md)

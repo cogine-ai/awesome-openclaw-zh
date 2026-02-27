@@ -1,85 +1,81 @@
-# AI编程协作模式
+# AI 编程协作模式
 
-> 把编码、测试、修复流程交给AI协作完成。
+> 由 OpenClaw 负责规划与调度，让 Claude Code 负责编码、测试与修复。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「把编码、测试、修复流程交给AI协作完成。」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 把“需求分析 → 编码实现 → 自动测试 → Bug 修复”串成一条流水线。
+- 适合先做可运行版本，再逐步加自动测试和自动修复。
+- 对个人开发者最直接的收益是减少重复样板开发和基础排障时间。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 外部（需安装） | `@anthropic-ai/claude-cli` | Claude Code 执行编码任务 | npm |
+| 外部（需安装） | `coding-agent` | OpenClaw 编程代理能力 | `clawhub install coding-agent` |
+| 内置 | OpenClaw 调度能力 | 任务拆解、流程编排、结果汇总 | OpenClaw Built-in |
 
-- `Notion`
-- `GitHub`
-- `OpenClaw`
-- `RSS`
+## 快速体验版（先感受效果）
 
-### 命令片段
-
-```bash
-openclaw schedule add "daily-report" \
-openclaw config set report.sources \
-openclaw config set report.channel "feishu"
-openclaw config set notes.default "备忘录/行业研究"
-openclaw template add "meeting-notes" \
-openclaw config set sync.targets "notion,feishu"
-openclaw config set reminder.action-items true
-openclaw config set archive.rules '{
-openclaw schedule add "daily-summary" \
-openclaw config set knowledge.graph true
-openclaw schedule add "morning-report" \
-openclaw config set clipper.default "备忘录/行业研究"
-```
-
-### 调度信息
-
-- 7:00
-- 09:00
-- 10:00
-- 14:00
-- 16:00
-- 17:00
-- 18:00
-- 07:00
-- 9:00
-- 12:00
-
-## 可复制提示词
+先跑一个小任务（不直接改生产项目）：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「AI编程协作模式」。
-
-任务目标：把编码、测试、修复流程交给AI协作完成。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Notion、GitHub、OpenClaw、RSS）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的 OpenClaw 开发助手。
+请调用 Claude Code 完成一个最小 React + TypeScript 待办应用，要求：
+1. 支持添加、删除、完成任务。
+2. 数据持久化到 localStorage。
+3. 输出运行命令与项目结构。
+4. 先给可运行版本，再给可选优化项。
 ```
 
-## 风险与边界
+## 稳定自动版（可长期运行）
 
-- 先在测试环境验证，再应用到生产或长期任务。
+### 1) 安装与配置
 
-## 使用建议
+```bash
+npm install -g @anthropic-ai/claude-cli
+export ANTHROPIC_API_KEY="your-api-key"
+clawhub install coding-agent
+openclaw config set coding.tool "claude-code"
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 2) Coding Agent 关键参数
 
-## CITATION
+```bash
+clawhub install coding-agent
+openclaw config set coding.tool "claude-code"
+openclaw config set coding.model "claude-3-5-sonnet"
+openclaw config set coding.api-key "YOUR_ANTHROPIC_API_KEY"
+openclaw config set coding.workspace "~/projects"
+openclaw config set coding.auto-test true
+openclaw config set coding.auto-fix true
+```
+
+### 3) 自动测试与修复提示词
+
+```text
+你是我的 OpenClaw 开发助手。
+请用 Claude Code 开发“用户管理系统”，并按以下流程执行：
+1. 后端开发。
+2. 前端开发。
+3. 自动测试并列出失败项。
+4. 自动修复失败项。
+5. 执行回归测试直到全部通过。
+
+输出要求：
+- 每个阶段都给出状态（进行中 / 完成）
+- 对每个修复项写明“问题原因 + 修复动作”
+- 最后输出通过/失败统计
+```
+
+## 成功标准
+
+- [ ] 能稳定完成“生成代码 → 测试 → 修复 → 回归”闭环。
+- [ ] 修复说明清晰，可人工复核。
+- [ ] 关键配置（模型、工作目录、自动测试开关）可复用。
+
+## 引用来源
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/12-personal-productivity.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md)

@@ -1,27 +1,35 @@
 # 家庭实验室远程安全访问
 
-> 通过聊天工具安全触发远程运维操作，降低误操作风险。
+> 用 Telegram + Tailscale + SSH 远程管理 homelab，危险操作必须二次确认。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「通过聊天工具安全触发远程运维操作，降低误操作风险。」做成一个可重复执行的小流程。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
-- 建议先跑最小闭环，再按实际反馈逐步扩展。
+- 不开公网端口也能远程看状态、重启服务、做基础排障。
+- 把命令分级（允许 / 需确认 / 禁止），降低误操作风险。
+- 在一个聊天入口管理多台设备，适合家庭实验室日常运维。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill / 工具 | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `message` | 接收和回复 Telegram 指令 | OpenClaw Built-in |
+| 内置 | `exec` | 执行 SSH 指令 | OpenClaw Built-in |
+| 外部（需安装） | Tailscale（或 WireGuard / ZeroTier） | 私网连通与加密传输 | 官方安装包 |
+| 外部（需准备） | Telegram Bot | 指令入口与通知 | @BotFather |
 
-- `/newbot`
-- `Telegram`
-- `Discord`
-- `Slack`
-- `OpenClaw`
-- `Tailscale`
-- `WireGuard`
-- `ZeroTier`
+## 快速体验版（先感受效果）
 
-### 命令片段
+先只开放只读状态命令：
+
+```text
+你是我的 homelab 访问助手。
+只允许执行以下状态命令：uptime、df -h、free -m、systemctl status。
+收到高风险命令时直接拒绝，并提示“需要人工 SSH 处理”。
+```
+
+## 稳定自动版（可长期运行）
+
+### 1) Tailscale 与 SSH 准备
 
 ```bash
 curl -fsSL https://tailscale.com/install.sh | sh
@@ -30,41 +38,77 @@ tailscale ip -4
 ssh homelab-router uptime
 ```
 
-## 可复制提示词
+`~/.ssh/config` 示例：
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「家庭实验室远程安全访问」。
-
-任务目标：通过聊天工具安全触发远程运维操作，降低误操作风险。
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：/newbot、Telegram、Discord、Slack、OpenClaw、Tailscale）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+Host homelab-router
+    HostName [TAILSCALE_IP]
+    User [USERNAME]
+    IdentityFile ~/.ssh/homelab_key
+    StrictHostKeyChecking accept-new
 ```
 
-## 风险与边界
+### 2) Telegram 机器人凭据
 
-- 涉及删除、外发、改密等动作时，先确认再执行。
-- 密钥与凭证不要放在公开文本或提示词中。
-- 远程访问和权限建议按最小授权配置。
+写入 `~/.openclaw/credentials/`：
 
-## 使用建议
+```text
+TELEGRAM_BOT_TOKEN=[YOUR_BOT_TOKEN]
+TELEGRAM_CHAT_ID=[YOUR_CHAT_ID]
+```
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### 3) Agent 安全策略
 
-## CITATION
+```yaml
+agents:
+  homelab:
+    model: anthropic/claude-sonnet-4-5
+    tools:
+      - message
+      - exec
+    system: |
+      You are a homelab access controller. Handle SSH commands from Telegram.
+
+      VALIDATION RULES:
+      1. Verify sender is authorized ([YOUR_TELEGRAM_USERNAME])
+      2. Parse command from message
+      3. Check command against allowlist
+
+      ALLOWLIST (no confirmation):
+      - Status: uptime, df -h, free -m, systemctl status [service]
+      - Network: ping, curl -I, ip addr
+      - Info: ls, cat (read-only files)
+
+      REQUIRES CONFIRMATION (ask "Execute? Reply YES"):
+      - Service restart: systemctl restart
+      - Package install: apt install, pip install
+      - File changes: sed, echo >, editing configs
+      - Reboot: reboot, shutdown
+
+      FORBIDDEN (always reject):
+      - rm -rf, dd, disk wiping
+      - Password changes, user management
+      - Firewall changes without explicit context
+
+      EXECUTION:
+      - SSH via Tailscale: ssh [host] [command]
+      - Timeout: 30 seconds
+      - Return output to Telegram
+```
+
+### 4) 测试命令
+
+```text
+/homelab status router
+```
+
+## 成功标准
+
+- [ ] 只读命令可立即返回结果。
+- [ ] 高风险命令会触发 `YES` 二次确认。
+- [ ] 禁止命令始终被拒绝，不会落地执行。
+
+## 引用来源
 
 - 来源仓库： [digitalknk/openclaw-runbook](https://github.com/digitalknk/openclaw-runbook)
 - 原始条目： [showcases/homelab-access.md](https://github.com/digitalknk/openclaw-runbook/blob/main/showcases/homelab-access.md)

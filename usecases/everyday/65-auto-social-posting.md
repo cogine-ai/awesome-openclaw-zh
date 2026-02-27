@@ -1,57 +1,78 @@
-# 自动社交发帖
+# 社媒自动发布助手
 
-> 自动排期发布内容
+> 按周内容日历自动起草、审核、发布，并跟踪发后互动。
 
 ## 这个案例能帮你做什么
 
-- 你可以先把「自动排期发布内容」做成一个可重复执行的小流程。
-- 这个场景适合加上定时执行，减少手动重复操作。
-- 可结合现有技能与渠道，把结果直接推送到你常用入口。
+- 保持稳定发帖频率，不再“想到才发”。
+- 发帖前先走 Telegram 审核，兼顾效率与风险控制。
+- 发后 2 小时自动巡检评论，提升互动响应速度。
 
-## 开始前准备
+## 你需要的 Skills（按类型）
 
-### 技能与工具
+| 类型 | Skill | 用途 | 来源 |
+|---|---|---|---|
+| 内置 | `Browser Control` | 执行发帖与评论回复 | OpenClaw Built-in |
+| 外部（需安装） | `Web Search` | 参考热点主题 | [clawhub.ai/skills/searching-assistant](https://clawhub.ai/skills/searching-assistant) |
+| 内置 | Telegram 通道 | 草稿审核与确认 | OpenClaw Built-in |
 
-- `Telegram`
-- `Web Search`
-- `cron`
-- `OpenClaw`
-
-### 调度信息
-
-- 8:30
-- 12:30
-- 9:00
-
-## 可复制提示词
+## 快速体验版（先跑一轮）
 
 ```text
-你是我的 OpenClaw 助手，请帮我完成「自动社交发帖」。
-
-任务目标：自动排期发布内容
-
-请按这个顺序执行：
-1. 先给出今天可落地的最小版本（3-5步）。
-2. 直接产出第一版结果，不要只讲思路。
-3. 如果缺少信息，把问题集中放在最后让我一次补全。
-4. 使用我已启用的技能（优先：Telegram、Web Search、cron、OpenClaw）。
-5. 涉及高风险动作（删除、外发、改密、生产写操作）先暂停并请求确认。
-
-输出格式：
-## 今日执行计划
-## 立即可执行动作
-## 第一版结果
-## 我需要补充的信息
-## 风险提醒
+你是我的社媒内容助手。
+请按今天的内容主题先生成 2 个草稿：
+1) X/Twitter 版本（<=280 字）
+2) LinkedIn 版本
+并给出最多 3 个相关 hashtag。
+本轮不发布。
 ```
 
-## 使用建议
+## 稳定自动版（可长期运行）
 
-- 先手动跑通一次，再设置自动化。
-- 先用一个渠道验证结果，再扩到更多渠道。
-- 关键动作建议保留确认步骤。
+### OpenClaw 执行提示词（自动版）
 
-## CITATION
+```text
+You are my social media content manager. Manage posting for:
+- X/Twitter: @[YOUR_HANDLE]
+- LinkedIn: [YOUR_PROFILE]
+
+Content calendar:
+- Monday: Motivational/mindset post
+- Tuesday: Industry insight or tip
+- Wednesday: Behind-the-scenes or personal story
+- Thursday: Engage with trending topic in my field
+- Friday: Weekend recommendation (book/tool/article)
+- Saturday: Repost/engage with community content
+- Sunday: Rest (no posting)
+
+Workflow:
+1. Draft the post the evening before
+2. Send me the draft via Telegram for approval
+3. If I approve (or don't respond within 2 hours), publish at optimal time:
+   - X/Twitter: 8:30 AM and 12:30 PM
+   - LinkedIn: 9:00 AM
+4. After posting, monitor engagement for 2 hours and reply to any comments
+
+Content rules:
+- Never post about: politics, religion, controversial takes
+- Max 280 characters for X/Twitter
+- Include relevant hashtags (max 3)
+- Use emoji sparingly ✨
+```
+
+### 调度配置
+
+- 草稿生成：每天 `8 PM`
+- 发布：按平台时段触发
+- 互动巡检：每次发布后 `2` 小时
+
+## 成功标准
+
+- [ ] 每周稳定发布 5-6 天。
+- [ ] 发后互动率保持或增长。
+- [ ] 每天管理耗时控制在 5 分钟以内。
+
+## 引用来源
 
 - 来源仓库： [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 - 原始条目： [usecases/65-auto-social-posting.md](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/65-auto-social-posting.md)
