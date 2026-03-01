@@ -1285,5 +1285,185 @@
     "sourceRepo": "digitalknk/openclaw-runbook",
     "sourcePath": "examples/config-example-guide.md",
     "sourceUrl": "https://github.com/digitalknk/openclaw-runbook/blob/main/examples/config-example-guide.md"
+  },
+  {
+    "title": "Agent 隔离身份启动（独立账号边界）",
+    "desc": "先建立专用账号边界，再开放执行权限，降低主账号风险。",
+    "category": "安全监控",
+    "localPath": "usecases/security/01-agent-isolated-identity-bootstrap.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/localghost/status/2014568799824212004",
+    "sourceUrl": "https://x.com/localghost/status/2014568799824212004"
+  },
+  {
+    "title": "Excalidraw Diagram-as-Code（流程图自动生成）",
+    "desc": "让 OpenClaw 直接生成 Excalidraw JSON，把文本需求快速转成流程图。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/02-excalidraw-diagram-as-code.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/swiftlysingh/status/2009684853827281070",
+    "sourceUrl": "https://x.com/swiftlysingh/status/2009684853827281070"
+  },
+  {
+    "title": "车价谈判自动化（多经销商协商）",
+    "desc": "并行沟通多家经销商并统一比较报价与附加条件。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/03-car-price-negotiation.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/astuyve/status/2014147784098681217",
+    "sourceUrl": "https://x.com/astuyve/status/2014147784098681217"
+  },
+  {
+    "title": "用户流测试 → 并行 PR 修复流水线",
+    "desc": "将测试问题结构化后并行派发修复，缩短回归周期。",
+    "category": "基础设施与 DevOps",
+    "localPath": "usecases/devops/04-user-flow-to-pr-parallel-fix.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/nateliason/status/2014797672419340435",
+    "sourceUrl": "https://x.com/nateliason/status/2014797672419340435"
+  },
+  {
+    "title": "大规模 X 数据研究管线（4M 帖文）",
+    "desc": "在大样本社媒数据中提炼主题信号，支撑研究与选题决策。",
+    "category": "数据分析",
+    "localPath": "usecases/data/05-large-scale-x-research-pipeline.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/andrewjiang/status/2008388427180630155",
+    "sourceUrl": "https://x.com/andrewjiang/status/2008388427180630155"
+  },
+  {
+    "title": "语音驱动 Railway 故障定位与修复",
+    "desc": "在移动场景通过语音指令完成排障、修复、验证和复盘。",
+    "category": "基础设施与 DevOps",
+    "localPath": "usecases/devops/06-voice-driven-railway-incident-fix.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/georgedagg_/status/2012119327147798753",
+    "sourceUrl": "https://x.com/georgedagg_/status/2012119327147798753"
+  },
+  {
+    "title": "Telegram 远程站点迁移（Notion → Astro + DNS）",
+    "desc": "通过 Telegram 远程驱动内容迁移、静态站重建与 DNS 切换。",
+    "category": "基础设施与 DevOps",
+    "localPath": "usecases/devops/07-telegram-notion-astro-migration.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/davekiss/status/2008994096736817624",
+    "sourceUrl": "https://x.com/davekiss/status/2008994096736817624"
+  },
+  {
+    "title": "家庭餐食运营系统（Notion）",
+    "desc": "将餐食计划、采购清单与天气联动到同一家庭协作流程。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/08-family-meal-ops-notion.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/stevecaldwell/status/2007616854689280196",
+    "sourceUrl": "https://x.com/stevecaldwell/status/2007616854689280196"
+  },
+  {
+    "title": "超市代购自动化（1Password + MFA + Beeper）",
+    "desc": "从采购消息到待支付订单形成完整下单链路。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/09-grocery-ordering-with-1password-mfa.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/dreetje/status/2013645067441844697",
+    "sourceUrl": "https://x.com/dreetje/status/2013645067441844697"
+  },
+  {
+    "title": "跨 Bot 协作（同一 WhatsApp 群）",
+    "desc": "让两个 OpenClaw 在同一群里分工协作，处理复杂任务。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/10-cross-bot-whatsapp-collaboration.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/danpeguine/status/2014481698369536402",
+    "sourceUrl": "https://x.com/danpeguine/status/2014481698369536402"
+  },
+  {
+    "title": "血检报告结构化入库（Notion）",
+    "desc": "自动提取血检字段并沉淀为可查询的健康数据库。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/11-bloodwork-to-notion-structured-db.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/danpeguine/status/2013388700479058068",
+    "sourceUrl": "https://x.com/danpeguine/status/2013388700479058068"
+  },
+  {
+    "title": "邮件小票转零件清单（Receipt → BOM）",
+    "desc": "自动从收据邮件提取物料明细并输出标准 BOM。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/12-email-receipt-to-parts-list.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/localghost/status/2014880905979167005",
+    "sourceUrl": "https://x.com/localghost/status/2014880905979167005"
+  },
+  {
+    "title": "OpenClaw macOS 菜单栏控制台",
+    "desc": "在桌面菜单栏查看网关状态、日志并执行快捷控制。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/13-macos-menubar-openclaw-console.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/MagiMetal/status/2009424267801485362",
+    "sourceUrl": "https://x.com/MagiMetal/status/2009424267801485362"
+  },
+  {
+    "title": "Alexa CLI 自然语言控制（含智能家居设备）",
+    "desc": "用自然语言控制 Alexa 设备并接入自动化流程。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/14-alexa-cli-natural-language-control.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/buddyhadry/status/2007656142105661693",
+    "sourceUrl": "https://x.com/buddyhadry/status/2007656142105661693"
+  },
+  {
+    "title": "航班邮件自动值机与靠窗选座",
+    "desc": "自动识别航班邮件并在确认后执行值机与选座。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/15-email-flight-auto-checkin-window-seat.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/armanddp/status/2008767951340794245",
+    "sourceUrl": "https://x.com/armanddp/status/2008767951340794245"
+  },
+  {
+    "title": "保险理赔自动提交与维修预约",
+    "desc": "串联理赔提交与后续维修预约，减少流程中断。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/16-insurance-claim-and-repair-booking.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/avi_press/status/2013066316467560521",
+    "sourceUrl": "https://x.com/avi_press/status/2013066316467560521"
+  },
+  {
+    "title": "伴侣双 Bot 共享记忆层（shared-memory）",
+    "desc": "两个 OpenClaw 同步关键上下文，支持跨人协作接力。",
+    "category": "内存管理",
+    "localPath": "usecases/memory/17-shared-memory-for-partner-bots.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/christinetyip/status/2013196232181637500",
+    "sourceUrl": "https://x.com/christinetyip/status/2013196232181637500"
+  },
+  {
+    "title": "Garmin 运动数据热力图（个人轨迹可视化）",
+    "desc": "导入运动轨迹后快速生成可筛选的交互热力图。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/18-garmin-exercise-heatmap.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/bangkokbuild/status/2013158851194085388",
+    "sourceUrl": "https://x.com/bangkokbuild/status/2013158851194085388"
+  },
+  {
+    "title": "Telegram 驱动 iOS 提交与 TestFlight 更新",
+    "desc": "在聊天中触发 iOS 发布流程并标准化 TestFlight 更新。",
+    "category": "基础设施与 DevOps",
+    "localPath": "usecases/devops/19-telegram-driven-ios-testflight-release.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/CopyKatCapital/status/2013003345686868171",
+    "sourceUrl": "https://x.com/CopyKatCapital/status/2013003345686868171"
+  },
+  {
+    "title": "想法 → 实验 → 决策（ADR）夜间闭环",
+    "desc": "白天收集想法、夜间自动实验、次日输出 ADR 决策记录。",
+    "category": "研究与学习",
+    "localPath": "usecases/research/20-idea-experiment-adr-night-loop.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/antonplex/status/2012397507754770587",
+    "sourceUrl": "https://x.com/antonplex/status/2012397507754770587"
   }
 ]

@@ -3,3 +3,4 @@ node_modules/
 *.log
 resources/source-cache/
 /scripts/
+draft/
