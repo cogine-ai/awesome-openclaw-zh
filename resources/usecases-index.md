@@ -1,6 +1,6 @@
 # 用例总览
 
-当前共收录 **163** 个中文可用案例。
+当前共收录 **168** 个中文可用案例。
 
 按分类浏览：
 
@@ -27,7 +27,7 @@
 | [Excalidraw Diagram-as-Code（流程图自动生成）](../usecases/creative/02-excalidraw-diagram-as-code.md) | 让 OpenClaw 直接生成 Excalidraw JSON，把文本需求快速转成流程图。 |
 | [YouTube 内容流水线](../usecases/creative/youtube-content-pipeline.md) | 为 YouTube 频道自动化视频创意发掘、研究和追踪。 |
 
-## 基础设施与 DevOps (10)
+## 基础设施与 DevOps (11)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -35,6 +35,7 @@
 | [家庭实验室远程安全访问](../usecases/devops/homelab-access-showcase.md) | 通过聊天工具安全触发远程运维操作，降低误操作风险。 |
 | [自愈家庭服务器](../usecases/devops/self-healing-home-server.md) | 运行一个始终在线的基础设施智能体，具有 SSH 访问权限、自动化 cron 作业，以及跨家庭网络的自愈能力。 |
 | [AI编程协作模式](../usecases/devops/ai-coding-collaboration.md) | 把编码、测试、修复流程交给AI协作完成。 |
+| [自主教育游戏开发流水线（Autonomous Educational Game Development Pipeline）](../usecases/devops/autonomous-game-dev-pipeline.md) | 以“先修 Bug、再做新游戏”规则持续推进教育游戏开发。 |
 | [用户流测试 → 并行 PR 修复流水线](../usecases/devops/04-user-flow-to-pr-parallel-fix.md) | 把用户流测试问题结构化后并行派发修复，提升回归效率。 |
 | [语音驱动 Railway 故障定位与修复](../usecases/devops/06-voice-driven-railway-incident-fix.md) | 在移动场景通过语音指令完成排障、修复、验证和复盘。 |
 | [Telegram 远程站点迁移（Notion → Astro + DNS）](../usecases/devops/07-telegram-notion-astro-migration.md) | 通过 Telegram 远程驱动内容迁移、静态站重建与 DNS 切换。 |
@@ -42,7 +43,7 @@
 | [n8n 工作流编排](../usecases/devops/n8n-workflow-orchestration.md) | 通过 webhook 将 API 调用委托给 n8n 工作流 —— 智能体从不接触凭证，每个集成都是可视化的且可锁定。 |
 | [VPS部署与加固流程](../usecases/devops/vps-deployment-hardening.md) | 从部署到安全收口的一体化流程，适合长期在线运行。 |
 
-## 生产力 (26)
+## 生产力 (27)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -65,6 +66,7 @@
 | [任务追踪透明化中心](../usecases/productivity/task-tracking-workflow-center.md) | 把智能体任务状态结构化记录，随时看到进展与阻塞。 |
 | [社区版每日简报（Daily Brief）](../usecases/productivity/daily-brief-showcase.md) | 每天自动汇总天气、日程、任务和重点信息，早上一次看完。 |
 | [收件箱整理](../usecases/productivity/inbox-declutter.md) | 总结新闻通讯并以电子邮件形式发送给你摘要。 |
+| [自动会议纪要与行动项分发（Automated Meeting Notes & Action Items）](../usecases/productivity/automated-meeting-notes-action-items.md) | 会后自动生成纪要并把行动项分发到任务系统。 |
 | [项目状态管理](../usecases/productivity/project-state-management.md) | 事件驱动的项目追踪，自动捕获上下文，取代静态看板。 |
 | [学生学习助手工作流](../usecases/productivity/student-learning-assistant-workflow.md) | 课程管理、复习规划、作业辅助的一体化学习流程。 |
 | [知识工作者全天工作流](../usecases/productivity/knowledge-worker-day-workflow.md) | 覆盖日报、资料、会议、复盘的一整天效率流程。 |
@@ -73,7 +75,7 @@
 | [Notion全自动运营工作流](../usecases/productivity/notion-automatic-operation-flow.md) | 把内容与运营动作自动落到 Notion，减少手工维护。 |
 | [Todoist 任务管理器](../usecases/productivity/todoist-task-manager.md) | 通过将推理和进度日志同步到 Todoist，最大化智能体的透明度。 |
 
-## 研究与学习 (9)
+## 研究与学习 (10)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -85,6 +87,7 @@
 | [语义记忆搜索](../usecases/research/semantic-memory-search.md) | 使用混合检索和自动同步，为你的 OpenClaw markdown 记忆文件添加向量驱动的语义搜索。 |
 | [自托管知识库助手（Coeus）](../usecases/research/coeus-knowledge-base-showcase.md) | 把资料持续沉淀到可检索知识库，支持长期复用。 |
 | [想法 → 实验 → 决策（ADR）夜间闭环](../usecases/research/20-idea-experiment-adr-night-loop.md) | 白天收集想法、夜间自动实验、次日输出 ADR 决策记录。 |
+| [开工前想法验证闸门（Pre-Build Idea Validator）](../usecases/research/pre-build-idea-validator.md) | 开发前先做竞争度扫描，用 `reality_signal` 决定继续或转向。 |
 | [AI 财报追踪器](../usecases/research/earnings-tracker.md) | 追踪科技/AI 财报，带有自动化预览、警报和详细摘要。 |
 
 ## 金融与交易 (1)
@@ -93,7 +96,7 @@
 |---|---|
 | [Polymarket 自动驾驶](../usecases/finance/polymarket-autopilot.md) | 在预测市场上进行自动化模拟交易，带有回测、策略分析和每日绩效报告。 |
 
-## 日常生活 (30)
+## 日常生活 (31)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -111,6 +114,7 @@
 | [航班邮件自动值机与靠窗选座](../usecases/everyday/15-email-flight-auto-checkin-window-seat.md) | 自动识别航班邮件并在确认后执行值机与选座。 |
 | [保险理赔自动提交与维修预约](../usecases/everyday/16-insurance-claim-and-repair-booking.md) | 串联理赔提交与后续维修预约，减少流程中断。 |
 | [Garmin 运动数据热力图（个人轨迹可视化）](../usecases/everyday/18-garmin-exercise-heatmap.md) | 导入运动轨迹后快速生成可筛选的交互热力图。 |
+| [习惯追踪与督促教练（Habit Tracker & Accountability Coach）](../usecases/everyday/habit-tracker-accountability-coach.md) | 主动发起每日打卡并跟踪 streak，帮助稳定养成习惯。 |
 | [每日晨间简报](../usecases/everyday/52-morning-briefing-telegram.md) | 天气+日历+新闻一条消息搞定 |
 | [每日学习日记](../usecases/everyday/57-daily-learning-journal.md) | 晚间问答追踪个人成长 |
 | [社交媒体监控](../usecases/everyday/64-social-media-monitor.md) | 跨平台追踪提及和情感 |
@@ -128,7 +132,7 @@
 | [Telegram 智能家居](../usecases/everyday/62-smart-home-telegram.md) | 聊天控制灯光温度门锁 |
 | [Trello/Notion 整理](../usecases/everyday/66-trello-notion-organizer.md) | 夜间清理看板晨间状态报告 |
 
-## 内容转换 (12)
+## 内容转换 (13)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -143,6 +147,7 @@
 | [邮件转播客技能](../usecases/content/38-email-to-podcast-skill.md) | 邮件音频转换的可重用技能 |
 | [云端内容创作工作流](../usecases/content/cloud-content-creation-flow.md) | 把选题、写作、发布串成全自动内容生产线。 |
 | [自动化内容创作流水线](../usecases/content/auto-content-creation-pipeline.md) | 从资料收集到成稿发布的一体化内容自动化。 |
+| [播客生产流水线（Podcast Production Pipeline）](../usecases/content/podcast-production-pipeline.md) | 从调研、提纲到 show notes 和宣发文案一次产出。 |
 | [LinkedIn 周更草稿助手](../usecases/content/linkedin-drafter-showcase.md) | 按你的口吻自动生成周更内容草稿，减少写作启动成本。 |
 
 ## 内存管理 (11)

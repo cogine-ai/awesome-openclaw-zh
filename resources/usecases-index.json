@@ -1465,5 +1465,50 @@
     "sourceRepo": "openclaw.ai/showcase",
     "sourcePath": "x.com/antonplex/status/2012397507754770587",
     "sourceUrl": "https://x.com/antonplex/status/2012397507754770587"
+  },
+  {
+    "title": "习惯追踪与督促教练（Habit Tracker & Accountability Coach）",
+    "desc": "主动发起每日打卡并跟踪 streak，帮助稳定养成习惯。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/habit-tracker-accountability-coach.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/habit-tracker-accountability-coach.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/habit-tracker-accountability-coach.md"
+  },
+  {
+    "title": "自动会议纪要与行动项分发（Automated Meeting Notes & Action Items）",
+    "desc": "会后自动生成纪要并把行动项分发到任务系统。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/automated-meeting-notes-action-items.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/meeting-notes-action-items.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/meeting-notes-action-items.md"
+  },
+  {
+    "title": "播客生产流水线（Podcast Production Pipeline）",
+    "desc": "从调研、提纲到 show notes 和宣发文案一次产出。",
+    "category": "内容转换",
+    "localPath": "usecases/content/podcast-production-pipeline.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/podcast-production-pipeline.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/podcast-production-pipeline.md"
+  },
+  {
+    "title": "开工前想法验证闸门（Pre-Build Idea Validator）",
+    "desc": "开发前先做竞争度扫描，用 reality_signal 决定继续或转向。",
+    "category": "研究与学习",
+    "localPath": "usecases/research/pre-build-idea-validator.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/pre-build-idea-validator.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/pre-build-idea-validator.md"
+  },
+  {
+    "title": "自主教育游戏开发流水线（Autonomous Educational Game Development Pipeline）",
+    "desc": "以先修 Bug 再做新游戏的规则持续推进教育游戏开发。",
+    "category": "基础设施与 DevOps",
+    "localPath": "usecases/devops/autonomous-game-dev-pipeline.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/autonomous-game-dev-pipeline.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/autonomous-game-dev-pipeline.md"
   }
 ]

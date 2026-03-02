@@ -5,7 +5,7 @@
 
 本仓库主打：
 - 非技术用户友好
-- 案例覆盖广（已收录 163 个）
+- 案例覆盖广（已收录 168 个）
 - 复制提示词即可上手
 - 以真实社区用法为核心
 - 每个案例都包含来源对齐信息（场景/动作/工具/边界）
@@ -14,7 +14,7 @@
 
 1. [5分钟快速上手](./quickstart/00-5min-quickstart.md)
 2. [7天上手路径](./quickstart/01-7day-path.md)
-3. [按分类找案例（163个）](./resources/usecases-index.md)
+3. [按分类找案例（168个）](./resources/usecases-index.md)
 
 ## 你可以先从这 10 个开始
 
@@ -31,15 +31,15 @@
 
 ## 分类导航
 
-- [全量用例索引（163）](./resources/usecases-index.md)
+- [全量用例索引（168）](./resources/usecases-index.md)
 - [社交媒体（6）](./usecases/social)
 - [创意与构建（7）](./usecases/creative)
-- [基础设施与 DevOps（10）](./usecases/devops)
-- [生产力（26）](./usecases/productivity)
-- [研究与学习（9）](./usecases/research)
+- [基础设施与 DevOps（11）](./usecases/devops)
+- [生产力（27）](./usecases/productivity)
+- [研究与学习（10）](./usecases/research)
 - [金融与交易（1）](./usecases/finance)
-- [日常生活（30）](./usecases/everyday)
-- [内容转换（12）](./usecases/content)
+- [日常生活（31）](./usecases/everyday)
+- [内容转换（13）](./usecases/content)
 - [内存管理（11）](./usecases/memory)
 - [夜间自动化（14）](./usecases/automation)
 - [数据分析（16）](./usecases/data)
