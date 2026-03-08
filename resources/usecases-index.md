@@ -1,6 +1,6 @@
 # 用例总览
 
-当前共收录 **168** 个中文可用案例。
+当前共收录 **176** 个中文可用案例。
 
 按分类浏览：
 
@@ -15,7 +15,7 @@
 | [每周技术发现精选](../usecases/social/tech-discoveries-showcase.md) | 自动追踪和筛选技术动态，输出可读性高的周报。 |
 | [X 账号分析](../usecases/social/x-account-analysis.md) | 获取你的 X 账号的定性分析。 |
 
-## 创意与构建 (7)
+## 创意与构建 (8)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -26,6 +26,7 @@
 | [AI绘画生产工作流](../usecases/creative/ai-image-generation-workflow.md) | 从想法到配图的批量化创作流程，适合内容团队。 |
 | [Excalidraw Diagram-as-Code（流程图自动生成）](../usecases/creative/02-excalidraw-diagram-as-code.md) | 让 OpenClaw 直接生成 Excalidraw JSON，把文本需求快速转成流程图。 |
 | [YouTube 内容流水线](../usecases/creative/youtube-content-pipeline.md) | 为 YouTube 频道自动化视频创意发掘、研究和追踪。 |
+| [WhatsApp 驱动 UI 生成与截图回传](../usecases/creative/whatsapp-driven-ui-with-screenshot-feedback.md) | 通过 WhatsApp 远程生成界面并回传截图，先看效果再继续迭代。 |
 
 ## 基础设施与 DevOps (11)
 
@@ -43,7 +44,7 @@
 | [n8n 工作流编排](../usecases/devops/n8n-workflow-orchestration.md) | 通过 webhook 将 API 调用委托给 n8n 工作流 —— 智能体从不接触凭证，每个集成都是可视化的且可锁定。 |
 | [VPS部署与加固流程](../usecases/devops/vps-deployment-hardening.md) | 从部署到安全收口的一体化流程，适合长期在线运行。 |
 
-## 生产力 (27)
+## 生产力 (28)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -74,6 +75,7 @@
 | [自主项目管理](../usecases/productivity/autonomous-project-management.md) | 使用 STATE.yaml 模式协调多智能体项目 —— 子智能体并行工作，无需编排器开销。 |
 | [Notion全自动运营工作流](../usecases/productivity/notion-automatic-operation-flow.md) | 把内容与运营动作自动落到 Notion，减少手工维护。 |
 | [Todoist 任务管理器](../usecases/productivity/todoist-task-manager.md) | 通过将推理和进度日志同步到 Todoist，最大化智能体的透明度。 |
+| [任务时间块排程与周复盘助理](../usecases/productivity/task-timeblocking-and-weekly-review-assistant.md) | 按优先级排进日历，并基于会议转录输出 weekly review 和后续动作。 |
 
 ## 研究与学习 (10)
 
@@ -96,7 +98,7 @@
 |---|---|
 | [Polymarket 自动驾驶](../usecases/finance/polymarket-autopilot.md) | 在预测市场上进行自动化模拟交易，带有回测、策略分析和每日绩效报告。 |
 
-## 日常生活 (31)
+## 日常生活 (33)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -131,8 +133,10 @@
 | [Instagram 故事管理](../usecases/everyday/53-instagram-story-manager.md) | 自动发布故事并管理互动 |
 | [Telegram 智能家居](../usecases/everyday/62-smart-home-telegram.md) | 聊天控制灯光温度门锁 |
 | [Trello/Notion 整理](../usecases/everyday/66-trello-notion-organizer.md) | 夜间清理看板晨间状态报告 |
+| [电话外呼提醒（Phone Call Notifications）](../usecases/everyday/phone-call-notifications.md) | 在真正重要的时候由 OpenClaw 主动给你打电话，减少关键通知遗漏。 |
+| [家庭 PM 周报](../usecases/everyday/family-pm-weekly-roundup.md) | 收集家庭话题、补做研究，并在固定时间发送一份集中周报。 |
 
-## 内容转换 (13)
+## 内容转换 (14)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -149,6 +153,7 @@
 | [自动化内容创作流水线](../usecases/content/auto-content-creation-pipeline.md) | 从资料收集到成稿发布的一体化内容自动化。 |
 | [播客生产流水线（Podcast Production Pipeline）](../usecases/content/podcast-production-pipeline.md) | 从调研、提纲到 show notes 和宣发文案一次产出。 |
 | [LinkedIn 周更草稿助手](../usecases/content/linkedin-drafter-showcase.md) | 按你的口吻自动生成周更内容草稿，减少写作启动成本。 |
+| [阅读材料重打包成极简 HTML/CSS 阅读器](../usecases/content/html-css-reading-repackager.md) | 把原始资料重排成更适合阅读的轻量 HTML/CSS 页面，并支持调字号和 speed-read。 |
 
 ## 内存管理 (11)
 
@@ -166,7 +171,7 @@
 | [早间摘要生成器](../usecases/memory/45-morning-digest-generator.md) | 编译夜间活动 |
 | [知识图谱重建器](../usecases/memory/40-knowledge-graph-rebuilder.md) | 夜间图重建 |
 
-## 夜间自动化 (14)
+## 夜间自动化 (15)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -184,6 +189,7 @@
 | [Swift 日志记录包](../usecases/automation/37-swift-logger-package.md) | TDD 包开发 |
 | [Trello 看板组织器](../usecases/automation/49-trello-board-organizer.md) | 夜间看板维护 |
 | [V4 LP 自动复利](../usecases/automation/11-v4-lp-auto-compounding.md) | Uniswap V4 费用复利 |
+| [多账号 Gmail + Calendar 晨间汇总](../usecases/automation/multi-account-gmail-calendar-morning-rollup.md) | 用 gog 聚合多个 Gmail 和 Calendar 账号，早晨一次看完重点。 |
 
 ## 数据分析 (16)
 
@@ -227,7 +233,7 @@
 | [Git 历史清理器](../usecases/security/33-git-history-cleaner.md) | 从历史中删除机密 |
 | [SSH 密钥扫描器](../usecases/security/09-ssh-key-scanner.md) | 查找暴露的 SSH 密钥 |
 
-## 工具开发 (5)
+## 工具开发 (7)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -236,3 +242,5 @@
 | [OpenClaw macOS 菜单栏控制台](../usecases/tools/13-macos-menubar-openclaw-console.md) | 在桌面菜单栏查看网关状态、日志并执行快捷控制。 |
 | [技能构建提示词工厂](../usecases/tools/skill-builder-prompt-workflow.md) | 用标准提示词批量生成可维护技能，减少重复劳动。 |
 | [可公开配置基线模板](../usecases/tools/sanitized-config-baseline.md) | 通过脱敏配置建立团队基线，方便复制和协作。 |
+| [AionUi 桌面协作与远程救援（OpenClaw Cowork）](../usecases/tools/aionui-cowork-desktop-remote-rescue.md) | 用可视化 Cowork 界面远程使用和修复 OpenClaw，适合离开电脑后的协作与救援。 |
+| [语音模型发现、安装并接入对话](../usecases/tools/voice-model-discovery-install-and-conversation.md) | 发现新 voice model 后，让 OpenClaw 负责检查、安装并完成对话验证。 |

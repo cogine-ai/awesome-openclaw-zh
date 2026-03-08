@@ -1510,5 +1510,77 @@
     "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
     "sourcePath": "usecases/autonomous-game-dev-pipeline.md",
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/autonomous-game-dev-pipeline.md"
+  },
+  {
+    "title": "AionUi 桌面协作与远程救援（OpenClaw Cowork）",
+    "desc": "用可视化 Cowork 界面远程使用和修复 OpenClaw，适合离开电脑后的协作与救援。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/aionui-cowork-desktop-remote-rescue.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/aionui-cowork-desktop.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/aionui-cowork-desktop.md"
+  },
+  {
+    "title": "电话外呼提醒（Phone Call Notifications）",
+    "desc": "在真正重要的时候由 OpenClaw 主动给你打电话，减少关键通知遗漏。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/phone-call-notifications.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/phone-call-notifications.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/phone-call-notifications.md"
+  },
+  {
+    "title": "任务时间块排程与周复盘助理",
+    "desc": "按优先级排进日历，并基于会议转录输出 weekly review 和后续动作。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/task-timeblocking-and-weekly-review-assistant.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/danpeguine/status/2012565160586625345",
+    "sourceUrl": "https://x.com/danpeguine/status/2012565160586625345"
+  },
+  {
+    "title": "语音模型发现、安装并接入对话",
+    "desc": "发现新 voice model 后，让 OpenClaw 负责检查、安装并完成对话验证。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/voice-model-discovery-install-and-conversation.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/jlehman_/status/2011965312824942772",
+    "sourceUrl": "https://x.com/jlehman_/status/2011965312824942772"
+  },
+  {
+    "title": "多账号 Gmail + Calendar 晨间汇总",
+    "desc": "用 gog 聚合多个 Gmail 和 Calendar 账号，早晨一次看完重点。",
+    "category": "夜间自动化",
+    "localPath": "usecases/automation/multi-account-gmail-calendar-morning-rollup.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/LLMJunky/status/2012081542567280964",
+    "sourceUrl": "https://x.com/LLMJunky/status/2012081542567280964"
+  },
+  {
+    "title": "WhatsApp 驱动 UI 生成与截图回传",
+    "desc": "通过 WhatsApp 远程生成界面并回传截图，先看效果再继续迭代。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/whatsapp-driven-ui-with-screenshot-feedback.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/DhruvalGolakiya/status/2009577664018018425",
+    "sourceUrl": "https://x.com/DhruvalGolakiya/status/2009577664018018425"
+  },
+  {
+    "title": "阅读材料重打包成极简 HTML/CSS 阅读器",
+    "desc": "把原始资料重排成更适合阅读的轻量 HTML/CSS 页面，并支持调字号和 speed-read。",
+    "category": "内容转换",
+    "localPath": "usecases/content/html-css-reading-repackager.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/kylezantos/status/2012646568219029586",
+    "sourceUrl": "https://x.com/kylezantos/status/2012646568219029586"
+  },
+  {
+    "title": "家庭 PM 周报",
+    "desc": "收集家庭话题、补做研究，并在固定时间发送一份集中周报。",
+    "category": "日常生活",
+    "localPath": "usecases/everyday/family-pm-weekly-roundup.md",
+    "sourceRepo": "openclaw.ai/showcase",
+    "sourcePath": "x.com/tonylongname/status/2008970037013381165",
+    "sourceUrl": "https://x.com/tonylongname/status/2008970037013381165"
   }
 ]
