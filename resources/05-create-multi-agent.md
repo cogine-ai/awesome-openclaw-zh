@@ -1,4 +1,4 @@
-# 如何创建新的 OpenClaw Agent
+# 如何创建多个 OpenClaw Agent
 
 OpenClaw 默认有一个 `main` agent，以及一套默认 workspace。
 
