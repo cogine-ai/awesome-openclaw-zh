@@ -31,7 +31,7 @@
 
 ### 推荐渠道入口
 
-- 飞书接入对话（待补）
+- [飞书接入对话（基础篇）](./channels/02-feishu-basic.md)
 - [企业微信接入对话](./channels/01-wecom-intelligent-bot.md)
 - 钉钉接入对话（待补）
 
@@ -70,6 +70,7 @@
 - [部署与安装中心](./deploy/README.md)
 - [安装与部署入口（小白版）](./resources/01-install-and-deploy.md)
 - [模型、渠道、技能怎么选](./resources/02-model-channel-skill-guide.md)
+- [如何创建新的 OpenClaw Agent](./resources/05-create-new-agent.md)
 - [低成本稳定运行（精简版）](./playbooks/01-low-cost-stable-run.md)
 - [安全与权限边界（非技术版）](./playbooks/02-safe-usage-boundary.md)
 
