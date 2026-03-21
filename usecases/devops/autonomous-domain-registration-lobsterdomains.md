@@ -51,3 +51,5 @@
 
 - 官网：https://lobsterdomains.xyz
 - ClawHub Skill：https://clawhub.ai/esokullu/lobsterdomains
+- Skill 文档（skills.md）：https://lobsterdomains.xyz/skills.md
+- API 端点：`GET https://lobsterdomains.xyz/api/v1/domains/check`，`POST https://lobsterdomains.xyz/api/v1/domains/register`
