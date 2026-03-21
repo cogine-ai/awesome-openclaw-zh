@@ -25,6 +25,7 @@
 | [视频脚本生成工作流](../usecases/creative/video-script-generator-workflow.md) | 短视频与长视频脚本自动生成，支持系列化输出。 |
 | [AI绘画生产工作流](../usecases/creative/ai-image-generation-workflow.md) | 从想法到配图的批量化创作流程，适合内容团队。 |
 | [Excalidraw Diagram-as-Code（流程图自动生成）](../usecases/creative/02-excalidraw-diagram-as-code.md) | 让 OpenClaw 直接生成 Excalidraw JSON，把文本需求快速转成流程图。 |
+| [AI YouTube 视频剪辑（Tubeify）](../usecases/creative/ai-youtube-video-editing-tubeify.md) | 自动删除停顿和口头禅，无需手动剪辑，几分钟出成品。 |
 | [YouTube 内容流水线](../usecases/creative/youtube-content-pipeline.md) | 为 YouTube 频道自动化视频创意发掘、研究和追踪。 |
 | [WhatsApp 驱动 UI 生成与截图回传](../usecases/creative/whatsapp-driven-ui-with-screenshot-feedback.md) | 通过 WhatsApp 远程生成界面并回传截图，先看效果再继续迭代。 |
 
@@ -34,6 +35,7 @@
 |---|---|
 | [编码任务编排中心（Agent Orchestrator）](../usecases/devops/agent-orchestrator-showcase.md) | 把编码任务路由给最合适的工具链，提升多任务效率。 |
 | [家庭实验室远程安全访问](../usecases/devops/homelab-access-showcase.md) | 通过聊天工具安全触发远程运维操作，降低误操作风险。 |
+| [加密货币自动注册域名（LobsterDomains）](../usecases/devops/autonomous-domain-registration-lobsterdomains.md) | AI 全程自主完成域名查询、链上付款和注册，无需浏览器和验证码。 |
 | [自愈家庭服务器](../usecases/devops/self-healing-home-server.md) | 运行一个始终在线的基础设施智能体，具有 SSH 访问权限、自动化 cron 作业，以及跨家庭网络的自愈能力。 |
 | [AI编程协作模式](../usecases/devops/ai-coding-collaboration.md) | 把编码、测试、修复流程交给AI协作完成。 |
 | [自主教育游戏开发流水线（Autonomous Educational Game Development Pipeline）](../usecases/devops/autonomous-game-dev-pipeline.md) | 以“先修 Bug、再做新游戏”规则持续推进教育游戏开发。 |
