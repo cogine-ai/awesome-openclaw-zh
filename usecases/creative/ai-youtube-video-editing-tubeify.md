@@ -52,3 +52,5 @@
 
 - 官网：https://tubeify.xyz
 - ClawHub Skill：https://clawhub.ai/esokullu/tubeify
+- Skill 文档（skills.md）：https://tubeify.xyz/skills.md
+- API 端点：`POST https://tubeify.xyz/process.php`，`GET https://tubeify.xyz/status.php`
