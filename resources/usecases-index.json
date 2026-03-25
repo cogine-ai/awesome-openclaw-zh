@@ -1582,5 +1582,77 @@
     "sourceRepo": "openclaw.ai/showcase",
     "sourcePath": "x.com/tonylongname/status/2008970037013381165",
     "sourceUrl": "https://x.com/tonylongname/status/2008970037013381165"
+  },
+  {
+    "title": "一个 OpenClaw 管多个飞书机器人",
+    "desc": "用多账号、多 Agent、可选多 Gateway 的方式，把不同飞书机器人稳定路由到不同 OpenClaw 身份。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/11-multi-gateway-feishu-bots.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/concepts/multi-agent.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/multi-agent.md"
+  },
+  {
+    "title": "OpenClaw 调度 Claude Code 与 Codex CLI",
+    "desc": "让 OpenClaw 作为总控，把 Claude Code、Codex CLI 这类 coding harness 接进同一套工作流。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/51-openclaw-claude-code-codex-cli.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/tools/acp-agents.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/main/docs/tools/acp-agents.md"
+  },
+  {
+    "title": "HF Papers 研究发现流水线",
+    "desc": "每天自动抓 Hugging Face Papers 热门论文，再联动 arXiv 深读，形成一套持续研究雷达。",
+    "category": "研究与学习",
+    "localPath": "usecases/research/21-hf-papers-research-discovery.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/hf-papers-research-discovery.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/hf-papers-research-discovery.md"
+  },
+  {
+    "title": "AI 视频编辑助手",
+    "desc": "用聊天方式完成粗剪、加字幕、转竖屏和批量导出，把重复视频后处理交给 OpenClaw。",
+    "category": "内容转换",
+    "localPath": "usecases/content/48-ai-video-editing-assistant.md",
+    "sourceRepo": "hesamsheikh/awesome-openclaw-usecases",
+    "sourcePath": "usecases/ai-video-editing.md",
+    "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/ai-video-editing.md"
+  },
+  {
+    "title": "X / Twitter 自动化运营",
+    "desc": "用 OpenClaw 统一完成发帖、回复、监控、抽奖和数据抽取，把 X/Twitter 运营动作收回到聊天里。",
+    "category": "社交媒体",
+    "localPath": "usecases/social/07-x-twitter-automation-ops.md",
+    "sourceRepo": "Xquik-dev/tweetclaw",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/Xquik-dev/tweetclaw/blob/main/README.md"
+  },
+  {
+    "title": "arXiv 论文阅读助手",
+    "desc": "直接按 arXiv ID 抓摘要、目录和全文，让 OpenClaw 变成可对话的论文阅读器。",
+    "category": "研究与学习",
+    "localPath": "usecases/research/22-arxiv-paper-reader.md",
+    "sourceRepo": "Prismer-AI/Prismer",
+    "sourcePath": "skills/arxiv-reader/SKILL.md",
+    "sourceUrl": "https://github.com/Prismer-AI/Prismer/blob/main/skills/arxiv-reader/SKILL.md"
+  },
+  {
+    "title": "本地 CRM / DenchClaw 框架",
+    "desc": "用 DenchClaw 把 OpenClaw 变成一套本地优先的 CRM、销售自动化和业务运营工作台。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/12-denchclaw-local-crm-framework.md",
+    "sourceRepo": "DenchHQ/DenchClaw",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/DenchHQ/DenchClaw/blob/main/README.md"
+  },
+  {
+    "title": "Claworc 多实例控制台",
+    "desc": "用一个 Web 控制台集中管理多个 OpenClaw 实例，把实例隔离、权限控制和运维入口统一起来。",
+    "category": "基础设施与 DevOps",
+    "localPath": "usecases/devops/21-claworc-multi-instance-control-plane.md",
+    "sourceRepo": "gluk-w/claworc",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/gluk-w/claworc/blob/main/README.md"
   }
 ]
