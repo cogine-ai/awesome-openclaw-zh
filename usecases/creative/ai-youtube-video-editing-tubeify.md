@@ -32,10 +32,11 @@
 视频 URL：[URL]
 
 步骤：
-1. 向 POST https://tubeify.xyz/index.php 提交我的钱包地址完成认证
-2. 向 POST https://tubeify.xyz/process.php 提交视频 URL，参数：remove_pauses=true, remove_fillers=true
-3. 轮询 GET https://tubeify.xyz/status.php 直到处理完成
-4. 返回下载链接
+1. 向 POST https://tubeify.xyz/index.php 提交我的钱包地址完成认证（Web3 会话 cookie 流程）
+2. 向 POST https://tubeify.xyz/process.php 提交视频 URL，参数：url_input=<URL>, remove_pauses=on, speed=1.0（可选：pause_threshold, pause_target, subtitles, enhance_voice）
+3. 跟随重定向到 wait.php，提取 job ID
+4. 轮询 GET https://tubeify.xyz/job-status.php?job=<job_id>，每 10 分钟一次，直到 status=complete
+5. 返回下载链接
 ```
 
 ## 成功标准
@@ -53,4 +54,4 @@
 - 官网：https://tubeify.xyz
 - ClawHub Skill：https://clawhub.ai/esokullu/tubeify
 - Skill 文档（skills.md）：https://tubeify.xyz/skills.md
-- API 端点：`POST https://tubeify.xyz/process.php`，`GET https://tubeify.xyz/status.php`
+- API 端点：`POST https://tubeify.xyz/process.php`，`GET https://tubeify.xyz/job-status.php?job=<id>`（通过 wait.php 重定向获取 job ID）
