@@ -30,11 +30,14 @@
 你是我的域名注册助手，请用 LobsterDomains 完成以下操作：
 目标域名：[域名]
 
+**认证：** 所有 API 请求需在 Header 中携带 `Authorization: Bearer <api_key>`，密钥由用户在 https://lobsterdomains.xyz/api-keys 生成（以 `ld_` 开头）。
+
 步骤：
-1. GET https://lobsterdomains.xyz/api/v1/domains/check?domain=[域名] 查询可用性和价格
-2. 确认价格后，告知用户需支付的 USDC 金额和收款地址
-3. 收到链上交易 hash 后，POST https://lobsterdomains.xyz/api/v1/domains/register 完成注册
-4. 返回 DNS 管理凭据
+1. GET https://lobsterdomains.xyz/api/v1/domains/check?domain=[域名]（携带 Bearer token）查询可用性和价格
+2. 确认价格后，告知用户需支付的 USDC 金额（支持 Ethereum/Arbitrum/Base/Optimism）和收款地址
+3. 等用户完成链上转账，请求其粘贴交易 hash（payment_tx）
+4. POST https://lobsterdomains.xyz/api/v1/domains/register，Body 包含 domain, payment_tx, chain, currency
+5. 返回 DNS 管理凭据
 ```
 
 ## 成功标准
