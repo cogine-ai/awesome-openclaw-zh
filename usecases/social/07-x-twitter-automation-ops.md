@@ -1,20 +1,21 @@
 # X / Twitter 自动化运营
 
-> 用 OpenClaw 统一完成发帖、回复、监控、抽奖和数据抽取，把 X/Twitter 运营动作收回到聊天里。
+> 用 OpenClaw 统一完成发帖、回复、搜索、监控、抽奖和数据导出，把 X/Twitter 运营动作收回到聊天里。
 
 ## 这个案例能帮你做什么
 
-- 直接从聊天里发帖、回复、转推、关注、私信和搜索。
-- 跑 giveaway、抽取互动用户、监控目标账号的新动态。
+- 直接从聊天里发帖、回复、搜索推文、搜索回复、转推、关注和私信。
+- 跑 giveaway、导出粉丝或互动用户名单、监控目标账号的新动态。
 - 用一个插件覆盖内容运营、社媒监听和活动执行，不必在多个面板之间切换。
 
 ## 你需要的 Skills（按类型）
 
 | 类型 | Skill / 工具 | 用途 | 来源 |
 |---|---|---|---|
-| 外部（需安装） | [`@xquik/tweetclaw`](https://www.npmjs.com/package/@xquik/tweetclaw) | X/Twitter 全量运营与 API 调用 | npm |
+| 外部（需安装） | [`@xquik/tweetclaw`](https://www.npmjs.com/package/@xquik/tweetclaw) | OpenClaw 插件，覆盖发帖、搜索、监控、抽奖和数据导出 | npm |
 | 内置 | `openclaw plugins install` | 安装 TweetClaw 插件 | OpenClaw CLI |
-| 内置 | `/xstatus` / `/xtrends` | 查看账号状态与趋势 | TweetClaw 命令 |
+| 内置 | `tools.alsoAllow` | 保留默认工具配置，同时允许 `explore` 和 `tweetclaw` | OpenClaw CLI |
+| 内置 | `/xstatus` / `/xtrends` | 查看账号状态、余额与趋势 | TweetClaw 命令 |
 
 ## 快速体验版（先跑一轮）
 
@@ -22,9 +23,9 @@
 你是我的 X 运营助手。
 请先做一个不直接发帖的预演：
 1. 根据我的产品定位起草 3 条推文
-2. 给出每条推文适合配什么图片或链接
-3. 设计一个“监控 3 个竞品账号”的关键词方案
-4. 本轮不要真实发帖、不要点赞、不要发私信
+2. 搜索最近 20 条相关推文，提炼大家常见的表达方式
+3. 设计一个“监控 3 个竞品账号”和“搜索 2 组回复关键词”的方案
+4. 本轮不要真实发帖、不要点赞、不要发私信、不要创建监控
 ```
 
 ## 稳定自动版（可长期运行）
@@ -35,19 +36,27 @@
 openclaw plugins install @xquik/tweetclaw
 ```
 
+插件可以先安装，后配置凭证。未配置时，先用 `explore` 查看能力目录。
+
 ### 2) 配置方式（二选一）
 
 API Key 模式：
 
 ```bash
-openclaw config set plugins.entries.tweetclaw.config.apiKey 'xq_YOUR_KEY'
+openclaw config set plugins.entries.tweetclaw.config.apiKey "$XQUIK_API_KEY"
 ```
 
-MPP 按次付费模式：
+MPP 按次付费模式（仅 31 个只读端点）：
 
 ```bash
 npm i mppx viem
-openclaw config set plugins.entries.tweetclaw.config.tempoPrivateKey '0xYOUR_TEMPO_KEY'
+openclaw config set plugins.entries.tweetclaw.config.tempoSigningKey "$MPP_SIGNING_KEY"
+```
+
+如果代理能看到 Skill，但调不到工具，再补一条：
+
+```bash
+openclaw config set tools.alsoAllow '["explore", "tweetclaw"]'
 ```
 
 可选轮询：
@@ -57,12 +66,19 @@ openclaw config set plugins.entries.tweetclaw.config.pollingEnabled true
 openclaw config set plugins.entries.tweetclaw.config.pollingInterval 60
 ```
 
+建议安装后先验证一次：
+
+```bash
+openclaw plugins inspect tweetclaw --runtime
+openclaw skills info tweetclaw
+```
+
 ### 3) 常见操作提示词
 
 发帖：
 
 ```text
-Post a tweet: "Just shipped a new feature — try it out!"
+Post a tweet: "Just shipped a new feature - try it out!"
 ```
 
 抽奖：
@@ -77,6 +93,24 @@ Pick 3 random winners from the retweeters of this tweet: https://x.com/username/
 Extract all users who liked this tweet and export as CSV: https://x.com/username/status/123456789
 ```
 
+搜索推文：
+
+```text
+Search tweets about AI agents and summarize the top 20 results.
+```
+
+搜索回复：
+
+```text
+Search tweet replies mentioning refund delays for this product launch and group the complaints by theme.
+```
+
+导出粉丝：
+
+```text
+Export the latest followers of @username as CSV and mark verified accounts.
+```
+
 监控账号：
 
 ```text
@@ -89,14 +123,15 @@ Monitor @elonmusk and notify me whenever he posts a new tweet.
 你是我的 X/Twitter 运营助手。
 请使用 TweetClaw 完成下面这些事情：
 1. 起草和发布内容前先给我确认
-2. 日常监控我关心的账号、关键词和趋势
-3. 如果我要做活动，支持抽奖和导出互动名单
+2. 日常搜索推文、搜索回复、监控我关心的账号、关键词和趋势
+3. 如果我要做活动，支持抽奖、导出互动名单和导出粉丝
 4. 输出每一步调用的目标动作，并在失败时给出回退建议
 ```
 
 ## 成功标准
 
 - [ ] 能完成发帖、监控、抽奖或数据导出中的至少一类核心动作。
+- [ ] 能完成搜索推文或搜索回复中的至少一种只读分析动作。
 - [ ] 账号状态和趋势命令能正常返回结果。
 - [ ] 自动监控开启后，可以把新动态回传到聊天窗口。
 
@@ -104,12 +139,14 @@ Monitor @elonmusk and notify me whenever he posts a new tweet.
 
 - TweetClaw 覆盖大量 API 能力，但不同能力的付费层级和访问范围不同。
 - 涉及发帖、私信、关注等写操作时，必须先设定你的审核边界，避免误触发。
+- MPP 模式只支持 31 个只读端点，不支持发帖、私信、监控、上传或媒体下载。
 - 高频自动化可能触发平台风控，建议先从监控、草稿和只读分析开始。
 
 ## 使用建议
 
 - 先把它当“运营控制台”，再逐步开放真实写操作。
 - giveaway、抽奖和导出名单这类动作最适合先写成固定口令模板。
+- 如果你主要做调研，优先用搜索推文、搜索回复、导出粉丝这三类只读动作起步。
 - 如果你做内容增长，把 `/xtrends` 和账号监控结合起来，会比单纯定时发帖更有价值。
 
 ## 引用来源
