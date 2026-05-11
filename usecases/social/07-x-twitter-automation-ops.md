@@ -53,10 +53,18 @@ npm i mppx viem
 openclaw config set plugins.entries.tweetclaw.config.tempoSigningKey "$MPP_SIGNING_KEY"
 ```
 
+注意：MPP 模式只适合搜索、查询和导出等只读动作。需要发帖、私信、监控、上传或媒体下载时，改用 API Key 模式。
+
 如果代理能看到 Skill，但调不到工具，再补一条：
 
 ```bash
 openclaw config set tools.alsoAllow '["explore", "tweetclaw"]'
+```
+
+PowerShell 写法：
+
+```powershell
+openclaw config set tools.alsoAllow "[`"explore`",`"tweetclaw`"]"
 ```
 
 可选轮询：
@@ -139,7 +147,7 @@ Monitor @elonmusk and notify me whenever he posts a new tweet.
 
 - TweetClaw 覆盖大量 API 能力，但不同能力的付费层级和访问范围不同。
 - 涉及发帖、私信、关注等写操作时，必须先设定你的审核边界，避免误触发。
-- MPP 模式只支持 31 个只读端点，不支持发帖、私信、监控、上传或媒体下载。
+- MPP 模式只支持 31 个只读端点，不支持发帖、私信、监控、上传或媒体下载；这些场景请使用 API Key 模式。
 - 高频自动化可能触发平台风控，建议先从监控、草稿和只读分析开始。
 
 ## 使用建议
