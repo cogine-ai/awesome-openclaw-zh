@@ -7,7 +7,7 @@
 
 - 部署与配置：Mac、Windows、Linux VPS、多 Agent
 - 渠道接入：飞书、钉钉、企业微信、QQ（持续补充）
-- 使用场景：184 个真实案例与工作流
+- 使用场景：192 个真实案例与工作流
 
 ## 开始使用 OpenClaw
 
@@ -21,7 +21,7 @@
 
 1. [部署后 5 分钟快速体验](./quickstart/00-5min-quickstart.md)
 2. [7 天上手路径](./quickstart/01-7day-path.md)
-3. [按分类找案例（184个）](./resources/usecases-index.md)
+3. [按分类找案例（192个）](./resources/usecases-index.md)
 
 ### 推荐部署入口
 
@@ -34,7 +34,7 @@
 
 - [飞书接入对话（基础篇）](./channels/02-feishu-basic.md)
 - [企业微信接入对话](./channels/01-wecom-intelligent-bot.md)
-- 钉钉接入对话（待补）
+- [钉钉 AI 助手](./usecases/productivity/13-dingtalk-ai-assistant.md)
 
 ## 你可以先从这 10 个案例开始尝试
 
@@ -51,15 +51,15 @@
 
 ## 分类导航
 
-- [全量用例索引（184）](./resources/usecases-index.md)
-- [社交媒体（7）](./usecases/social)
-- [创意与构建（8）](./usecases/creative)
-- [基础设施与 DevOps（12）](./usecases/devops)
-- [生产力（30）](./usecases/productivity)
-- [研究与学习（12）](./usecases/research)
-- [金融与交易（1）](./usecases/finance)
+- [全量用例索引（192）](./resources/usecases-index.md)
+- [社交媒体（8）](./usecases/social)
+- [创意与构建（9）](./usecases/creative)
+- [基础设施与 DevOps（13）](./usecases/devops)
+- [生产力（32）](./usecases/productivity)
+- [研究与学习（13）](./usecases/research)
+- [金融与交易（2）](./usecases/finance)
 - [日常生活（33）](./usecases/everyday)
-- [内容转换（15）](./usecases/content)
+- [内容转换（16）](./usecases/content)
 - [内存管理（11）](./usecases/memory)
 - [夜间自动化（15）](./usecases/automation)
 - [数据分析（16）](./usecases/data)
