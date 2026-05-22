@@ -254,7 +254,7 @@ openclaw agents unbind --agent supercoder --bind feishu:feishu_supercoder
 
 仓库内的飞书初始配置文档后续补充；在补充之前，可先参考 OpenClaw 官方飞书渠道文档：
 
-- https://docs.openclaw.ai/zh-CN/channels/feishu
+- [OpenClaw 官方飞书渠道文档](https://docs.openclaw.ai/zh-CN/channels/feishu)
 
 ### 2. 再新增一个飞书机器人
 
@@ -398,8 +398,7 @@ session.dmScope = "per-account-channel-peer"
   - https://docs.openclaw.ai/zh-CN/cli/agents
 - OpenClaw 官方：多智能体路由
   - https://docs.openclaw.ai/zh-CN/concepts/multi-agent
-- OpenClaw 官方：飞书渠道
-  - https://docs.openclaw.ai/zh-CN/channels/feishu
+- OpenClaw 官方：[飞书渠道](https://docs.openclaw.ai/zh-CN/channels/feishu)
 - OpenClaw 官方：Session Management
   - https://docs.openclaw.ai/concepts/session
 - OpenClaw 官方：Configuration
