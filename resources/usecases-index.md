@@ -1,10 +1,10 @@
 # 用例总览
 
-当前共收录 **184** 个中文可用案例。
+当前共收录 **192** 个中文可用案例。
 
 按分类浏览：
 
-## 社交媒体 (7)
+## 社交媒体 (8)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -15,8 +15,9 @@
 | [每周技术发现精选](../usecases/social/tech-discoveries-showcase.md) | 自动追踪和筛选技术动态，输出可读性高的周报。 |
 | [X 账号分析](../usecases/social/x-account-analysis.md) | 获取你的 X 账号的定性分析。 |
 | [X / Twitter 自动化运营](../usecases/social/07-x-twitter-automation-ops.md) | 用 OpenClaw 统一完成发帖、回复、监控、抽奖和数据抽取，把 X/Twitter 运营动作收回到聊天里。 |
+| [小红书内容自动化](../usecases/social/08-xiaohongshu-content-automation.md) | 辅助完成小红书选题、文案、封面和排期发布。 |
 
-## 创意与构建 (8)
+## 创意与构建 (9)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -28,8 +29,9 @@
 | [YouTube 内容流水线](../usecases/creative/youtube-content-pipeline.md) | 为 YouTube 频道自动化视频创意发掘、研究和追踪。 |
 | [Excalidraw Diagram-as-Code（流程图自动生成）](../usecases/creative/02-excalidraw-diagram-as-code.md) | 让 OpenClaw 直接生成 Excalidraw JSON，把文本需求快速转成流程图。 |
 | [WhatsApp 驱动 UI 生成与截图回传](../usecases/creative/whatsapp-driven-ui-with-screenshot-feedback.md) | 通过 WhatsApp 远程生成界面并回传截图，先看效果再继续迭代。 |
+| [AI YouTube 视频剪辑（Tubeify）](../usecases/creative/ai-youtube-video-editing-tubeify.md) | 用 Tubeify API 自动删除视频里的停顿和口头禅。 |
 
-## 基础设施与 DevOps (12)
+## 基础设施与 DevOps (13)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -45,8 +47,9 @@
 | [Telegram 驱动 iOS 提交与 TestFlight 更新](../usecases/devops/19-telegram-driven-ios-testflight-release.md) | 在聊天中触发 iOS 发布流程并标准化 TestFlight 更新。 |
 | [自主教育游戏开发流水线（Autonomous Educational Game Development Pipeline）](../usecases/devops/autonomous-game-dev-pipeline.md) | 以先修 Bug 再做新游戏的规则持续推进教育游戏开发。 |
 | [Claworc 多实例控制台](../usecases/devops/21-claworc-multi-instance-control-plane.md) | 用一个 Web 控制台集中管理多个 OpenClaw 实例，把实例隔离、权限控制和运维入口统一起来。 |
+| [加密货币自动注册域名（LobsterDomains）](../usecases/devops/autonomous-domain-registration-lobsterdomains.md) | 通过 API 完成域名查询、链上付款确认和注册流程。 |
 
-## 生产力 (30)
+## 生产力 (32)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -80,8 +83,10 @@
 | [任务时间块排程与周复盘助理](../usecases/productivity/task-timeblocking-and-weekly-review-assistant.md) | 按优先级排进日历，并基于会议转录输出 weekly review 和后续动作。 |
 | [一个 OpenClaw 管多个飞书机器人](../usecases/productivity/11-multi-gateway-feishu-bots.md) | 用多账号、多 Agent、可选多 Gateway 的方式，把不同飞书机器人稳定路由到不同 OpenClaw 身份。 |
 | [本地 CRM / DenchClaw 框架](../usecases/productivity/12-denchclaw-local-crm-framework.md) | 用 DenchClaw 把 OpenClaw 变成一套本地优先的 CRM、销售自动化和业务运营工作台。 |
+| [钉钉 AI 助手](../usecases/productivity/13-dingtalk-ai-assistant.md) | 把 OpenClaw 接进钉钉，让团队在原有办公群里触发 AI 任务。 |
+| [电商多 Agent 运营助手](../usecases/productivity/14-ecommerce-multi-agent-ops.md) | 用多个 Agent 分别处理销售、库存、客服和商品分析。 |
 
-## 研究与学习 (12)
+## 研究与学习 (13)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -97,12 +102,14 @@
 | [开工前想法验证闸门（Pre-Build Idea Validator）](../usecases/research/pre-build-idea-validator.md) | 开发前先做竞争度扫描，用 reality_signal 决定继续或转向。 |
 | [HF Papers 研究发现流水线](../usecases/research/21-hf-papers-research-discovery.md) | 每天自动抓 Hugging Face Papers 热门论文，再联动 arXiv 深读，形成一套持续研究雷达。 |
 | [arXiv 论文阅读助手](../usecases/research/22-arxiv-paper-reader.md) | 直接按 arXiv ID 抓摘要、目录和全文，让 OpenClaw 变成可对话的论文阅读器。 |
+| [Suppr 文献检索与文档翻译](../usecases/research/23-suppr-literature-translation.md) | 用 Suppr MCP 或 Skills 接入学术文献检索、论文元数据整理和 PDF 翻译。 |
 
-## 金融与交易 (1)
+## 金融与交易 (2)
 
 | 用例 | 能干什么 |
 |---|---|
 | [Polymarket 自动驾驶](../usecases/finance/polymarket-autopilot.md) | 在预测市场上进行自动化模拟交易，带有回测、策略分析和每日绩效报告。 |
+| [A 股每日行情监控](../usecases/finance/02-a-share-market-monitor.md) | 自动整理 A 股行情、板块轮动和自选股变化。 |
 
 ## 日常生活 (33)
 
@@ -142,7 +149,7 @@
 | [电话外呼提醒（Phone Call Notifications）](../usecases/everyday/phone-call-notifications.md) | 在真正重要的时候由 OpenClaw 主动给你打电话，减少关键通知遗漏。 |
 | [家庭 PM 周报](../usecases/everyday/family-pm-weekly-roundup.md) | 收集家庭话题、补做研究，并在固定时间发送一份集中周报。 |
 
-## 内容转换 (15)
+## 内容转换 (16)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -161,6 +168,7 @@
 | [播客生产流水线（Podcast Production Pipeline）](../usecases/content/podcast-production-pipeline.md) | 从调研、提纲到 show notes 和宣发文案一次产出。 |
 | [阅读材料重打包成极简 HTML/CSS 阅读器](../usecases/content/html-css-reading-repackager.md) | 把原始资料重排成更适合阅读的轻量 HTML/CSS 页面，并支持调字号和 speed-read。 |
 | [AI 视频编辑助手](../usecases/content/48-ai-video-editing-assistant.md) | 用聊天方式完成粗剪、加字幕、转竖屏和批量导出，把重复视频后处理交给 OpenClaw。 |
+| [微信公众号自动发布](../usecases/content/49-wechat-mp-automation.md) | 串起选题、写稿、排版和公众号草稿箱推送。 |
 
 ## 内存管理 (11)
 
@@ -252,4 +260,3 @@
 | [AionUi 桌面协作与远程救援（OpenClaw Cowork）](../usecases/tools/aionui-cowork-desktop-remote-rescue.md) | 用可视化 Cowork 界面远程使用和修复 OpenClaw，适合离开电脑后的协作与救援。 |
 | [语音模型发现、安装并接入对话](../usecases/tools/voice-model-discovery-install-and-conversation.md) | 发现新 voice model 后，让 OpenClaw 负责检查、安装并完成对话验证。 |
 | [OpenClaw 调度 Claude Code 与 Codex CLI](../usecases/tools/51-openclaw-claude-code-codex-cli.md) | 让 OpenClaw 作为总控，把 Claude Code、Codex CLI 这类 coding harness 接进同一套工作流。 |
-

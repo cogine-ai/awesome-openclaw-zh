@@ -11,6 +11,7 @@
 
 - 飞书：看 [飞书接入对话（基础篇）](./02-feishu-basic.md)
 - 企业微信：看 [企业微信智能机器人接入](./01-wecom-intelligent-bot.md)
+- 钉钉：看 [钉钉 AI 助手](../usecases/productivity/13-dingtalk-ai-assistant.md)
 
 ## 目录约定
 
@@ -30,7 +31,6 @@
 
 - 飞书高级篇：多机器人、多账号、多 Agent 绑定
 - 飞书高级篇：会话隔离、`dmScope`、routing / binding
-- 钉钉接入
 - QQ 接入
 
 ## 说明

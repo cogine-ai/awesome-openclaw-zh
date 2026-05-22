@@ -1654,5 +1654,77 @@
     "sourceRepo": "gluk-w/claworc",
     "sourcePath": "README.md",
     "sourceUrl": "https://github.com/gluk-w/claworc/blob/main/README.md"
+  },
+  {
+    "title": "小红书内容自动化",
+    "desc": "辅助完成小红书选题、文案、封面和排期发布。",
+    "category": "社交媒体",
+    "localPath": "usecases/social/08-xiaohongshu-content-automation.md",
+    "sourceRepo": "AlexAnys/awesome-openclaw-usecases-zh",
+    "sourcePath": "usecases/cn-xiaohongshu-automation.md",
+    "sourceUrl": "https://github.com/AlexAnys/awesome-openclaw-usecases-zh/blob/main/usecases/cn-xiaohongshu-automation.md"
+  },
+  {
+    "title": "AI YouTube 视频剪辑（Tubeify）",
+    "desc": "用 Tubeify API 自动删除视频里的停顿和口头禅。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/ai-youtube-video-editing-tubeify.md",
+    "sourceRepo": "cogine-ai/awesome-openclaw-zh",
+    "sourcePath": "pull/7",
+    "sourceUrl": "https://github.com/cogine-ai/awesome-openclaw-zh/pull/7"
+  },
+  {
+    "title": "加密货币自动注册域名（LobsterDomains）",
+    "desc": "通过 API 完成域名查询、链上付款确认和注册流程。",
+    "category": "基础设施与 DevOps",
+    "localPath": "usecases/devops/autonomous-domain-registration-lobsterdomains.md",
+    "sourceRepo": "cogine-ai/awesome-openclaw-zh",
+    "sourcePath": "pull/7",
+    "sourceUrl": "https://github.com/cogine-ai/awesome-openclaw-zh/pull/7"
+  },
+  {
+    "title": "钉钉 AI 助手",
+    "desc": "把 OpenClaw 接进钉钉，让团队在原有办公群里触发 AI 任务。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/13-dingtalk-ai-assistant.md",
+    "sourceRepo": "AlexAnys/awesome-openclaw-usecases-zh",
+    "sourcePath": "usecases/cn-dingtalk-ai-assistant.md",
+    "sourceUrl": "https://github.com/AlexAnys/awesome-openclaw-usecases-zh/blob/main/usecases/cn-dingtalk-ai-assistant.md"
+  },
+  {
+    "title": "电商多 Agent 运营助手",
+    "desc": "用多个 Agent 分别处理销售、库存、客服和商品分析。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/14-ecommerce-multi-agent-ops.md",
+    "sourceRepo": "AlexAnys/awesome-openclaw-usecases-zh",
+    "sourcePath": "usecases/cn-ecommerce-multi-agent.md",
+    "sourceUrl": "https://github.com/AlexAnys/awesome-openclaw-usecases-zh/blob/main/usecases/cn-ecommerce-multi-agent.md"
+  },
+  {
+    "title": "Suppr 文献检索与文档翻译",
+    "desc": "用 Suppr MCP 或 Skills 接入学术文献检索、论文元数据整理和 PDF 翻译。",
+    "category": "研究与学习",
+    "localPath": "usecases/research/23-suppr-literature-translation.md",
+    "sourceRepo": "zjg678/suppr-mcp",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/zjg678/suppr-mcp/blob/main/README.md"
+  },
+  {
+    "title": "A 股每日行情监控",
+    "desc": "自动整理 A 股行情、板块轮动和自选股变化。",
+    "category": "金融与交易",
+    "localPath": "usecases/finance/02-a-share-market-monitor.md",
+    "sourceRepo": "AlexAnys/awesome-openclaw-usecases-zh",
+    "sourcePath": "usecases/cn-a-share-monitor.md",
+    "sourceUrl": "https://github.com/AlexAnys/awesome-openclaw-usecases-zh/blob/main/usecases/cn-a-share-monitor.md"
+  },
+  {
+    "title": "微信公众号自动发布",
+    "desc": "串起选题、写稿、排版和公众号草稿箱推送。",
+    "category": "内容转换",
+    "localPath": "usecases/content/49-wechat-mp-automation.md",
+    "sourceRepo": "AlexAnys/awesome-openclaw-usecases-zh",
+    "sourcePath": "usecases/cn-wechat-mp-automation.md",
+    "sourceUrl": "https://github.com/AlexAnys/awesome-openclaw-usecases-zh/blob/main/usecases/cn-wechat-mp-automation.md"
   }
 ]
