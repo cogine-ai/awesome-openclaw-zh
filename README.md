@@ -94,3 +94,22 @@
 - [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 
 每个用例页或部署文档都会尽量保留来源线索，方便追溯和持续维护。
+
+
+
+## OpenClaw Monitor
+
+⭐ **Real-time AI Agent Monitoring Dashboard for OpenClaw**
+
+![Dashboard](https://raw.githubusercontent.com/flik2002/openclaw-monitor/main/Openclaw%20Monitor.jpg)
+
+### Features
+- **Real-time Monitoring**: Live Gateway connection and session status  
+- **Token Statistics**: Track prompt/completion tokens with visual charts
+- **Multi-Agent Support**: Monitor multiple OpenClaw agents simultaneously
+- **7-Day Trends**: Message volume and token usage history
+- **WebSocket-based**: Instant updates without page refresh
+
+### Links
+- GitHub: https://github.com/flik2002/openclaw-monitor
+
