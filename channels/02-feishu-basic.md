@@ -8,18 +8,19 @@
 
 这篇文档会完成什么：
 
-- 使用飞书官方提供的 OpenClaw 专页，快速完成飞书机器人侧配置
+- 使用飞书官方入口和开放平台文档，快速完成飞书机器人侧配置
 - 拿到 `App ID` 和 `App Secret`
 - 在 OpenClaw 里添加 Feishu channel
 - 跑通第一次配对和第一次对话
 
 ## 先说结论
 
-飞书现在已经有一个专门给 OpenClaw 准备的官方入口：
+飞书现在有两个和 OpenClaw 相关的官方入口：
 
-- [飞书 OpenClaw 专页](https://open.feishu.cn/page/openclaw)
+- [飞书 OpenClaw 方案中心](https://www.feishu.cn/openclaw)
+- [一键创建飞书智能体应用文档](https://open.feishu.cn/document/mcp_open_tools/integrating-agents-with-feishu/overview)
 
-如果你只是想快速完成飞书基础接入，优先走这条路。
+如果你只是想快速完成飞书基础接入，先看方案中心确认当前入口，再按开放平台文档创建或配置智能体应用。
 
 相比旧版“自己在飞书开放平台里手动创建应用、手动补权限、手动开机器人能力”的流程，这条路更适合仓库里的基础篇。
 
@@ -52,11 +53,15 @@
 openclaw plugins install @openclaw/feishu
 ```
 
-## 第一步：打开飞书官方 OpenClaw 专页
+## 第一步：打开飞书官方入口
 
-直接访问：
+先访问方案中心：
 
-- [https://open.feishu.cn/page/openclaw](https://open.feishu.cn/page/openclaw)
+- [https://www.feishu.cn/openclaw](https://www.feishu.cn/openclaw)
+
+再按开放平台文档创建或配置智能体应用：
+
+- [https://open.feishu.cn/document/mcp_open_tools/integrating-agents-with-feishu/overview](https://open.feishu.cn/document/mcp_open_tools/integrating-agents-with-feishu/overview)
 
 这一步的目标很简单：
 
@@ -170,9 +175,10 @@ openclaw pairing list feishu
 
 ### 1. 为什么这里不再推荐“手工建飞书应用”
 
-因为现在有更直接的官方入口：
+因为现在有更直接的官方入口和开放平台流程：
 
-- [飞书 OpenClaw 专页](https://open.feishu.cn/page/openclaw)
+- [飞书 OpenClaw 方案中心](https://www.feishu.cn/openclaw)
+- [一键创建飞书智能体应用文档](https://open.feishu.cn/document/mcp_open_tools/integrating-agents-with-feishu/overview)
 
 基础篇的目标不是“学会飞书开放平台的每一个配置细节”，而是先把机器人接进来。
 
@@ -216,8 +222,10 @@ openclaw pairing list feishu
 
 ## 参考资料
 
-- 飞书官方 OpenClaw 专页：
-  - [https://open.feishu.cn/page/openclaw](https://open.feishu.cn/page/openclaw)
+- 飞书 OpenClaw 方案中心：
+  - [https://www.feishu.cn/openclaw](https://www.feishu.cn/openclaw)
+- 飞书开放平台：一键创建飞书智能体应用：
+  - [https://open.feishu.cn/document/mcp_open_tools/integrating-agents-with-feishu/overview](https://open.feishu.cn/document/mcp_open_tools/integrating-agents-with-feishu/overview)
 - OpenClaw 官方飞书文档：
   - [https://docs.openclaw.ai/zh-CN/channels/feishu](https://docs.openclaw.ai/zh-CN/channels/feishu)
 - OpenClaw 官方 channels CLI：

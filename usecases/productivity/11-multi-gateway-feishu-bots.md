@@ -31,12 +31,13 @@
 
 ## 稳定自动版（可长期运行）
 
-### 1) 先准备两个隔离 Agent
+### 1) 保留默认 `main`，新增隔离 Agent
 
 ```bash
-openclaw agents add main
+# main 是默认 Agent，不需要新建；这里只新增 coding
 openclaw agents add coding
-openclaw agents list --bindings
+openclaw agents list
+openclaw agents bindings
 ```
 
 如果你需要更强隔离，可以按 profile 分开运行 Gateway：
@@ -52,9 +53,11 @@ openclaw --profile coding gateway --port 19001
 ```
 
 ```bash
-openclaw --profile main gateway install
-openclaw --profile coding gateway install
+openclaw --profile main gateway install --port 18789
+openclaw --profile coding gateway install --port 19001
 ```
+
+后台服务安装时也要带上对应端口，避免服务重启后回到默认端口或和其他 Gateway 冲突。
 
 ### 2) 在飞书侧创建多个机器人账号
 
@@ -124,7 +127,7 @@ openclaw --profile coding gateway install
 openclaw channels add
 openclaw gateway restart
 openclaw channels status --probe
-openclaw agents list --bindings
+openclaw agents bindings
 ```
 
 在两个飞书机器人里分别发一条测试消息，收到 pairing code 后批准：

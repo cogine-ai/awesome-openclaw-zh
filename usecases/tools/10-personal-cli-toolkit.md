@@ -76,10 +76,10 @@ Commands:
 - `molty scrape @username`：抓取并保存页面结果
 - `molty recap`：输出当日记录摘要
 
-### 3) 抓取命令关键调用（原文）
+### 3) 抓取调用方式
 
 ```bash
-openclaw web_fetch https://nitter.net/${username}
+openclaw agent --message "请用 web_fetch 抓取 https://nitter.net/${username}，并把结果保存到本地记录。"
 ```
 
 ## 成功标准

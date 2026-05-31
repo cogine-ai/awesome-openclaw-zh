@@ -12,8 +12,8 @@
 
 | 类型 | Skill / 工具 | 用途 | 来源 |
 |---|---|---|---|
-| 外部（需安装） | `@anthropic-ai/claude-cli` | Claude Code 执行编码任务 | npm |
-| 外部（需安装） | `coding-agent` | OpenClaw 编程代理能力 | `clawhub install coding-agent` |
+| 外部（需安装） | `@anthropic-ai/claude-code` | Claude Code 执行编码任务 | npm |
+| 外部（需安装） | `openclaw-code-agent` | 在 OpenClaw 中托管 Claude Code / Codex 后台会话 | ClawHub |
 | 内置 | OpenClaw 调度能力 | 任务拆解、流程编排、结果汇总 | OpenClaw Built-in |
 
 ## 快速体验版（先感受效果）
@@ -34,22 +34,29 @@
 ### 1) 安装与配置
 
 ```bash
-npm install -g @anthropic-ai/claude-cli
+npm install -g @anthropic-ai/claude-code
 export ANTHROPIC_API_KEY="your-api-key"
-clawhub install coding-agent
-openclaw config set coding.tool "claude-code"
+openclaw plugins install clawhub:openclaw-code-agent
+openclaw plugins enable openclaw-code-agent
 ```
 
-### 2) Coding Agent 关键参数
+### 2) Code Agent 关键参数
 
-```bash
-clawhub install coding-agent
-openclaw config set coding.tool "claude-code"
-openclaw config set coding.model "claude-3-5-sonnet"
-openclaw config set coding.api-key "YOUR_ANTHROPIC_API_KEY"
-openclaw config set coding.workspace "~/projects"
-openclaw config set coding.auto-test true
-openclaw config set coding.auto-fix true
+在 `~/.openclaw/openclaw.json` 里给插件添加最小配置：
+
+```json5
+{
+  "plugins": {
+    "entries": {
+      "openclaw-code-agent": {
+        "config": {
+          "defaultHarness": "claude-code",
+          "defaultWorkdir": "~/projects"
+        }
+      }
+    }
+  }
+}
 ```
 
 ### 3) 自动测试与修复提示词
@@ -79,3 +86,4 @@ openclaw config set coding.auto-fix true
 
 - 来源仓库： [xianyu110/awesome-openclaw-tutorial](https://github.com/xianyu110/awesome-openclaw-tutorial)
 - 原始条目： [docs/04-practical-cases/12-personal-productivity.md](https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md)
+- 当前插件： [OpenClaw Code Agent](https://clawhub.ai/plugins/openclaw-code-agent)

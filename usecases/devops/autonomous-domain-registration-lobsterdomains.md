@@ -63,5 +63,7 @@
 ## 引用来源
 
 - 来源 PR： [cogine-ai/awesome-openclaw-zh#7](https://github.com/cogine-ai/awesome-openclaw-zh/pull/7)
-- 官网： [lobsterdomains.xyz](https://lobsterdomains.xyz)
-- Skill 文档： [lobsterdomains.xyz/skills.md](https://lobsterdomains.xyz/skills.md)
+- Skill 仓库： [esokullu/lobsterdomains-skills](https://github.com/esokullu/lobsterdomains-skills)
+- Skill 文档：
+  - [README.md](https://github.com/esokullu/lobsterdomains-skills/blob/main/README.md)
+  - [SKILL.md](https://github.com/esokullu/lobsterdomains-skills/blob/main/SKILL.md)

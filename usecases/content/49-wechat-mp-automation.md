@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 外部 | [`md2wechat-skill`](https://github.com/geekjourneyx/md2wechat-skill) | Markdown 转公众号排版并推送草稿箱 | 社区项目 |
 | 外部（可选） | [`wechat-publisher`](https://github.com/0731coderlee-sudo/wechat-publisher) | 一键将 Markdown 推送到公众号草稿箱 | 社区项目 |
-| 外部（可选） | [`china-hot-ranks`](https://github.com/lucianaib0318/china-hot-ranks) | 聚合微博、抖音、B 站等热点 | 社区项目 |
+| 外部（可选） | [`china-hot-ranks`](https://github.com/LucianaiB2004/China-Hot-Ranks) | 聚合微博、抖音、B 站等热点 | 社区项目 |
 
 ## 快速体验版（先跑一轮）
 

@@ -12,7 +12,7 @@
 
 | 类型 | Skill / 工具 | 用途 | 来源 |
 |---|---|---|---|
-| 外部（需安装） | Last 30 Days | 抓取近 30 天 Reddit / X 用户声音 | [matvanhorde/last-30-days](https://github.com/matvanhorde/last-30-days) |
+| 外部（需安装） | Last 30 Days | 抓取近 30 天 Reddit / X 用户声音 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) |
 | 渠道 | Telegram / Discord | 接收周期性研究报告 | Telegram / Discord |
 
 ## 快速体验版（先跑一轮）
@@ -35,7 +35,7 @@ Organize the findings into:
 ### 1) 安装技能
 
 ```text
-Install this skill: https://github.com/matvanhorde/last-30-days
+Install this skill: https://github.com/mvanhorn/last30days-skill
 ```
 
 ### 2) 从研究推进到 MVP

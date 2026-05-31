@@ -51,7 +51,7 @@
 # daily-topic-push.sh
 
 # 1. 搜索热点
-openclaw ask "搜索过去24小时AI编程领域的热点，生成5个选题"
+openclaw agent --message "搜索过去24小时AI编程领域的热点，生成5个选题"
 
 # 2. 推送到Telegram
 openclaw telegram send "今日选题推荐：\n\n[选题内容]"
