@@ -114,7 +114,7 @@ Monitor @elonmusk and notify me whenever he posts a new tweet.
 
 ## 引用来源
 
-- 来源仓库： [Xquik-dev/tweetclaw](https://github.com/Xquik-dev/tweetclaw)
+- 包来源： [@xquik/tweetclaw](https://www.npmjs.com/package/@xquik/tweetclaw)
 - 原始条目：
-  - [README.md](https://github.com/Xquik-dev/tweetclaw/blob/main/README.md)
+  - [npm package](https://www.npmjs.com/package/@xquik/tweetclaw)
   - [hesamsheikh/awesome-openclaw-usecases/usecases/x-twitter-automation.md](https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/x-twitter-automation.md)

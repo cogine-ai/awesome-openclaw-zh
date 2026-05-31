@@ -12,7 +12,7 @@
 
 | 类型 | Skill / 工具 | 用途 | 来源 |
 |---|---|---|---|
-| 内置 | `openclaw config` / `openclaw ask` / `openclaw models` | 完成安装后配置与模型切换 | OpenClaw CLI |
+| 内置 | `openclaw config` / `openclaw agent --message` / `openclaw models` | 完成安装后配置与模型切换 | OpenClaw CLI |
 | 渠道 | Telegram 群 / 内容平台 | 引流与承接 | Telegram + 自有渠道 |
 | 外部（可选） | Notion | 新手教程承载 | Notion |
 | 外部（可选） | Flask + 支付回调 | 自动付款后发群二维码 | Python |
@@ -25,13 +25,13 @@
 
 ```bash
 # macOS/Linux
-curl -fsSL https://openclaw.example/install.sh | bash
+curl -fsSL https://openclaw.ai/install.sh | bash
 
 # 配置 API Key
 openclaw config set api.key "your-api-key"
 
 # 测试连接
-openclaw ask "你好"
+openclaw agent --message "你好"
 
 # 查看模型
 openclaw models list

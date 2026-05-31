@@ -27,7 +27,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/daily-youtube-digest.md"
   },
   {
-    "title": "每日AI行业日报推送",
+    "title": "每日 AI 行业日报推送",
     "desc": "每天定时推送 AI 行业动态，快速掌握最新趋势。",
     "category": "社交媒体",
     "localPath": "usecases/social/daily-ai-news-report-push.md",
@@ -135,7 +135,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/self-healing-home-server.md"
   },
   {
-    "title": "AI编程协作模式",
+    "title": "AI 编程协作模式",
     "desc": "把编码、测试、修复流程交给AI协作完成。",
     "category": "基础设施与 DevOps",
     "localPath": "usecases/devops/ai-coding-collaboration.md",
@@ -153,7 +153,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/n8n-workflow-orchestration.md"
   },
   {
-    "title": "VPS部署与加固流程",
+    "title": "VPS 部署与加固流程",
     "desc": "从部署到安全收口的一体化流程，适合长期在线运行。",
     "category": "基础设施与 DevOps",
     "localPath": "usecases/devops/vps-deployment-hardening.md",
@@ -189,7 +189,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/custom-morning-brief.md"
   },
   {
-    "title": "动态仪表板",
+    "title": "动态仪表板（子代理并行）",
     "desc": "实时仪表板，并行从 API、数据库和社交媒体获取数据。",
     "category": "生产力",
     "localPath": "usecases/productivity/dynamic-dashboard.md",
@@ -198,7 +198,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/dynamic-dashboard.md"
   },
   {
-    "title": "多机器人多Agent矩阵",
+    "title": "多机器人多 Agent 矩阵",
     "desc": "多渠道机器人协同，按角色分工处理不同业务任务。",
     "category": "生产力",
     "localPath": "usecases/productivity/multi-bot-multi-agent-matrix.md",
@@ -207,7 +207,7 @@
     "sourceUrl": "https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/15-solo-entrepreneur-cases.md"
   },
   {
-    "title": "多渠道 AI 客户服务",
+    "title": "多渠道 AI 客服平台",
     "desc": "将 WhatsApp、Instagram、电子邮件和 Google 评价统一到一个 AI 驱动的收件箱中，实现 24/7 自动回复。",
     "category": "生产力",
     "localPath": "usecases/productivity/multi-channel-customer-service.md",
@@ -234,7 +234,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-agent-team.md"
   },
   {
-    "title": "个人 CRM",
+    "title": "个人 CRM（自动联系人发现）",
     "desc": "自动从电子邮件和日历中发现并追踪联系人，支持自然语言查询。",
     "category": "生产力",
     "localPath": "usecases/productivity/personal-crm.md",
@@ -252,7 +252,7 @@
     "sourceUrl": "https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/12-personal-productivity.md"
   },
   {
-    "title": "活动嘉宾确认",
+    "title": "活动嘉宾确认（语音外呼）",
     "desc": "逐一呼叫活动嘉宾名单以确认出席、收集备注并编译摘要 —— 通过 AI 语音通话完全自动化。",
     "category": "生产力",
     "localPath": "usecases/productivity/event-guest-confirmation.md",
@@ -315,7 +315,7 @@
     "sourceUrl": "https://github.com/digitalknk/openclaw-runbook/blob/main/showcases/daily-brief.md"
   },
   {
-    "title": "收件箱整理",
+    "title": "收件箱整理（Newsletter Digest）",
     "desc": "总结新闻通讯并以电子邮件形式发送给你摘要。",
     "category": "生产力",
     "localPath": "usecases/productivity/inbox-declutter.md",
@@ -324,7 +324,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/inbox-declutter.md"
   },
   {
-    "title": "项目状态管理",
+    "title": "项目状态管理（事件驱动）",
     "desc": "事件驱动的项目追踪，自动捕获上下文，取代静态看板。",
     "category": "生产力",
     "localPath": "usecases/productivity/project-state-management.md",
@@ -360,7 +360,7 @@
     "sourceUrl": "https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/13-advanced-automation.md"
   },
   {
-    "title": "自主项目管理",
+    "title": "自主项目管理（子代理协同）",
     "desc": "使用 STATE.yaml 模式协调多智能体项目 —— 子智能体并行工作，无需编排器开销。",
     "category": "生产力",
     "localPath": "usecases/productivity/autonomous-project-management.md",
@@ -369,7 +369,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/autonomous-project-management.md"
   },
   {
-    "title": "Notion全自动运营工作流",
+    "title": "Notion 全自动运营工作流",
     "desc": "把内容与运营动作自动落到 Notion，减少手工维护。",
     "category": "生产力",
     "localPath": "usecases/productivity/notion-automatic-operation-flow.md",
@@ -378,7 +378,7 @@
     "sourceUrl": "https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/15-solo-entrepreneur-cases.md"
   },
   {
-    "title": "Todoist 任务管理器",
+    "title": "Todoist 任务管理器（Agent 可视化）",
     "desc": "通过将推理和进度日志同步到 Todoist，最大化智能体的透明度。",
     "category": "生产力",
     "localPath": "usecases/productivity/todoist-task-manager.md",
@@ -387,7 +387,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/todoist-task-manager.md"
   },
   {
-    "title": "1天冷启动付费社群流程",
+    "title": "1 天冷启动付费社群流程",
     "desc": "从定位到执行的高密度冷启动运营打法。",
     "category": "研究与学习",
     "localPath": "usecases/research/one-day-paid-community-launch.md",
@@ -396,7 +396,7 @@
     "sourceUrl": "https://github.com/xianyu110/awesome-openclaw-tutorial/blob/main/docs/04-practical-cases/15-solo-entrepreneur-cases.md"
   },
   {
-    "title": "个人知识库 (RAG)",
+    "title": "个人知识库（RAG）",
     "desc": "通过将 URL、推文和文章拖入聊天来构建可搜索的知识库。",
     "category": "研究与学习",
     "localPath": "usecases/research/knowledge-base-rag.md",
@@ -405,7 +405,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/knowledge-base-rag.md"
   },
   {
-    "title": "全自动学习系统（Skills组合）",
+    "title": "全自动学习系统（Skills 组合）",
     "desc": "把学习任务自动化，形成持续学习闭环。",
     "category": "研究与学习",
     "localPath": "usecases/research/skills-combo-auto-learning-system.md",
@@ -459,7 +459,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/earnings-tracker.md"
   },
   {
-    "title": "Polymarket 自动驾驶",
+    "title": "Polymarket 自动驾驶（模拟盘）",
     "desc": "在预测市场上进行自动化模拟交易，带有回测、策略分析和每日绩效报告。",
     "category": "金融与交易",
     "localPath": "usecases/finance/polymarket-autopilot.md",
@@ -468,7 +468,7 @@
     "sourceUrl": "https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/polymarket-autopilot.md"
   },
   {
-    "title": "多源新闻摘要",
+    "title": "新闻摘要聚合器",
     "desc": "多源汇总零重复",
     "category": "日常生活",
     "localPath": "usecases/everyday/59-news-digest-aggregator.md",
@@ -477,7 +477,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/59-news-digest-aggregator.md"
   },
   {
-    "title": "购物比价助手",
+    "title": "比价购物助手",
     "desc": "多平台找最优价格",
     "category": "日常生活",
     "localPath": "usecases/everyday/67-price-comparison-shopper.md",
@@ -486,7 +486,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/67-price-comparison-shopper.md"
   },
   {
-    "title": "会议纪要生成",
+    "title": "会议纪要自动生成",
     "desc": "粘贴原始笔记获取结构化纪要",
     "category": "日常生活",
     "localPath": "usecases/everyday/68-meeting-notes-generator.md",
@@ -495,7 +495,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/68-meeting-notes-generator.md"
   },
   {
-    "title": "冷关系复活",
+    "title": "冷关系重启助手",
     "desc": "重新联系失去联系的朋友",
     "category": "日常生活",
     "localPath": "usecases/everyday/54-cold-relationship-revival.md",
@@ -504,7 +504,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/54-cold-relationship-revival.md"
   },
   {
-    "title": "旅行行程规划",
+    "title": "旅行行程规划助手",
     "desc": "一条消息生成完整行程",
     "category": "日常生活",
     "localPath": "usecases/everyday/70-travel-itinerary-planner.md",
@@ -513,7 +513,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/70-travel-itinerary-planner.md"
   },
   {
-    "title": "每日晨间简报",
+    "title": "Telegram 每日晨报",
     "desc": "天气+日历+新闻一条消息搞定",
     "category": "日常生活",
     "localPath": "usecases/everyday/52-morning-briefing-telegram.md",
@@ -522,7 +522,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/52-morning-briefing-telegram.md"
   },
   {
-    "title": "每日学习日记",
+    "title": "每日学习日志",
     "desc": "晚间问答追踪个人成长",
     "category": "日常生活",
     "localPath": "usecases/everyday/57-daily-learning-journal.md",
@@ -531,7 +531,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/57-daily-learning-journal.md"
   },
   {
-    "title": "社交媒体监控",
+    "title": "社媒提及监控",
     "desc": "跨平台追踪提及和情感",
     "category": "日常生活",
     "localPath": "usecases/everyday/64-social-media-monitor.md",
@@ -540,7 +540,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/64-social-media-monitor.md"
   },
   {
-    "title": "生活记忆管理",
+    "title": "生活记忆记录器",
     "desc": "不再忘记生日、偏好和承诺",
     "category": "日常生活",
     "localPath": "usecases/everyday/60-memory-life-logger.md",
@@ -549,7 +549,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/60-memory-life-logger.md"
   },
   {
-    "title": "天气穿衣建议",
+    "title": "天气穿搭顾问",
     "desc": "基于天气和日程的穿搭建议",
     "category": "日常生活",
     "localPath": "usecases/everyday/58-weather-outfit-advisor.md",
@@ -567,7 +567,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/51-email-to-podcast-commute.md"
   },
   {
-    "title": "邮件自动分类",
+    "title": "邮件自动分拣器",
     "desc": "按紧急程度自动分类收件箱",
     "category": "日常生活",
     "localPath": "usecases/everyday/56-email-auto-sorter.md",
@@ -576,7 +576,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/56-email-auto-sorter.md"
   },
   {
-    "title": "预约预订助手",
+    "title": "预约与订位助手",
     "desc": "不只找服务还直接预约",
     "category": "日常生活",
     "localPath": "usecases/everyday/63-booking-appointment-agent.md",
@@ -585,7 +585,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/63-booking-appointment-agent.md"
   },
   {
-    "title": "阅读清单管理",
+    "title": "阅读清单整理助手",
     "desc": "整周保存链接周五获取摘要",
     "category": "日常生活",
     "localPath": "usecases/everyday/61-reading-list-curator.md",
@@ -612,7 +612,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/55-calendar-smart-reminder.md"
   },
   {
-    "title": "自动社交发帖",
+    "title": "社媒自动发布助手",
     "desc": "自动排期发布内容",
     "category": "日常生活",
     "localPath": "usecases/everyday/65-auto-social-posting.md",
@@ -621,7 +621,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/65-auto-social-posting.md"
   },
   {
-    "title": "作业辅导助手",
+    "title": "儿童作业辅导助手",
     "desc": "耐心辅导引导而非直接给答案",
     "category": "日常生活",
     "localPath": "usecases/everyday/69-homework-tutor.md",
@@ -630,7 +630,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/69-homework-tutor.md"
   },
   {
-    "title": "Instagram 故事管理",
+    "title": "Instagram Story 管理助手",
     "desc": "自动发布故事并管理互动",
     "category": "日常生活",
     "localPath": "usecases/everyday/53-instagram-story-manager.md",
@@ -639,7 +639,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/53-instagram-story-manager.md"
   },
   {
-    "title": "Telegram 智能家居",
+    "title": "Telegram 智能家居控制",
     "desc": "聊天控制灯光温度门锁",
     "category": "日常生活",
     "localPath": "usecases/everyday/62-smart-home-telegram.md",
@@ -648,7 +648,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/62-smart-home-telegram.md"
   },
   {
-    "title": "Trello/Notion 整理",
+    "title": "Trello / Notion 看板自动整理",
     "desc": "夜间清理看板晨间状态报告",
     "category": "日常生活",
     "localPath": "usecases/everyday/66-trello-notion-organizer.md",
@@ -729,7 +729,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/01-medical-email-to-podcast.md"
   },
   {
-    "title": "邮件转播客技能",
+    "title": "邮件转播客 Skill",
     "desc": "邮件音频转换的可重用技能",
     "category": "内容转换",
     "localPath": "usecases/content/38-email-to-podcast-skill.md",
@@ -765,7 +765,7 @@
     "sourceUrl": "https://github.com/digitalknk/openclaw-runbook/blob/main/showcases/linkedin-drafter.md"
   },
   {
-    "title": "安全操作分类账",
+    "title": "安全操作台账",
     "desc": "记录自主权限",
     "category": "内存管理",
     "localPath": "usecases/memory/42-safe-operations-ledger.md",
@@ -792,7 +792,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/39-daily-self-improvement-cron.md"
   },
   {
-    "title": "每周内存归档",
+    "title": "每周记忆归档",
     "desc": "将旧日志压缩为摘要",
     "category": "内存管理",
     "localPath": "usecases/memory/41-weekly-memory-archive.md",
@@ -801,7 +801,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/41-weekly-memory-archive.md"
   },
   {
-    "title": "三层内存系统",
+    "title": "三层记忆系统",
     "desc": "长期 + 每日 + 项目分层",
     "category": "内存管理",
     "localPath": "usecases/memory/04-three-tier-memory-system.md",
@@ -864,7 +864,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/12-7-sub-agent-night-parallel.md"
   },
   {
-    "title": "比特币铭文",
+    "title": "比特币铭文网页",
     "desc": "在链上创建永久网页",
     "category": "夜间自动化",
     "localPath": "usecases/automation/15-bitcoin-inscription.md",
@@ -918,7 +918,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/05-night-shell-alias-builder.md"
   },
   {
-    "title": "夜间 WhatsApp 复兴",
+    "title": "夜间 WhatsApp 关系维护",
     "desc": "回复消息，恢复冷淡友谊",
     "category": "夜间自动化",
     "localPath": "usecases/automation/14-night-whatsapp-revival.md",
@@ -954,7 +954,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/16-polymarket-scanner.md"
   },
   {
-    "title": "Swift 日志记录包",
+    "title": "Swift 日志包（TDD）",
     "desc": "TDD 包开发",
     "category": "夜间自动化",
     "localPath": "usecases/automation/37-swift-logger-package.md",
@@ -1134,7 +1134,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/28-distributed-tracing-benchmark.md"
   },
   {
-    "title": "技能供应链审计",
+    "title": "Skills 供应链审计",
     "desc": "YARA 扫描恶意技能",
     "category": "安全监控",
     "localPath": "usecases/security/31-skill-supply-chain-audit.md",
@@ -1143,7 +1143,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/31-skill-supply-chain-audit.md"
   },
   {
-    "title": "技能预检检查器",
+    "title": "Skill 预检检查器",
     "desc": "安装前安全检查",
     "category": "安全监控",
     "localPath": "usecases/security/34-skill-preflight-checker.md",
@@ -1152,7 +1152,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/34-skill-preflight-checker.md"
   },
   {
-    "title": "令牌使用优化器",
+    "title": "Token 使用优化器",
     "desc": "降低 API 成本",
     "category": "安全监控",
     "localPath": "usecases/security/27-token-usage-optimizer.md",
@@ -1215,7 +1215,7 @@
     "sourceUrl": "https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook/blob/main/usecases/32-api-security-tester.md"
   },
   {
-    "title": "API配额监控与提醒",
+    "title": "API 配额监控与提醒",
     "desc": "自动检查模型配额与调用消耗，避免突发中断。",
     "category": "安全监控",
     "localPath": "usecases/security/api-quota-monitor.md",
@@ -1593,7 +1593,7 @@
     "sourceUrl": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/multi-agent.md"
   },
   {
-    "title": "OpenClaw 调度 Claude Code 与 Codex CLI",
+    "title": "OpenClaw 调度 Claude Code 与 Codex",
     "desc": "让 OpenClaw 作为总控，把 Claude Code、Codex CLI 这类 coding harness 接进同一套工作流。",
     "category": "工具开发",
     "localPath": "usecases/tools/51-openclaw-claude-code-codex-cli.md",
@@ -1602,7 +1602,7 @@
     "sourceUrl": "https://github.com/openclaw/openclaw/blob/main/docs/tools/acp-agents.md"
   },
   {
-    "title": "HF Papers 研究发现流水线",
+    "title": "HuggingFace Papers 研究发现流水线",
     "desc": "每天自动抓 Hugging Face Papers 热门论文，再联动 arXiv 深读，形成一套持续研究雷达。",
     "category": "研究与学习",
     "localPath": "usecases/research/21-hf-papers-research-discovery.md",
@@ -1624,9 +1624,9 @@
     "desc": "用 OpenClaw 统一完成发帖、回复、监控、抽奖和数据抽取，把 X/Twitter 运营动作收回到聊天里。",
     "category": "社交媒体",
     "localPath": "usecases/social/07-x-twitter-automation-ops.md",
-    "sourceRepo": "Xquik-dev/tweetclaw",
-    "sourcePath": "README.md",
-    "sourceUrl": "https://github.com/Xquik-dev/tweetclaw/blob/main/README.md"
+    "sourceRepo": "npm:@xquik/tweetclaw",
+    "sourcePath": "package",
+    "sourceUrl": "https://www.npmjs.com/package/@xquik/tweetclaw"
   },
   {
     "title": "arXiv 论文阅读助手",

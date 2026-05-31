@@ -12,7 +12,7 @@
 
 | 类型 | Skill / 工具 | 用途 | 来源 |
 |---|---|---|---|
-| 外部（需安装） | `@anthropic-ai/claude-cli` | Claude Code 执行编码任务 | npm |
+| 外部（需安装） | `@anthropic-ai/claude-code` | Claude Code 执行编码任务 | npm |
 | 外部（需安装） | `coding-agent` | OpenClaw 编程代理能力 | `clawhub install coding-agent` |
 | 内置 | OpenClaw 调度能力 | 任务拆解、流程编排、结果汇总 | OpenClaw Built-in |
 
@@ -34,7 +34,7 @@
 ### 1) 安装与配置
 
 ```bash
-npm install -g @anthropic-ai/claude-cli
+npm install -g @anthropic-ai/claude-code
 export ANTHROPIC_API_KEY="your-api-key"
 clawhub install coding-agent
 openclaw config set coding.tool "claude-code"
