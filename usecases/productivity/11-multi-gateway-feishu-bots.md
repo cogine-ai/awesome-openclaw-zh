@@ -53,9 +53,11 @@ openclaw --profile coding gateway --port 19001
 ```
 
 ```bash
-openclaw --profile main gateway install
-openclaw --profile coding gateway install
+openclaw --profile main gateway install --port 18789
+openclaw --profile coding gateway install --port 19001
 ```
+
+后台服务安装时也要带上对应端口，避免服务重启后回到默认端口或和其他 Gateway 冲突。
 
 ### 2) 在飞书侧创建多个机器人账号
 

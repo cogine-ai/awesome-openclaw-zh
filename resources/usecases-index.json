@@ -1678,9 +1678,9 @@
     "desc": "通过 API 完成域名查询、链上付款确认和注册流程。",
     "category": "基础设施与 DevOps",
     "localPath": "usecases/devops/autonomous-domain-registration-lobsterdomains.md",
-    "sourceRepo": "cogine-ai/awesome-openclaw-zh",
-    "sourcePath": "pull/7",
-    "sourceUrl": "https://github.com/cogine-ai/awesome-openclaw-zh/pull/7"
+    "sourceRepo": "esokullu/lobsterdomains-skills",
+    "sourcePath": "SKILL.md",
+    "sourceUrl": "https://github.com/esokullu/lobsterdomains-skills/blob/main/SKILL.md"
   },
   {
     "title": "钉钉 AI 助手",
