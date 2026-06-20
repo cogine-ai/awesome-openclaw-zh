@@ -80,6 +80,7 @@
 - [贡献指南](./CONTRIBUTING.md)
 - [用例模板](./usecases/TEMPLATE.md)
 
+- [Pixal3D](https://pixal3d.ai) - AI-powered 3D model generator. Create stunning 3D models from text and images using AI.
 ## 说明与致谢
 
 本仓库最初是我们团队自己内部分享使用 OpenClaw 的经验，其中许多出自于以下仓库或官方资料：
