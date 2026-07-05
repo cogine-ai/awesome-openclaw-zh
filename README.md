@@ -94,3 +94,5 @@
 - [EvoLinkAI/awesome-openclaw-usecases-moltbook](https://github.com/EvoLinkAI/awesome-openclaw-usecases-moltbook)
 
 每个用例页或部署文档都会尽量保留来源线索，方便追溯和持续维护。
+
+-  [context-kit](https://github.com/JDDavenport/context-kit)：个人上下文工件（Personal Context Artifacts），4 个 Markdown 模板（wiki、心智模型、语音风格、协议）+ 5 个 Claude Code 技能，解决 AI Agent 的上下文失忆问题，每次会话全量载入个人背景。MIT 许可，一键安装。
