@@ -12,7 +12,7 @@
 
 | 类型 | Skill / 工具 | 用途 | 来源 |
 |---|---|---|---|
-| 外部 | [`Agent QA`](https://github.com/vostride/agent-qa) | 通过 CLI 或 MCP 用自然语言执行 Web / 移动端用户流测试，并保留测试记忆 | GitHub |
+| 外部 | [`Agent QA`](https://github.com/vostride/agent-qa) | 通过 CLI 或 MCP 用自然语言执行 Web / 移动端用户流测试，并保留测试记忆 | [官方文档](https://vostride.com/docs/agent-qa) |
 | 外部 | `Codex agents` | 并行修复问题并提交 PR | openai-codex |
 | 外部 | `Claude review` | 复核并改进 PR 质量 | Claude Code |
 | 外部 | `GitHub` | PR 流程与合并追踪 | GitHub |
@@ -25,7 +25,7 @@
 
 ```text
 我们正在做一轮用户流测试。
-请根据我提供的截图和备注：
+请根据我提供的截图、备注或 Agent QA 结构化测试证据：
 1) 生成问题列表（含优先级）
 2) 给出每个问题的修复假设
 3) 将可并行处理的问题分组
@@ -49,6 +49,7 @@
 ## 引用来源
 
 - Agent QA 官方仓库：<https://github.com/vostride/agent-qa>
+- Agent QA 官方文档：<https://vostride.com/docs/agent-qa>
 - 原帖链接：<https://x.com/nateliason/status/2014797672419340435>
 - 作者：`Twitter@nateliason`
 - 点赞：`239`
