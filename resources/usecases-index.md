@@ -1,6 +1,6 @@
 # 用例总览
 
-当前共收录 **192** 个中文可用案例。
+当前共收录 **193** 个中文可用案例。
 
 按分类浏览：
 
@@ -248,13 +248,14 @@
 | [SSH 密钥扫描器](../usecases/security/09-ssh-key-scanner.md) | 查找暴露的 SSH 密钥 |
 | [Agent 隔离身份启动（独立账号边界）](../usecases/security/01-agent-isolated-identity-bootstrap.md) | 先建立专用账号边界，再开放执行权限，降低主账号风险。 |
 
-## 工具开发 (8)
+## 工具开发 (9)
 
 | 用例 | 能干什么 |
 |---|---|
 | [多渠道存在同步](../usecases/tools/50-multi-channel-presence-sync.md) | 统一的跨平台身份 |
 | [个人 CLI 工具包](../usecases/tools/10-personal-cli-toolkit.md) | 代理使用的自定义命令 |
 | [技能构建提示词工厂](../usecases/tools/skill-builder-prompt-workflow.md) | 用标准提示词批量生成可维护技能，减少重复劳动。 |
+| [录制与离线复现](../usecases/tools/orcareplay-record-and-replay.md) | 录下一次 OpenClaw 运行，之后不联网、不花 token 地原样跑回来，并可从任一步换模型继续。 |
 | [可公开配置基线模板](../usecases/tools/sanitized-config-baseline.md) | 通过脱敏配置建立团队基线，方便复制和协作。 |
 | [OpenClaw macOS 菜单栏控制台](../usecases/tools/13-macos-menubar-openclaw-console.md) | 在桌面菜单栏查看网关状态、日志并执行快捷控制。 |
 | [AionUi 桌面协作与远程救援（OpenClaw Cowork）](../usecases/tools/aionui-cowork-desktop-remote-rescue.md) | 用可视化 Cowork 界面远程使用和修复 OpenClaw，适合离开电脑后的协作与救援。 |

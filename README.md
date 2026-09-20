@@ -51,7 +51,7 @@
 
 ## 分类导航
 
-- [全量用例索引（192）](./resources/usecases-index.md)
+- [全量用例索引（193）](./resources/usecases-index.md)
 - [社交媒体（8）](./usecases/social)
 - [创意与构建（9）](./usecases/creative)
 - [基础设施与 DevOps（13）](./usecases/devops)
@@ -64,7 +64,7 @@
 - [夜间自动化（15）](./usecases/automation)
 - [数据分析（16）](./usecases/data)
 - [安全监控（16）](./usecases/security)
-- [工具开发（8）](./usecases/tools)
+- [工具开发（9）](./usecases/tools)
 
 ## 部署与运行建议
 
