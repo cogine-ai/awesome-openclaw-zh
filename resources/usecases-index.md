@@ -1,6 +1,10 @@
 # 用例总览
 
-当前共收录 **192** 个中文可用案例。
+当前共收录 **203** 个中文案例与实验方案。
+
+案例是否经过本地实测，请查看各页的验证说明；收录和来源核对不等于端到端运行通过。
+
+[查看 2026 年 10 月新玩法精选](./05-october-new-playbooks.md) · [在线搜索](https://www.opcboost.com/usecases/)
 
 按分类浏览：
 
@@ -17,7 +21,7 @@
 | [X / Twitter 自动化运营](../usecases/social/07-x-twitter-automation-ops.md) | 用 OpenClaw 统一完成发帖、回复、监控、抽奖和数据抽取，把 X/Twitter 运营动作收回到聊天里。 |
 | [小红书内容自动化](../usecases/social/08-xiaohongshu-content-automation.md) | 辅助完成小红书选题、文案、封面和排期发布。 |
 
-## 创意与构建 (9)
+## 创意与构建 (13)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -30,6 +34,10 @@
 | [Excalidraw Diagram-as-Code（流程图自动生成）](../usecases/creative/02-excalidraw-diagram-as-code.md) | 让 OpenClaw 直接生成 Excalidraw JSON，把文本需求快速转成流程图。 |
 | [WhatsApp 驱动 UI 生成与截图回传](../usecases/creative/whatsapp-driven-ui-with-screenshot-feedback.md) | 通过 WhatsApp 远程生成界面并回传截图，先看效果再继续迭代。 |
 | [AI YouTube 视频剪辑（Tubeify）](../usecases/creative/ai-youtube-video-editing-tubeify.md) | 用 Tubeify API 自动删除视频里的停顿和口头禅。 |
+| [在聊天里生成视频：文字、图片与异步回传](../usecases/creative/native-video-generation-chat.md) | 通过原生 video_generate 从文字或参考素材生成短视频，并在同一会话收取异步结果。 |
+| [论文变侦探漫画：Easel 科普创作工作台](../usecases/creative/easel-paper-to-detective-comic.md) | 先提炼论文证据，再用侦探分镜讲清一个问题，交付可核对来源的漫画与知识卡片。 |
+| [龙虾短剧导演：一致角色与离线分镜看板](../usecases/creative/short-drama-consistent-storyboard-board.md) | 把一个小故事整理为角色资产板、连续镜头提示词和可打开的 HTML 看板，减少短剧制作中的换脸与穿帮。 |
+| [旅行碎片变成可点击的故事地图](../usecases/creative/travel-notes-interactive-story-map.md) | 用三段虚构手记制作可离线浏览的单文件故事地图，点击地点探索文字与示意画面。 |
 
 ## 基础设施与 DevOps (13)
 
@@ -49,7 +57,7 @@
 | [Claworc 多实例控制台](../usecases/devops/21-claworc-multi-instance-control-plane.md) | 用一个 Web 控制台集中管理多个 OpenClaw 实例，把实例隔离、权限控制和运维入口统一起来。 |
 | [加密货币自动注册域名（LobsterDomains）](../usecases/devops/autonomous-domain-registration-lobsterdomains.md) | 通过 API 完成域名查询、链上付款确认和注册流程。 |
 
-## 生产力 (32)
+## 生产力 (33)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -85,8 +93,9 @@
 | [本地 CRM / DenchClaw 框架](../usecases/productivity/12-denchclaw-local-crm-framework.md) | 用 DenchClaw 把 OpenClaw 变成一套本地优先的 CRM、销售自动化和业务运营工作台。 |
 | [钉钉 AI 助手](../usecases/productivity/13-dingtalk-ai-assistant.md) | 把 OpenClaw 接进钉钉，让团队在原有办公群里触发 AI 任务。 |
 | [电商多 Agent 运营助手](../usecases/productivity/14-ecommerce-multi-agent-ops.md) | 用多个 Agent 分别处理销售、库存、客服和商品分析。 |
+| [让 Agent 进入会议：实时听、答与留下纪要](../usecases/productivity/live-meeting-agent-participant.md) | 使用会议插件从只观察字幕逐步到实时语音参加，并区分入会、可听性与纪要验证。 |
 
-## 研究与学习 (13)
+## 研究与学习 (14)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -103,6 +112,7 @@
 | [HuggingFace Papers 研究发现流水线](../usecases/research/21-hf-papers-research-discovery.md) | 每天自动抓 Hugging Face Papers 热门论文，再联动 arXiv 深读，形成一套持续研究雷达。 |
 | [arXiv 论文阅读助手](../usecases/research/22-arxiv-paper-reader.md) | 直接按 arXiv ID 抓摘要、目录和全文，让 OpenClaw 变成可对话的论文阅读器。 |
 | [Suppr 文献检索与文档翻译](../usecases/research/23-suppr-literature-translation.md) | 用 Suppr MCP 或 Skills 接入学术文献检索、论文元数据整理和 PDF 翻译。 |
+| [新玩法雷达：从 GitHub 信号到周末复刻实验](../usecases/research/github-growth-to-remix-lab.md) | 区分累计 Star 与增长证据，选一个低门槛新玩法，留下可分享的最小二创产物。 |
 
 ## 金融与交易 (2)
 
@@ -149,7 +159,7 @@
 | [电话外呼提醒（Phone Call Notifications）](../usecases/everyday/phone-call-notifications.md) | 在真正重要的时候由 OpenClaw 主动给你打电话，减少关键通知遗漏。 |
 | [家庭 PM 周报](../usecases/everyday/family-pm-weekly-roundup.md) | 收集家庭话题、补做研究，并在固定时间发送一份集中周报。 |
 
-## 内容转换 (16)
+## 内容转换 (17)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -169,6 +179,7 @@
 | [阅读材料重打包成极简 HTML/CSS 阅读器](../usecases/content/html-css-reading-repackager.md) | 把原始资料重排成更适合阅读的轻量 HTML/CSS 页面，并支持调字号和 speed-read。 |
 | [AI 视频编辑助手](../usecases/content/48-ai-video-editing-assistant.md) | 用聊天方式完成粗剪、加字幕、转竖屏和批量导出，把重复视频后处理交给 OpenClaw。 |
 | [微信公众号自动发布](../usecases/content/49-wechat-mp-automation.md) | 串起选题、写稿、排版和公众号草稿箱推送。 |
+| [一个知识点，三种讲法：卡片、漫画、短片内容擂台](../usecases/content/one-concept-three-formats-arena.md) | 同一份事实底稿生成三种表达，再用一致的口径与真实阅读反馈选择下一期方向。 |
 
 ## 内存管理 (11)
 
@@ -186,7 +197,7 @@
 | [知识图谱重建器](../usecases/memory/40-knowledge-graph-rebuilder.md) | 夜间图重建 |
 | [伴侣双 Bot 共享记忆层（shared-memory）](../usecases/memory/17-shared-memory-for-partner-bots.md) | 两个 OpenClaw 同步关键上下文，支持跨人协作接力。 |
 
-## 夜间自动化 (15)
+## 夜间自动化 (16)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -205,6 +216,7 @@
 | [Trello 看板组织器](../usecases/automation/49-trello-board-organizer.md) | 夜间看板维护 |
 | [V4 LP 自动复利](../usecases/automation/11-v4-lp-auto-compounding.md) | Uniswap V4 费用复利 |
 | [多账号 Gmail + Calendar 晨间汇总](../usecases/automation/multi-account-gmail-calendar-morning-rollup.md) | 用 gog 聚合多个 Gmail 和 Calendar 账号，早晨一次看完重点。 |
+| [Lobster 交互工作流：暂停、补充信息、从原处继续](../usecases/automation/lobster-interactive-resume-workflow.md) | 用结构化输入检查点暂停流程，验证回答、保留恢复令牌并继续或取消后续步骤。 |
 
 ## 数据分析 (16)
 
@@ -248,7 +260,7 @@
 | [SSH 密钥扫描器](../usecases/security/09-ssh-key-scanner.md) | 查找暴露的 SSH 密钥 |
 | [Agent 隔离身份启动（独立账号边界）](../usecases/security/01-agent-isolated-identity-bootstrap.md) | 先建立专用账号边界，再开放执行权限，降低主账号风险。 |
 
-## 工具开发 (8)
+## 工具开发 (11)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -260,3 +272,6 @@
 | [AionUi 桌面协作与远程救援（OpenClaw Cowork）](../usecases/tools/aionui-cowork-desktop-remote-rescue.md) | 用可视化 Cowork 界面远程使用和修复 OpenClaw，适合离开电脑后的协作与救援。 |
 | [语音模型发现、安装并接入对话](../usecases/tools/voice-model-discovery-install-and-conversation.md) | 发现新 voice model 后，让 OpenClaw 负责检查、安装并完成对话验证。 |
 | [OpenClaw 调度 Claude Code 与 Codex](../usecases/tools/51-openclaw-claude-code-codex-cli.md) | 让 OpenClaw 作为总控，把 Claude Code、Codex CLI 这类 coding harness 接进同一套工作流。 |
+| [Crabbox 临时应用实验室：边聊天边看远程界面](../usecases/tools/crabbox-disposable-app-playground.md) | 在会话附属的临时机器上打开 Web 或桌面应用，旁观界面、接管操作并明确保存与停止。 |
+| [MCP Apps 交互工作台：在聊天旁查看、选择与编辑](../usecases/tools/mcp-apps-interactive-chat-workbench.md) | 开启标准 MCP Apps 视图，并在服务声明支持时把选中资源或文件操作接回当前会话。 |
+| [把成功任务变成 Skill：审阅提案后再复用](../usecases/tools/skill-workshop-learn-from-success.md) | 用 /learn 提炼素材包检查方法，审阅并应用提案，再换一组输入验证复用。 |
