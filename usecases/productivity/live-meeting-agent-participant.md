@@ -23,7 +23,7 @@ source_date: 2026-10-11
 
 - 让 Agent 在 Meet、Teams、Zoom，或已开启的 Slack huddle 中参与讨论。
 - 先用只观察的模式获取会议字幕，再选择普通 Agent 回答或低延迟实时语音。
-- 会议结束后查看保存的字幕与纪要，而不是手动把录音上传给模型。
+- 启用持久记录后，会议结束可查看保存的字幕与纪要，而不是手动把录音上传给模型。
 
 这里的“进入会议”覆盖会议参加与语音路径。Teams、Zoom 插件不因此获得创建会议、调用厂商 API 或录制音视频的能力。
 
@@ -43,6 +43,7 @@ source_date: 2026-10-11
 - 只安装自己使用的平台插件。消息渠道插件与会议参加插件是不同组件。
 - 受控测试会议与第二位参与者，用来确认真实入会、字幕、远端听到的声音与打断效果。
 - 启用说话时，Chrome 所在机器需要虚拟音频依赖；远程 Chrome node 还需允许对应平台命令与 `browser.proxy`。
+- 需要保存字幕与纪要时，保持全局 `transcripts.enabled: true`（默认值）。设为 `false` 时，显式 `transcribe` 只保留有界实时字幕尾部，不写入持久记录。
 
 只加入你有权添加 Agent 的会议，并按实际会议规则告知自动参加和转写行为。
 
@@ -56,6 +57,7 @@ openclaw plugins install @openclaw/google-meet
 
 ```json5
 {
+  transcripts: { enabled: true },
   plugins: {
     entries: {
       "google-meet": {
@@ -130,8 +132,8 @@ brew install blackhole-2ch sox
 
 ## 输出与失败处理
 
-- 三种模式都可保存已经完成的字幕行与会议纪要；有新语音时纪要约每五分钟更新，离会后写最终摘要。
-- 可用 `openclaw transcripts` 查看、检查或导出保存记录；这不等于创建了音视频录像。
+- 全局 `transcripts.enabled: true` 时，三种模式的浏览器入会都可保存已完成的字幕行与会议纪要；有新语音被保存时，纪要约每五分钟更新，离会后写最终摘要。字幕仍取决于平台是否提供。
+- 可用 `openclaw transcripts` 的 `list`、`show`、`path` 查看或导出已经保存的记录；关闭持久记录后不能从实时字幕尾部推断已有完整归档。这不等于创建了音视频录像。
 - `manualAction` 返回登录、验证码、准入或权限步骤时，在同一 Chrome profile 完成，不反复创建新标签页。
 - 没有字幕、音频依赖缺失、提供者授权失败时，停止对应路径并记录原因。
 - 用明确的 `leave` 结束会议；清理失败时继续检查该 session，而不是立即发起另一次入会。
@@ -139,6 +141,7 @@ brew install blackhole-2ch sox
 ## 引用来源
 
 - [固定版本：Meeting plugins 的模式、音频与入会检查](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/plugins/meeting-plugins.md)
+- [固定版本：Transcripts CLI 与持久记录开关](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/cli/transcripts.md)
 - [Google Meet 工具与状态](https://docs.openclaw.ai/plugins/google-meet/tool-and-modes)
 - [Google Meet 配置：GPT Live with Cove](https://docs.openclaw.ai/plugins/google-meet/config#gpt-live-with-cove)
 - [v2026.9.5 发布记录：2026-09-19](https://github.com/openclaw/openclaw/releases/tag/v2026.9.5)

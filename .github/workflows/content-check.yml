@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Verify catalog, documents and generated counts
         run: python3 scripts/generate-index.py --check
       - name: Verify failure detection

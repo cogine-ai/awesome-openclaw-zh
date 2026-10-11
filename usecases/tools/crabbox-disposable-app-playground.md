@@ -22,7 +22,7 @@ source_date: 2026-10-11
 ## 这个案例能帮你做什么
 
 - 在一次对话中试用 Web 原型或原生 Linux 应用，直接查看它的界面。
-- 保留同一台附属临时机器，在后续轮次继续调试、修改和查看结果。
+- 在附属临时机器仍有效时，后续轮次继续调试、修改和查看结果。
 - 需要人工操作时接管桌面，随后明确要求 Agent 继续。
 
 Agent 的主工作区仍在原来的机器上。临时环境是当前会话的附属机器，所需文件必须显式复制或准备过去。
@@ -80,6 +80,8 @@ OpenClaw `v2026.10.1` 的 provider 要求 Crabbox `0.69.0` 或更新版本。缺
 
 `readyWorkers: 0` 关闭这个 profile 的备用机器；`warmImage: false` 不为该配置启用镜像复用。实际规格、费用和可用区域由 Crabbox 后端决定。
 
+这份配置不会无限保留原环境：会话空闲达到 `suspendAfter: "45m"` 后，Gateway 可回收附属机器；成功回收后，下一次创建会使用替代机器。这里 `warmImage: false` 不会从暖镜像恢复。`ttl: "24h"` 与 `idleTimeout: "60m"` 是传给后端的存活上限和空闲超时保障，不能用提示词延长。等待下一轮或离开前，先保存或导出需要的结果。
+
 原生 Linux 应用还需启用 **Cloud Worker Desktop** lab。所用 Gateway 地址必须能被工作机连接，provider 显式禁用或工具 allowlist 缺少所需工具时也不会自动恢复权限。
 
 ## 快速体验：先打开一个 Web 原型
@@ -91,7 +93,7 @@ OpenClaw `v2026.10.1` 的 provider 要求 Crabbox `0.69.0` 或更新版本。缺
 先说明要准备或复制的文件，以及启动命令。
 生成最小示例时只包含新增、勾选、删除测试待办三个动作。
 应用启动后在聊天旁打开 Portal，告诉我访问地址和环境 ID。
-保留当前环境供下一轮修改；完成后提醒我保存结果并停止机器。
+当前环境仍有效时供下一轮修改；等待或结束前提醒我保存结果，结束后停止机器。
 ```
 
 这是一种文档组合的原型玩法，未验证某个框架或应用。需安装的依赖、服务端口和可访问性取决于项目本身。
@@ -117,7 +119,7 @@ Open this in Crabbox and show me.
 
 ## 输出与结束流程
 
-你应看到应用对应的 Portal 或 Desktop，而不仅是一句“已启动”。后续轮次应继续使用当前会话绑定的环境。
+你应看到应用对应的 Portal 或 Desktop，而不仅是一句“已启动”。后续轮次先核对当前会话绑定的环境状态；已经回收、过期或停止时，需要重新准备环境，不能假定原文件与进程仍存在。
 
 结束时请 Agent：保存或导出需要保留的文件，说明保存位置，停止附属机器，并报告实际清理结果。关闭面板只隐藏界面，应用与机器可能仍在运行。
 
@@ -143,6 +145,7 @@ crabbox stop <lease>
 
 - [固定版本：Cloud Worker Desktop](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/gateway/cloud-workers/desktop.md)
 - [固定版本：Crabbox profile 配置](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/gateway/config-cloud-workers.md)
+- [固定版本：附属环境的空闲回收实现](https://github.com/openclaw/openclaw/blob/v2026.10.1/src/gateway/worker-environments/session-attachment-service.ts)
 - [官方 2026.9.6 发布说明](https://docs.openclaw.ai/releases/2026.9.6)
 - [Crabbox 安装与准备指南](https://github.com/openclaw/crabbox/blob/main/docs/getting-started.md)
 - [Crabbox v0.74.0 发布记录：2026-10-11](https://github.com/openclaw/crabbox/releases/tag/v0.74.0)

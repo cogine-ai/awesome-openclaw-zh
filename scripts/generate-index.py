@@ -18,7 +18,7 @@ CATEGORIES = {
 
 
 def load_catalog():
-    entries = json.loads((ROOT / "resources/usecases-index.json").read_text())
+    entries = json.loads((ROOT / "resources/usecases-index.json").read_text(encoding="utf-8"))
     seen = set()
     for entry in entries:
         for key in ("title", "desc", "category", "localPath", "sourceRepo", "sourcePath", "sourceUrl"):
@@ -78,13 +78,13 @@ def main():
     entries = load_catalog()
     readme = ROOT / "README.md"
     generated = {ROOT / "resources/usecases-index.md": markdown_index(entries),
-                 readme: readme_counts(readme.read_text(), entries)}
+                 readme: readme_counts(readme.read_text(encoding="utf-8"), entries)}
     stale = []
     for path, content in generated.items():
-        if path.read_text() != content:
+        if path.read_text(encoding="utf-8") != content:
             stale.append(path.relative_to(ROOT).as_posix())
             if not args.check:
-                path.write_text(content)
+                path.write_text(content, encoding="utf-8")
     if args.check and stale:
         print("Run python3 scripts/generate-index.py: " + ", ".join(stale), file=sys.stderr)
         return 1

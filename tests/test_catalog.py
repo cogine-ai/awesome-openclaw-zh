@@ -1,6 +1,7 @@
 """Exercise failures that could silently break source-to-website publishing."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -19,7 +20,7 @@ class CatalogChecks(unittest.TestCase):
         self.root = Path(self.temp.name).resolve()
         (self.root / "resources").mkdir()
         (self.root / "usecases/tools").mkdir(parents=True)
-        (self.root / "usecases/tools/sample.md").write_text("# Sample\n")
+        (self.root / "usecases/tools/sample.md").write_text("# Sample\n", encoding="utf-8")
         self.entry = dict(title="Sample", desc="Sample workflow", category="工具开发",
                           localPath="usecases/tools/sample.md", sourceRepo="owner/repo",
                           sourcePath="sample.md", sourceUrl="https://example.com/sample")
@@ -28,14 +29,14 @@ class CatalogChecks(unittest.TestCase):
         self.temp.cleanup()
 
     def load(self, entries):
-        (self.root / "resources/usecases-index.json").write_text(json.dumps(entries))
+        (self.root / "resources/usecases-index.json").write_text(json.dumps(entries), encoding="utf-8")
         with patch.object(catalog, "ROOT", self.root):
             return catalog.load_catalog()
 
     def test_duplicate_and_unindexed_documents_are_rejected(self):
         with self.assertRaisesRegex(ValueError, "Duplicate path"):
             self.load([self.entry, self.entry])
-        (self.root / "usecases/tools/missing-index.md").write_text("# Missing\n")
+        (self.root / "usecases/tools/missing-index.md").write_text("# Missing\n", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "unindexed"):
             self.load([self.entry])
 
@@ -54,16 +55,17 @@ class CatalogChecks(unittest.TestCase):
     def test_check_detects_drift_without_changing_files(self):
         (self.root / "scripts").mkdir()
         script = self.root / "scripts/generate-index.py"
-        script.write_text((ROOT / "scripts/generate-index.py").read_text())
+        script.write_text((ROOT / "scripts/generate-index.py").read_text(encoding="utf-8"), encoding="utf-8")
         self.load([self.entry])
         readme = self.root / "README.md"
-        readme.write_text("使用场景：0 个\n")
-        (self.root / "resources/usecases-index.md").write_text("stale\n")
-        result = subprocess.run(["python3", str(script), "--check"], capture_output=True)
+        readme.write_text("使用场景：0 个\n", encoding="utf-8")
+        (self.root / "resources/usecases-index.md").write_text("stale\n", encoding="utf-8")
+        ascii_env = {**os.environ, "LC_ALL": "C", "PYTHONUTF8": "0", "PYTHONCOERCECLOCALE": "0"}
+        result = subprocess.run(["python3", str(script), "--check"], capture_output=True, env=ascii_env)
         self.assertEqual(result.returncode, 1)
-        self.assertEqual(readme.read_text(), "使用场景：0 个\n")
-        subprocess.run(["python3", str(script)], check=True, capture_output=True)
-        result = subprocess.run(["python3", str(script), "--check"], capture_output=True)
+        self.assertEqual(readme.read_text(encoding="utf-8"), "使用场景：0 个\n")
+        subprocess.run(["python3", str(script)], check=True, capture_output=True, env=ascii_env)
+        result = subprocess.run(["python3", str(script), "--check"], capture_output=True, env=ascii_env)
         self.assertEqual(result.returncode, 0, result.stderr.decode())
 
 
