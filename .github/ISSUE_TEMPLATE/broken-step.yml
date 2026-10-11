@@ -1,0 +1,17 @@
+name: 报告失效步骤
+description: 告诉我们哪个案例已经不能复现
+title: "[失效] "
+body:
+  - type: input
+    id: page
+    attributes:
+      label: 案例页面链接
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 哪一步出错？
+      description: 预期结果、实际报错、OpenClaw 版本与系统。日志请先脱敏。
+    validations:
+      required: true

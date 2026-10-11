@@ -1726,5 +1726,104 @@
     "sourceRepo": "AlexAnys/awesome-openclaw-usecases-zh",
     "sourcePath": "usecases/cn-wechat-mp-automation.md",
     "sourceUrl": "https://github.com/AlexAnys/awesome-openclaw-usecases-zh/blob/main/usecases/cn-wechat-mp-automation.md"
+  },
+  {
+    "title": "在聊天里生成视频：文字、图片与异步回传",
+    "desc": "通过原生 video_generate 从文字或参考素材生成短视频，并在同一会话收取异步结果。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/native-video-generation-chat.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/tools/video-generation.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/tools/video-generation.md"
+  },
+  {
+    "title": "Crabbox 临时应用实验室：边聊天边看远程界面",
+    "desc": "在会话附属的临时机器上打开 Web 或桌面应用，旁观界面、接管操作并明确保存与停止。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/crabbox-disposable-app-playground.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/gateway/cloud-workers/desktop.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/gateway/cloud-workers/desktop.md"
+  },
+  {
+    "title": "让 Agent 进入会议：实时听、答与留下纪要",
+    "desc": "使用会议插件从只观察字幕逐步到实时语音参加，并区分入会、可听性与纪要验证。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/live-meeting-agent-participant.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/plugins/meeting-plugins.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/plugins/meeting-plugins.md"
+  },
+  {
+    "title": "Lobster 交互工作流：暂停、补充信息、从原处继续",
+    "desc": "用结构化输入检查点暂停流程，验证回答、保留恢复令牌并继续或取消后续步骤。",
+    "category": "夜间自动化",
+    "localPath": "usecases/automation/lobster-interactive-resume-workflow.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/tools/lobster.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/tools/lobster.md"
+  },
+  {
+    "title": "MCP Apps 交互工作台：在聊天旁查看、选择与编辑",
+    "desc": "开启标准 MCP Apps 视图，并在服务声明支持时把选中资源或文件操作接回当前会话。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/mcp-apps-interactive-chat-workbench.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/cli/mcp/apps.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/cli/mcp/apps.md"
+  },
+  {
+    "title": "论文变侦探漫画：Easel 科普创作工作台",
+    "desc": "先提炼论文证据，再用侦探分镜讲清一个问题，交付可核对来源的漫画与知识卡片。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/easel-paper-to-detective-comic.md",
+    "sourceRepo": "ZJU-REAL/Easel",
+    "sourcePath": "skills/openclaw/paper-explainer/SKILL.md",
+    "sourceUrl": "https://github.com/ZJU-REAL/Easel/blob/main/skills/openclaw/paper-explainer/SKILL.md"
+  },
+  {
+    "title": "龙虾短剧导演：一致角色与离线分镜看板",
+    "desc": "把一个小故事整理为角色资产板、连续镜头提示词和可打开的 HTML 看板，减少短剧制作中的换脸与穿帮。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/short-drama-consistent-storyboard-board.md",
+    "sourceRepo": "lixiaoxiao9888-create/manju-laoli-skill",
+    "sourcePath": "short-drama-director/SKILL.md",
+    "sourceUrl": "https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/main/short-drama-director/SKILL.md"
+  },
+  {
+    "title": "把成功任务变成 Skill：审阅提案后再复用",
+    "desc": "用 /learn 提炼素材包检查方法，审阅并应用提案，再换一组输入验证复用。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/skill-workshop-learn-from-success.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/tools/skill-workshop/authoring.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/tools/skill-workshop/authoring.md"
+  },
+  {
+    "title": "旅行碎片变成可点击的故事地图",
+    "desc": "用三段虚构手记制作可离线浏览的单文件故事地图，点击地点探索文字与示意画面。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/travel-notes-interactive-story-map.md",
+    "sourceRepo": "cogine-ai/awesome-openclaw-zh",
+    "sourcePath": "usecases/creative/travel-notes-interactive-story-map.md",
+    "sourceUrl": "https://github.com/cogine-ai/awesome-openclaw-zh/blob/main/usecases/creative/travel-notes-interactive-story-map.md"
+  },
+  {
+    "title": "新玩法雷达：从 GitHub 信号到周末复刻实验",
+    "desc": "区分累计 Star 与增长证据，选一个低门槛新玩法，留下可分享的最小二创产物。",
+    "category": "研究与学习",
+    "localPath": "usecases/research/github-growth-to-remix-lab.md",
+    "sourceRepo": "cogine-ai/awesome-openclaw-zh",
+    "sourcePath": "usecases/research/github-growth-to-remix-lab.md",
+    "sourceUrl": "https://github.com/cogine-ai/awesome-openclaw-zh/blob/main/usecases/research/github-growth-to-remix-lab.md"
+  },
+  {
+    "title": "一个知识点，三种讲法：卡片、漫画、短片内容擂台",
+    "desc": "同一份事实底稿生成三种表达，再用一致的口径与真实阅读反馈选择下一期方向。",
+    "category": "内容转换",
+    "localPath": "usecases/content/one-concept-three-formats-arena.md",
+    "sourceRepo": "cogine-ai/awesome-openclaw-zh",
+    "sourcePath": "usecases/content/one-concept-three-formats-arena.md",
+    "sourceUrl": "https://github.com/cogine-ai/awesome-openclaw-zh/blob/main/usecases/content/one-concept-three-formats-arena.md"
   }
 ]

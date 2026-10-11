@@ -1,0 +1,36 @@
+name: 分享案例 / 新玩法
+description: 分享跑通的实践，或提出有来源的新玩法
+title: "[案例] "
+body:
+  - type: textarea
+    id: result
+    attributes:
+      label: 你完成了什么？
+      description: 适用人群、输入、结果，以及与已有案例的区别。
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: 当前状态
+      options:
+        - 我已经跑通，可提供脱敏结果
+        - 作者已经展示，我提供原始来源
+        - 基于文档的组合方案，还未实测
+        - 原创选题，希望一起验证
+    validations:
+      required: true
+  - type: textarea
+    id: setup
+    attributes:
+      label: 工具、版本、前置条件与步骤
+      description: 有哪些账号或权限要求？请勿粘贴密钥、个人聊天或客户资料。
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: 来源与结果
+      description: 原始链接、脱敏截图或产物示例；原创方案请注明。
+    validations:
+      required: true

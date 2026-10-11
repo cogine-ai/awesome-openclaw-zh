@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>没有日落，也很好的一天 · 故事地图</title>
+  <style>
+    :root{font-family:system-ui,sans-serif;color:#243d42;background:#f3efe6;color-scheme:light}
+    *{box-sizing:border-box}body{margin:0}main{max-width:1050px;margin:auto;padding:48px 24px}
+    .eyebrow{color:#527c79;font-size:13px;letter-spacing:.12em}h1{font-size:clamp(28px,5vw,48px);font-weight:650;margin:14px 0}
+    .intro{color:#5d6b69;line-height:1.8}article{display:grid;grid-template-columns:260px 1fr;gap:30px;margin-top:32px}
+    nav{display:flex;flex-direction:column;gap:12px}button{font:inherit;text-align:left;border:1px solid #b5c6be;border-radius:12px;padding:17px;background:transparent;color:inherit;cursor:pointer}
+    button[aria-pressed="true"]{background:#285b56;color:white;border-color:#285b56}button:focus-visible{outline:3px solid #e69a44;outline-offset:4px}
+    .time{font-size:13px;display:block;margin-bottom:5px;opacity:.8}.card{background:#fffdf7;border:1px solid #ddd8cb;border-radius:20px;padding:28px;min-width:0}
+    svg{width:100%;height:auto;display:block}.caption{font-size:12px;color:#6a7770}h2{font-size:26px;margin-bottom:12px}.story{font-size:19px;line-height:1.9;min-height:74px}
+    .photo{background:#e5ebe2;padding:16px;border-radius:10px;line-height:1.6}footer{margin-top:30px;font-size:12px;color:#68736d;line-height:1.7}
+    @media(max-width:680px){main{padding:28px 18px}article{grid-template-columns:1fr;gap:18px}nav{flex-direction:row}button{flex:1;padding:12px;font-size:14px}.card{padding:22px}.story{min-height:0}}
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">COGINE · 原创实验样例</p>
+  <h1>没有日落，也很好的一天</h1>
+  <p class="intro">三段旅行碎片，点击地点慢慢读。所有地点和文字均为虚构演示素材。</p>
+  <article>
+    <nav aria-label="选择故事地点">
+      <button type="button" data-place="0" aria-pressed="true"><span class="time">01 · 上午</span>海边栈道</button>
+      <button type="button" data-place="1" aria-pressed="false"><span class="time">02 · 午后</span>巷口书店</button>
+      <button type="button" data-place="2" aria-pressed="false"><span class="time">03 · 傍晚</span>山顶观景台</button>
+    </nav>
+    <section class="card" aria-live="polite" aria-atomic="true">
+      <svg viewBox="0 0 540 170" role="img" aria-label="三个地点的故事顺序示意，不表示真实路线">
+        <path d="M60 125Q165 25 265 85T480 42" fill="none" stroke="#9fb7a4" stroke-width="3" stroke-dasharray="7 7"/>
+        <g fill="#bcd0bf" stroke="#fffdf7" stroke-width="5"><circle data-dot="0" cx="60" cy="125" r="15"/><circle data-dot="1" cx="265" cy="85" r="15"/><circle data-dot="2" cx="480" cy="42" r="15"/></g>
+        <g font-size="13" fill="#586e61"><text x="30" y="160">海边栈道</text><text x="234" y="125">巷口书店</text><text x="435" y="82">山顶观景台</text></g>
+      </svg>
+      <p class="caption">故事顺序示意 · 无真实经纬度</p>
+      <h2 id="place">海边栈道</h2>
+      <p id="time" class="time">上午</p>
+      <p id="story" class="story">风很大，我们把咖啡杯抱得很紧。</p>
+      <div class="photo">图形占位（示意） · 照片说明：<span id="photo">两只纸杯。</span></div>
+    </section>
+  </article>
+  <footer>由 Cogine 为案例编写的静态参考样例，未通过 OpenClaw 生成。可保存到本地离线打开；无外部资源与跟踪脚本。<br>案例：旅行碎片变成可点击的故事地图。</footer>
+</main>
+<script>
+  const places=[
+    {name:'海边栈道',time:'上午',story:'风很大，我们把咖啡杯抱得很紧。',photo:'两只纸杯。'},
+    {name:'巷口书店',time:'午后',story:'找到一本封面掉色的旧书。',photo:'木书架。'},
+    {name:'山顶观景台',time:'傍晚',story:'没看到日落，但看到了云的另一面。',photo:'一片云。'}
+  ];
+  const buttons=[...document.querySelectorAll('[data-place]')];
+  function selectPlace(index){
+    const item=places[index];
+    for(const [id,value] of Object.entries({place:item.name,time:item.time,story:item.story,photo:item.photo}))document.getElementById(id).textContent=value;
+    buttons.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));
+    document.querySelectorAll('[data-dot]').forEach((dot,i)=>dot.setAttribute('fill',i===index?'#285b56':'#bcd0bf'));
+  }
+  buttons.forEach((button,index)=>button.addEventListener('click',()=>selectPlace(index)));
+  selectPlace(0);
+</script>
+</body>
+</html>

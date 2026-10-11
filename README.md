@@ -3,11 +3,23 @@
 一个面向中文用户的 OpenClaw 开源仓库：
 **先部署成功，再接入渠道，再跑通第一个场景。**
 
+**[在线阅读与搜索：OPCBoost](https://www.opcboost.com/) · [10 月新玩法精选](./resources/05-october-new-playbooks.md) · [提交你的案例](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)**
+
+由 **[Cogine 团队](https://www.cogine.ai/)** 整理与维护。觉得有用，欢迎点击仓库右上角 **Star** 收藏，方便再次找到这些案例；订阅更新可使用 GitHub 的 **Watch → Custom → Releases**。
+
 本仓库当前覆盖三类核心内容：
 
 - 部署与配置：Mac、Windows、Linux VPS、多 Agent
 - 渠道接入：飞书、钉钉、企业微信、QQ（持续补充）
-- 使用场景：192 个真实案例与工作流
+- 使用场景：203 个来源可追溯的案例、工作流与原创实验
+
+## 最近更新：2026 年 10 月
+
+这一轮聚焦近期上游能力、中文创作生态和有趣的组合玩法。每个新案例说明来源、前置条件、产物和验证状态；原创方案明确标记为实验。
+
+- [10 月新玩法与选题依据](./resources/05-october-new-playbooks.md)
+- [第一次体验：三个中文工作场景](./quickstart/02-first-three-workflows.md)
+- [更新记录](./CHANGELOG.md)
 
 ## 开始使用 OpenClaw
 
@@ -21,7 +33,7 @@
 
 1. [部署后 5 分钟快速体验](./quickstart/00-5min-quickstart.md)
 2. [7 天上手路径](./quickstart/01-7day-path.md)
-3. [按分类找案例（192个）](./resources/usecases-index.md)
+3. [按分类找案例（203 个）](./resources/usecases-index.md)
 
 ### 推荐部署入口
 
@@ -51,20 +63,20 @@
 
 ## 分类导航
 
-- [全量用例索引（192）](./resources/usecases-index.md)
+- [全量用例索引（203）](./resources/usecases-index.md)
 - [社交媒体（8）](./usecases/social)
-- [创意与构建（9）](./usecases/creative)
+- [创意与构建（13）](./usecases/creative)
 - [基础设施与 DevOps（13）](./usecases/devops)
-- [生产力（32）](./usecases/productivity)
-- [研究与学习（13）](./usecases/research)
+- [生产力（33）](./usecases/productivity)
+- [研究与学习（14）](./usecases/research)
 - [金融与交易（2）](./usecases/finance)
 - [日常生活（33）](./usecases/everyday)
-- [内容转换（16）](./usecases/content)
+- [内容转换（17）](./usecases/content)
 - [内存管理（11）](./usecases/memory)
-- [夜间自动化（15）](./usecases/automation)
+- [夜间自动化（16）](./usecases/automation)
 - [数据分析（16）](./usecases/data)
 - [安全监控（16）](./usecases/security)
-- [工具开发（8）](./usecases/tools)
+- [工具开发（11）](./usecases/tools)
 
 ## 部署与运行建议
 
@@ -79,6 +91,9 @@
 
 - [贡献指南](./CONTRIBUTING.md)
 - [用例模板](./usecases/TEMPLATE.md)
+- [报告失效步骤 / 分享跑通的案例](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)
+
+不会提交 PR 也可以直接用 Issue 投稿：告诉我们你想完成什么、用了什么工具、得到什么结果。
 
 ## 说明与致谢
 

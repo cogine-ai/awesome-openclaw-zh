@@ -2,5 +2,7 @@
 node_modules/
 *.log
 resources/source-cache/
-/scripts/
+/scripts/*
+!/scripts/generate-index.py
 draft/
+__pycache__/
