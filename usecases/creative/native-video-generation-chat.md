@@ -42,16 +42,26 @@ source_date: 2026-10-11
 
 ## 最小设置
 
-官方快速开始使用 Gemini/Veo 作为示例。将授权配置到运行 Gateway 的环境，再按自己的账户权限选择模型：
+官方快速开始使用 Gemini/Veo 作为示例。先让 Gateway 能读取授权，再按自己的账户权限选择模型。
+
+如果 Gateway 由 launchd／systemd 托管，终端里的 `export GEMINI_API_KEY="your-key"` 不会自动传给它；该写法适用于从同一 shell 启动的前台 Gateway。官方推荐把提供者密钥放在 Gateway 实际运行用户的 `~/.openclaw/.env`；使用其他状态目录或 profile 时，放在对应的 `$OPENCLAW_STATE_DIR/.env`。不要放在项目工作区的 `.env`，该位置的提供者凭证会被忽略。
+
+用编辑器打开已有全局 `.env`，保留其他变量与已有密钥；仅补充缺少的 `GEMINI_API_KEY`。下面是文件内容示意，`your-key` 必须由你在本机替换，不是可执行命令：
+
+```dotenv
+GEMINI_API_KEY=your-key
+```
+
+已有可用密钥时直接复用，不覆盖文件。全局 `.env` 也不会普遍覆盖 Gateway 已有的进程环境；如果服务自身配置了同名密钥，应先核对实际使用的来源。保存后设置模型并重启对应 Gateway，让新授权生效：
 
 ```bash
-export GEMINI_API_KEY="your-key"
 openclaw config set agents.defaults.mediaModels.video.primary "google/veo-3.1-fast-generate-preview"
+openclaw gateway restart
 ```
 
 `your-key` 是占位符。不要把真实凭证贴到聊天或提交到仓库。上面的模型来自官方文档示例，仍需账户实际可用。
 
-如果已有其他受支持的提供者，可保留它的设置。先让 Agent 列出视频能力，不必为了本页切换提供者：
+如果已有其他受支持的提供者，可保留它的设置。Gateway 重启完成后，在对应会话让 Agent 用 `action: "list"` 检查视频能力，确认提供者与模型出现，并核对输入模式与参数限制：
 
 ```text
 请用 video_generate 的 action=list 检查可用提供者。
@@ -123,6 +133,8 @@ openclaw config set agents.defaults.mediaModels.video.primary "google/veo-3.1-fa
 ## 引用来源
 
 - [固定版本：视频生成工具与提供者限制](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/tools/video-generation.md)
+- [固定版本：Gateway 环境变量来源与全局 .env](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/help/environment.md)
+- [固定版本：Gateway 重启](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/cli/gateway/restart-and-supervision.md)
 - [官方在线指南：Video generation](https://docs.openclaw.ai/tools/video-generation)
 - [2026.9.7 更新说明：新增视频提供者](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/releases/2026.9.7.md)
 - [v2026.10.1 发布记录](https://github.com/openclaw/openclaw/releases/tag/v2026.10.1)
