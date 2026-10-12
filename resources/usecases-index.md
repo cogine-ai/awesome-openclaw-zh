@@ -181,7 +181,7 @@
 | [微信公众号自动发布](../usecases/content/49-wechat-mp-automation.md) | 串起选题、写稿、排版和公众号草稿箱推送。 |
 | [一个知识点，三种讲法：卡片、漫画、短片内容擂台](../usecases/content/one-concept-three-formats-arena.md) | 同一份事实底稿生成三种表达，再用一致的口径与真实阅读反馈选择下一期方向。 |
 
-## 内存管理 (11)
+## 内存管理 (12)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -196,6 +196,7 @@
 | [早间摘要生成器](../usecases/memory/45-morning-digest-generator.md) | 编译夜间活动 |
 | [知识图谱重建器](../usecases/memory/40-knowledge-graph-rebuilder.md) | 夜间图重建 |
 | [伴侣双 Bot 共享记忆层（shared-memory）](../usecases/memory/17-shared-memory-for-partner-bots.md) | 两个 OpenClaw 同步关键上下文，支持跨人协作接力。 |
+| [零依赖认知记忆引擎（Mnemosyne）](../usecases/memory/mnemosyne-memory-engine.md) | 纯本地 Markdown + 认知心理学检索，四层记忆 + 用户画像，零 API 成本、数据不出境。 |
 
 ## 夜间自动化 (16)
 
