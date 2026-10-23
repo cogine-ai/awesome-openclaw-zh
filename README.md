@@ -3,7 +3,7 @@
 一个面向中文用户的 OpenClaw 开源仓库：
 **先部署成功，再接入渠道，再跑通第一个场景。**
 
-**[在线阅读与搜索：OPCBoost](https://www.opcboost.com/) · [10 月新玩法精选](./resources/05-october-new-playbooks.md) · [提交你的案例](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)**
+**[在线阅读与搜索：OPCBoost](https://www.opcboost.com/) · [三份可复刻成果](./resources/06-reproducible-showcase.md) · [提交你的案例](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)**
 
 由 **[Cogine 团队](https://www.cogine.ai/)** 整理与维护。觉得有用，欢迎点击仓库右上角 **Star** 收藏，方便再次找到这些案例；订阅更新可使用 GitHub 的 **Watch → Custom → Releases**。
 
@@ -11,12 +11,13 @@
 
 - 部署与配置：Mac、Windows、Linux VPS、多 Agent
 - 渠道接入：飞书、钉钉、企业微信、QQ（持续补充）
-- 使用场景：203 个来源可追溯的案例、工作流与原创实验
+- 使用场景：206 个来源可追溯的案例、工作流与原创实验
 
 ## 最近更新：2026 年 10 月
 
-这一轮聚焦近期上游能力、中文创作生态和有趣的组合玩法。每个新案例说明来源、前置条件、产物和验证状态；原创方案明确标记为实验。
+10 月 23 日新增经验卡、公开仓库手绘战报和喜剧追逐制作包，附实际产物、固定来源与复现入口。脚本运行、模型对话和视频生成的验证范围分别说明。
 
+- [本期：三份可复刻成果](./resources/06-reproducible-showcase.md)
 - [10 月新玩法与选题依据](./resources/05-october-new-playbooks.md)
 - [第一次体验：三个中文工作场景](./quickstart/02-first-three-workflows.md)
 - [更新记录](./CHANGELOG.md)
@@ -33,7 +34,7 @@
 
 1. [部署后 5 分钟快速体验](./quickstart/00-5min-quickstart.md)
 2. [7 天上手路径](./quickstart/01-7day-path.md)
-3. [按分类找案例（203 个）](./resources/usecases-index.md)
+3. [按分类找案例（206 个）](./resources/usecases-index.md)
 
 ### 推荐部署入口
 
@@ -63,11 +64,11 @@
 
 ## 分类导航
 
-- [全量用例索引（203）](./resources/usecases-index.md)
+- [全量用例索引（206）](./resources/usecases-index.md)
 - [社交媒体（8）](./usecases/social)
-- [创意与构建（13）](./usecases/creative)
+- [创意与构建（15）](./usecases/creative)
 - [基础设施与 DevOps（13）](./usecases/devops)
-- [生产力（33）](./usecases/productivity)
+- [生产力（34）](./usecases/productivity)
 - [研究与学习（14）](./usecases/research)
 - [金融与交易（2）](./usecases/finance)
 - [日常生活（33）](./usecases/everyday)

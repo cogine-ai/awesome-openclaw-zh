@@ -1,0 +1,200 @@
+{
+  "fetched_at": "2026-10-23T13:08:51Z",
+  "scope": "Only cogine-ai/awesome-openclaw-zh; not an organization or personal profile total. Non-public repositories are excluded.",
+  "api": "https://api.github.com/graphql",
+  "commit_sample": "At most 100 latest default-branch commits per repository; committedDate in UTC. Includes merge commits, not unique authors or work hours.",
+  "disk_usage": "GitHub diskUsage in KiB; repository storage, not source-code byte count.",
+  "language_bytes": "GitHub languages edges.size; tracked language bytes, not prose/case counts.",
+  "repositories": [
+    {
+      "nameWithOwner": "cogine-ai/awesome-openclaw-zh",
+      "url": "https://github.com/cogine-ai/awesome-openclaw-zh",
+      "isPrivate": false,
+      "createdAt": "2026-02-25T16:08:08Z",
+      "pushedAt": "2026-10-11T15:35:27Z",
+      "isArchived": false,
+      "diskUsage": 12734,
+      "stargazerCount": 240,
+      "forkCount": 37,
+      "primaryLanguage": {
+        "name": "HTML"
+      },
+      "languages": {
+        "totalCount": 2,
+        "edges": [
+          {
+            "size": 42119,
+            "node": {
+              "name": "HTML"
+            }
+          },
+          {
+            "size": 8673,
+            "node": {
+              "name": "Python"
+            }
+          }
+        ]
+      },
+      "defaultBranchRef": {
+        "name": "main",
+        "target": {
+          "history": {
+            "totalCount": 49
+          },
+          "recent": {
+            "nodes": [
+              {
+                "committedDate": "2026-10-11T15:35:27Z"
+              },
+              {
+                "committedDate": "2026-10-11T15:30:25Z"
+              },
+              {
+                "committedDate": "2026-10-11T15:26:11Z"
+              },
+              {
+                "committedDate": "2026-10-11T15:21:22Z"
+              },
+              {
+                "committedDate": "2026-10-11T15:08:18Z"
+              },
+              {
+                "committedDate": "2026-09-20T11:51:13Z"
+              },
+              {
+                "committedDate": "2026-08-16T01:46:08Z"
+              },
+              {
+                "committedDate": "2026-08-16T01:41:07Z"
+              },
+              {
+                "committedDate": "2026-05-31T22:13:47Z"
+              },
+              {
+                "committedDate": "2026-05-31T22:05:43Z"
+              },
+              {
+                "committedDate": "2026-05-31T21:10:50Z"
+              },
+              {
+                "committedDate": "2026-05-22T13:59:01Z"
+              },
+              {
+                "committedDate": "2026-05-22T13:57:12Z"
+              },
+              {
+                "committedDate": "2026-05-22T13:49:39Z"
+              },
+              {
+                "committedDate": "2026-05-22T13:45:08Z"
+              },
+              {
+                "committedDate": "2026-03-25T14:32:50Z"
+              },
+              {
+                "committedDate": "2026-03-25T14:12:09Z"
+              },
+              {
+                "committedDate": "2026-03-15T17:26:51Z"
+              },
+              {
+                "committedDate": "2026-03-15T16:39:41Z"
+              },
+              {
+                "committedDate": "2026-03-15T15:37:48Z"
+              },
+              {
+                "committedDate": "2026-03-09T13:53:20Z"
+              },
+              {
+                "committedDate": "2026-03-09T07:59:22Z"
+              },
+              {
+                "committedDate": "2026-03-09T07:02:32Z"
+              },
+              {
+                "committedDate": "2026-03-09T05:19:43Z"
+              },
+              {
+                "committedDate": "2026-03-08T15:30:46Z"
+              },
+              {
+                "committedDate": "2026-03-08T03:36:37Z"
+              },
+              {
+                "committedDate": "2026-03-08T03:30:24Z"
+              },
+              {
+                "committedDate": "2026-03-02T17:58:28Z"
+              },
+              {
+                "committedDate": "2026-03-02T17:57:38Z"
+              },
+              {
+                "committedDate": "2026-03-01T15:39:19Z"
+              },
+              {
+                "committedDate": "2026-03-01T12:29:15Z"
+              },
+              {
+                "committedDate": "2026-02-27T19:29:51Z"
+              },
+              {
+                "committedDate": "2026-02-27T19:02:50Z"
+              },
+              {
+                "committedDate": "2026-02-27T18:51:55Z"
+              },
+              {
+                "committedDate": "2026-02-27T18:25:24Z"
+              },
+              {
+                "committedDate": "2026-02-27T18:17:27Z"
+              },
+              {
+                "committedDate": "2026-02-27T16:31:19Z"
+              },
+              {
+                "committedDate": "2026-02-27T16:24:26Z"
+              },
+              {
+                "committedDate": "2026-02-27T16:23:35Z"
+              },
+              {
+                "committedDate": "2026-02-27T16:06:16Z"
+              },
+              {
+                "committedDate": "2026-02-27T15:42:44Z"
+              },
+              {
+                "committedDate": "2026-02-27T15:35:18Z"
+              },
+              {
+                "committedDate": "2026-02-25T17:45:02Z"
+              },
+              {
+                "committedDate": "2026-02-25T16:26:38Z"
+              },
+              {
+                "committedDate": "2026-02-25T16:24:15Z"
+              },
+              {
+                "committedDate": "2026-02-25T16:20:15Z"
+              },
+              {
+                "committedDate": "2026-02-25T16:15:52Z"
+              },
+              {
+                "committedDate": "2026-02-25T16:12:44Z"
+              },
+              {
+                "committedDate": "2026-02-25T16:09:21Z"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

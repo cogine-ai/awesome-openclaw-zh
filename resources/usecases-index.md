@@ -1,10 +1,10 @@
 # 用例总览
 
-当前共收录 **203** 个中文案例与实验方案。
+当前共收录 **206** 个中文案例与实验方案。
 
 案例是否经过本地实测，请查看各页的验证说明；收录和来源核对不等于端到端运行通过。
 
-[查看 2026 年 10 月新玩法精选](./05-october-new-playbooks.md) · [在线搜索](https://www.opcboost.com/usecases/)
+[本期可复刻成果](./06-reproducible-showcase.md) · [10 月新玩法精选](./05-october-new-playbooks.md) · [在线搜索](https://www.opcboost.com/usecases/)
 
 按分类浏览：
 
@@ -21,7 +21,7 @@
 | [X / Twitter 自动化运营](../usecases/social/07-x-twitter-automation-ops.md) | 用 OpenClaw 统一完成发帖、回复、监控、抽奖和数据抽取，把 X/Twitter 运营动作收回到聊天里。 |
 | [小红书内容自动化](../usecases/social/08-xiaohongshu-content-automation.md) | 辅助完成小红书选题、文案、封面和排期发布。 |
 
-## 创意与构建 (13)
+## 创意与构建 (15)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -38,6 +38,8 @@
 | [论文变侦探漫画：Easel 科普创作工作台](../usecases/creative/easel-paper-to-detective-comic.md) | 先提炼论文证据，再用侦探分镜讲清一个问题，交付可核对来源的漫画与知识卡片。 |
 | [龙虾短剧导演：一致角色与离线分镜看板](../usecases/creative/short-drama-consistent-storyboard-board.md) | 把一个小故事整理为角色资产板、连续镜头提示词和可打开的 HTML 看板，减少短剧制作中的换脸与穿帮。 |
 | [旅行碎片变成可点击的故事地图](../usecases/creative/travel-notes-interactive-story-map.md) | 用三段虚构手记制作可离线浏览的单文件故事地图，点击地点探索文字与示意画面。 |
+| [公开GitHub仓库变成手绘项目战报](../usecases/creative/github-handdrawn-project-cards.md) | 把单个公开仓库的带日期快照渲染成城市、语言和提交节奏SVG，保留数据范围和复现入口。 |
+| [15秒喜剧追逐：把动作与空间接起来](../usecases/creative/comedy-chase-action-continuity.md) | 用原创追帽子故事制作连续分镜、站位与双模型投喂稿，运行检查器并生成离线看板。 |
 
 ## 基础设施与 DevOps (13)
 
@@ -57,7 +59,7 @@
 | [Claworc 多实例控制台](../usecases/devops/21-claworc-multi-instance-control-plane.md) | 用一个 Web 控制台集中管理多个 OpenClaw 实例，把实例隔离、权限控制和运维入口统一起来。 |
 | [加密货币自动注册域名（LobsterDomains）](../usecases/devops/autonomous-domain-registration-lobsterdomains.md) | 通过 API 完成域名查询、链上付款确认和注册流程。 |
 
-## 生产力 (33)
+## 生产力 (34)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -94,6 +96,7 @@
 | [钉钉 AI 助手](../usecases/productivity/13-dingtalk-ai-assistant.md) | 把 OpenClaw 接进钉钉，让团队在原有办公群里触发 AI 任务。 |
 | [电商多 Agent 运营助手](../usecases/productivity/14-ecommerce-multi-agent-ops.md) | 用多个 Agent 分别处理销售、库存、客服和商品分析。 |
 | [让 Agent 进入会议：实时听、答与留下纪要](../usecases/productivity/live-meeting-agent-participant.md) | 使用会议插件从只观察字幕逐步到实时语音参加，并区分入会、可听性与纪要验证。 |
+| [让龙虾采访你：把一次经验做成可修订卡片](../usecases/productivity/experience-interview-record-card.md) | 用事实输入创建经验卡v1，再通过明确标记的编辑修订生成v2，保留版本和可复现脚本。 |
 
 ## 研究与学习 (14)
 
