@@ -1,0 +1,36 @@
+{
+  "upstream_repository": "https://github.com/ZJU-REAL/Easel",
+  "upstream_commit": "a097ddfbb704c9d1eeb1db49a056fdbca9c2351a",
+  "upstream_pull_request": "https://github.com/ZJU-REAL/Easel/pull/158",
+  "upstream_files_unmodified": {
+    "skills/builtin/skill-record-card/scripts/card.py": "2a81e0af4f1ab6f88e0397d5c0086aefe991a1b19463ba79f64e4394851f7789",
+    "skills/shared/scripts/output_paths.py": "00672d9b6129acae8c0e08764f6b6d5787f501326b077b396734e942bb197139"
+  },
+  "license": "Apache-2.0",
+  "fixture_date": "2026-10-23",
+  "fixture_kind": "公开页面事实的维护者演练，非用户口述或人工访谈",
+  "facts": [
+    {
+      "id": "F1",
+      "text": "公开内容Markdown含 ../../docs/research/short-drama-offline-validation-2026-10-11.md 相对链接。",
+      "source": "https://raw.githubusercontent.com/cogine-ai/awesome-openclaw-zh/d354b3188b5954852871443750deb86113f25c30/usecases/creative/short-drama-consistent-storyboard-board.md"
+    },
+    {
+      "id": "F2",
+      "text": "2026-10-23公开页面返回200；研究文档链接已指向内容仓库的固定提交d354b318…，示例看板保留为站内资源链接。",
+      "source": "https://www.opcboost.com/usecases/creative/short-drama-consistent-storyboard-board"
+    },
+    {
+      "id": "F3",
+      "text": "该页面链接到的固定提交GitHub研究文档可以打开，HTTP状态200。",
+      "source": "https://github.com/cogine-ai/awesome-openclaw-zh/blob/d354b3188b5954852871443750deb86113f25c30/docs/research/short-drama-offline-validation-2026-10-11.md"
+    },
+    {
+      "id": "F4",
+      "text": "2026-10-23直接访问未映射的站内 docs/research/ 文档路径，仍得到HTTP404；该路径不等于页面当前的实际链接目标。",
+      "observed_path": "https://www.opcboost.com/docs/research/short-drama-offline-validation-2026-10-11.md"
+    }
+  ],
+  "public_page": "https://www.opcboost.com/usecases/creative/short-drama-consistent-storyboard-board",
+  "public_content_revision": "d354b3188b5954852871443750deb86113f25c30"
+}

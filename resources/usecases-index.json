@@ -1825,5 +1825,32 @@
     "sourceRepo": "cogine-ai/awesome-openclaw-zh",
     "sourcePath": "usecases/content/one-concept-three-formats-arena.md",
     "sourceUrl": "https://github.com/cogine-ai/awesome-openclaw-zh/blob/main/usecases/content/one-concept-three-formats-arena.md"
+  },
+  {
+    "title": "让龙虾采访你：把一次经验做成可修订卡片",
+    "desc": "用事实输入创建经验卡v1，再通过明确标记的编辑修订生成v2，保留版本和可复现脚本。",
+    "category": "生产力",
+    "localPath": "usecases/productivity/experience-interview-record-card.md",
+    "sourceRepo": "ZJU-REAL/Easel",
+    "sourcePath": "skills/builtin/skill-record-card/SKILL.md",
+    "sourceUrl": "https://github.com/ZJU-REAL/Easel/blob/a097ddfbb704c9d1eeb1db49a056fdbca9c2351a/skills/builtin/skill-record-card/SKILL.md"
+  },
+  {
+    "title": "公开GitHub仓库变成手绘项目战报",
+    "desc": "把单个公开仓库的带日期快照渲染成城市、语言和提交节奏SVG，保留数据范围和复现入口。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/github-handdrawn-project-cards.md",
+    "sourceRepo": "mgkvibez/openclaw-profile-cards",
+    "sourcePath": "SKILL.md",
+    "sourceUrl": "https://github.com/mgkvibez/openclaw-profile-cards/blob/bc589498e4cb72dbe29de5121f5009eb95b5a22c/SKILL.md"
+  },
+  {
+    "title": "15秒喜剧追逐：把动作与空间接起来",
+    "desc": "用原创追帽子故事制作连续分镜、站位与双模型投喂稿，运行检查器并生成离线看板。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/comedy-chase-action-continuity.md",
+    "sourceRepo": "lixiaoxiao9888-create/manju-laoli-skill",
+    "sourcePath": "sd-real-engine/SKILL.md",
+    "sourceUrl": "https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/sd-real-engine/SKILL.md"
   }
 ]

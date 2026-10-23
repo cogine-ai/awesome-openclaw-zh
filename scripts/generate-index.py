@@ -48,7 +48,7 @@ def load_catalog():
 def markdown_index(entries):
     lines = ["# 用例总览", "", f"当前共收录 **{len(entries)}** 个中文案例与实验方案。", "",
              "案例是否经过本地实测，请查看各页的验证说明；收录和来源核对不等于端到端运行通过。", "",
-             "[查看 2026 年 10 月新玩法精选](./05-october-new-playbooks.md) · [在线搜索](https://www.opcboost.com/usecases/)", "", "按分类浏览：", ""]
+             "[本期可复刻成果](./06-reproducible-showcase.md) · [10 月新玩法精选](./05-october-new-playbooks.md) · [在线搜索](https://www.opcboost.com/usecases/)", "", "按分类浏览：", ""]
     for category in CATEGORIES:
         group = [entry for entry in entries if entry["category"] == category]
         lines += [f"## {category} ({len(group)})", "", "| 用例 | 能干什么 |", "|---|---|"]
