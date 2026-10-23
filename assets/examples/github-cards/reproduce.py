@@ -12,6 +12,7 @@ import io
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tarfile
@@ -165,7 +166,7 @@ def gallery(snapshot, data):
 
 
 def publish_artifacts(artifacts, snapshot=None):
-    """Prepare every file before replacing outputs; commit a refreshed snapshot last."""
+    """Stage every file, snapshot last; roll back ordinary replacement failures."""
     targets = [(ROOT / name, text) for name, text in artifacts.items()]
     if snapshot is not None:
         targets.append((SNAPSHOT, json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n"))
@@ -176,8 +177,32 @@ def publish_artifacts(artifacts, snapshot=None):
             source = Path(directory) / str(index)
             source.write_text(text, encoding="utf-8")
             staged.append((source, target))
-        for source, target in staged:
-            os.replace(source, target)
+        prepared = []
+        for index, (source, target) in enumerate(staged):
+            backup = None
+            if os.path.lexists(target):
+                backup = Path(directory) / f"backup-{index}"
+                shutil.copy2(target, backup, follow_symlinks=False)
+            prepared.append((source, target, backup))
+        changed = []
+        try:
+            for source, target, backup in prepared:
+                os.replace(source, target)
+                changed.append((target, backup))
+        except OSError as error:
+            for target, backup in reversed(changed):
+                try:
+                    if backup is None:
+                        target.unlink(missing_ok=True)
+                    else:
+                        os.replace(backup, target)
+                except OSError as rollback_error:
+                    note = f"Could not roll back {target.name}: {rollback_error}"
+                    if hasattr(error, "add_note"):
+                        error.add_note(note)
+                    else:
+                        print(note, file=sys.stderr)
+            raise
 
 
 def main():

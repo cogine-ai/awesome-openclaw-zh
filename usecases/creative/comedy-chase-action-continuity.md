@@ -29,7 +29,7 @@ validation: "M0制作包已离线校验并编译HTML；OpenClaw执行、图片�
 | 固定来源 | 漫剧老李 V7.4.26，提交 `6f16955c57053d77ea0ffbdbbf3a7985a3e0080a` |
 | 来源日期 | 该提交为2026-10-21；本页2026-10-23核查 |
 | 使用规则 | `sd-real-engine` 的R1动作动力、空间/镜头方法；M0素材形态；P4.5预演附件 |
-| 已完成 | 两版文本检查、两版六道闸门、六格预演附件检查、HTML编译与15秒/4时间片断言 |
+| 已完成 | 两版文本检查、对白适配副本的六道闸门及实际识别断言、六格预演附件检查、HTML编译与15秒/4时间片断言 |
 | 尚未完成 | 未在OpenClaw内生成本包；未生成图片、视频或配音，未验证成片运动与模型费用 |
 
 这次与[旧短剧看板案例](https://github.com/cogine-ai/awesome-openclaw-zh/blob/506f4291003e0ea3468d894b1fccb950f7d3e0b8/usecases/creative/short-drama-consistent-storyboard-board.md)的区别是：从固定角色与连续镜头，推进到**追逐路径、手掌接触、软帽入袋、风推动纸袋**的动作因果检查。故事、人物与道具均为新写，未使用旧红伞故事。
@@ -70,7 +70,11 @@ validation: "M0制作包已离线校验并编译HTML；OpenClaw执行、图片�
 python3 assets/examples/comedy-chase/reproduce.py
 ```
 
-脚本临时克隆上游、校验固定SHA，依次执行 `validate_prompt.py`、`gate_check.py`、`check_p45.py`、`build_board_lite.py`，完成后清理临时克隆。默认只更新本包的 `board.html`，不读取OpenClaw配置、密钥或云账号。
+脚本临时克隆上游、校验固定SHA与工具未修改，依次执行 `validate_prompt.py`、`gate_check.py`、`check_p45.py`、`build_board_lite.py`，完成后清理临时克隆。默认只更新本包的 `board.html`，不读取OpenClaw配置、密钥或云账号。
+
+**对白兼容范围：** 固定闸门只识别 `【角色（语气）：“台词”】`，会跳过本包2.5的花括号写法和2.0的文字写法。脚本仅在临时检查副本中转成该形式，断言上游实际识别1条、位于12–15秒，再执行闸门并校验语气与时长。两版实际投喂原稿不改，不能把原稿直接返回的0告警当作对白通过证明。
+
+固定HTML编译器的SRT导出也仅认上述方括号形式。脚本在原编译之后加入明确标记的本包SRT适配，字幕数据来自实际镜行，显示正文仍保留2.5原稿。导出为 **12–15秒「连袋也跑？」**；这是分镜计划时段，尚未与生成音频对齐。该后处理属于本仓库胶水代码，上游工具未修改。
 
 如果已经有该SHA的未修改上游副本，可省去下载；把路径替换为自己的真实路径：
 
@@ -86,9 +90,9 @@ python3 assets/examples/comedy-chase/reproduce.py --upstream-dir /path/to/manju-
 |---|---|
 | 2.5文本结构、版本、画幅、动作与风格检查 | 15秒、4时间片，0 FAIL，保留2 WARN |
 | 2.0同范围检查 | 15秒、4时间片，0 FAIL，保留2 WARN；声音改为文字描述 |
-| 两版六道闸门 | 各1个投喂单元，M0、引用图号为空，均0 FAIL / 0 WARN |
+| 两版六道闸门 | 临时对白适配副本各实际识别1句；12–15秒、4个中文字、语气非空；最快约1.07秒，舒适档约1.54秒，均0 FAIL / 0 WARN |
 | 六格预演提示词 | 1段、6格，0 FAIL / 0 WARN |
-| HTML看板编译 | 1组、4时间片、5项文字资产、5条可选资产提示词；15秒、0 WARN |
+| HTML看板编译 | 1组、4时间片、5项文字资产、5条可选资产提示词；15秒、0 WARN；SRT适配后实际导出1条12–15秒对白 |
 
 两版都显式开启 `--combat on --plugin real --c23 on`，没有修改或关闭上游检查器。文本文件以 `--delivery feed-only --contract` 核查其承诺的投喂范围，不宣称上游完整剧集生产契约全部通过。
 
@@ -133,6 +137,7 @@ python3 assets/examples/comedy-chase/reproduce.py --upstream-dir /path/to/manju-
 - [M0 / M1 / M2素材形态](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/short-drama-director/references/asset-delivery-modes.md)
 - [P4.5预演附件与验收边界](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/sd-storyboard-engine/references/p45-previs-storyboard.md)
 - [固定版本的文本检查器](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/short-drama-director/scripts/validate_prompt.py)
+- [固定版本的六道闸门与对白解析](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/sd-feed-engine/scripts/gate_check.py)
 - [固定版本的HTML编译器](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/short-drama-director/scripts/build_board_lite.py)
 
 故事与复现胶水代码为本仓库原创；看板由上游MIT许可编译器生成，其许可随包保留为 [LICENSE.upstream.txt](../../assets/examples/comedy-chase/LICENSE.upstream.txt)。

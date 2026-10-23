@@ -126,6 +126,44 @@ class PublicShowcaseInputs(unittest.TestCase):
             self.assertEqual(json.loads((root / "public-repositories.json").read_text(encoding="utf-8")), refreshed)
             self.assertEqual({path.name for path in root.iterdir()}, {*artifacts, "public-repositories.json"})
 
+    def assert_late_replace_failure_rolls_back(self, missing_names=()):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.seed_existing_artifacts(root)
+            for name in missing_names:
+                (root / name).unlink()
+            before = {path.name: path.read_bytes() for path in root.iterdir()}
+            artifacts = {name: "new " + name for name in
+                         ("city.svg", "languages.svg", "rhythm.svg", "index.html", "LICENSE-upstream.txt")}
+            refreshed = copy.deepcopy(self.snapshot)
+            refreshed["repositories"][0]["stargazerCount"] += 1
+            replace = cards.os.replace
+            failure = OSError("late snapshot replacement failed")
+            replaced = []
+
+            def fail_on_snapshot(source, target):
+                if target == root / "public-repositories.json":
+                    self.assertEqual(len(replaced), len(artifacts))
+                    for name, text in artifacts.items():
+                        self.assertEqual((root / name).read_text(encoding="utf-8"), text)
+                    raise failure
+                replace(source, target)
+                replaced.append(target)
+
+            with patch.object(cards, "ROOT", root), \
+                    patch.object(cards, "SNAPSHOT", root / "public-repositories.json"), \
+                    patch.object(cards.os, "replace", side_effect=fail_on_snapshot):
+                with self.assertRaises(OSError) as raised:
+                    cards.publish_artifacts(artifacts, refreshed)
+            self.assertIs(raised.exception, failure)
+            self.assert_existing_artifacts_unchanged(root, before)
+
+    def test_late_replace_failure_restores_all_existing_outputs_and_snapshot(self):
+        self.assert_late_replace_failure_rolls_back()
+
+    def test_late_replace_failure_removes_new_targets_and_restores_existing_outputs(self):
+        self.assert_late_replace_failure_rolls_back(missing_names=("city.svg", "index.html"))
+
 
 if __name__ == "__main__":
     unittest.main()
