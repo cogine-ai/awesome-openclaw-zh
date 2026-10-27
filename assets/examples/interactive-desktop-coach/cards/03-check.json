@@ -1,0 +1,10 @@
+{
+  "title": "第 3 步：在复现前核对公开输入与运行条件",
+  "color": "green",
+  "theme": "light",
+  "rows": [
+    {"type": "text", "value": "以下勾选只代表你的自报确认，不是脚本自动检测，也不代表 Agent 已完成真实访谈。"},
+    {"type": "code", "label": "只读检查 Python 版本", "value": "python3 --version"},
+    {"type": "checklist", "id": "readiness", "items": [{"id": "public-data", "label": "我将使用公开演练输入，不放账号和秘密"}, {"id": "python", "label": "我已检查 Python 3.10 或更新版本"}, {"id": "scope", "label": "我理解离线脚本成功与完整 Agent 访谈是两项验证"}]}
+  ]
+}

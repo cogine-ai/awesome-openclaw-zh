@@ -1,14 +1,14 @@
 # 用例总览
 
-当前共收录 **206** 个中文案例与实验方案。
+当前共收录 **212** 个中文案例与实验方案。
 
 案例是否经过本地实测，请查看各页的验证说明；收录和来源核对不等于端到端运行通过。
 
-[本期可复刻成果](./06-reproducible-showcase.md) · [10 月新玩法精选](./05-october-new-playbooks.md) · [在线搜索](https://www.opcboost.com/usecases/)
+[六个新玩法与实验](./07-new-playbooks-lab.md) · [本期可复刻成果](./06-reproducible-showcase.md) · [在线搜索](https://www.opcboost.com/usecases/)
 
 按分类浏览：
 
-## 社交媒体 (8)
+## 社交媒体 (9)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -20,8 +20,9 @@
 | [X 账号分析](../usecases/social/x-account-analysis.md) | 获取你的 X 账号的定性分析。 |
 | [X / Twitter 自动化运营](../usecases/social/07-x-twitter-automation-ops.md) | 用 OpenClaw 统一完成发帖、回复、监控、抽奖和数据抽取，把 X/Twitter 运营动作收回到聊天里。 |
 | [小红书内容自动化](../usecases/social/08-xiaohongshu-content-automation.md) | 辅助完成小红书选题、文案、封面和排期发布。 |
+| [B站观众提问变选题简报：先挡住无效样本](../usecases/social/bilibili-audience-to-topic-brief.md) | 从B站公开评论检查选题依据；真实样本不足就停止推断，另附明确标注的原创提问演练。 |
 
-## 创意与构建 (15)
+## 创意与构建 (18)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -40,6 +41,9 @@
 | [旅行碎片变成可点击的故事地图](../usecases/creative/travel-notes-interactive-story-map.md) | 用三段虚构手记制作可离线浏览的单文件故事地图，点击地点探索文字与示意画面。 |
 | [公开GitHub仓库变成手绘项目战报](../usecases/creative/github-handdrawn-project-cards.md) | 把单个公开仓库的带日期快照渲染成城市、语言和提交节奏SVG，保留数据范围和复现入口。 |
 | [15秒喜剧追逐：把动作与空间接起来](../usecases/creative/comedy-chase-action-continuity.md) | 用原创追帽子故事制作连续分镜、站位与双模型投喂稿，运行检查器并生成离线看板。 |
+| [数字人口播制作台：先完成26秒离线准备](../usecases/creative/digital-human-product-intro.md) | 实跑固定上游规划器，制作三段26秒口播计划、字幕与任务草稿；尚未生成视频，报价未知。 |
+| [文案匿名擂台：先打分，再揭晓写法](../usecases/creative/blind-agent-copy-arena.md) | 同一份Brief、三个预置候选、先评分再揭晓的离线擂台；附原生blind能力适配，原生试验未执行。 |
+| [本地决策蛇：把模型建议与保护规则摊开看](../usecases/creative/local-decision-snake-lab.md) | 真实本地模型推理与蛇游戏轨迹回放，分清BFS、模型排序、保护规则与未执行的OpenClaw接入。 |
 
 ## 基础设施与 DevOps (13)
 
@@ -184,7 +188,7 @@
 | [微信公众号自动发布](../usecases/content/49-wechat-mp-automation.md) | 串起选题、写稿、排版和公众号草稿箱推送。 |
 | [一个知识点，三种讲法：卡片、漫画、短片内容擂台](../usecases/content/one-concept-three-formats-arena.md) | 同一份事实底稿生成三种表达，再用一致的口径与真实阅读反馈选择下一期方向。 |
 
-## 内存管理 (11)
+## 内存管理 (12)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -199,6 +203,7 @@
 | [早间摘要生成器](../usecases/memory/45-morning-digest-generator.md) | 编译夜间活动 |
 | [知识图谱重建器](../usecases/memory/40-knowledge-graph-rebuilder.md) | 夜间图重建 |
 | [伴侣双 Bot 共享记忆层（shared-memory）](../usecases/memory/17-shared-memory-for-partner-bots.md) | 两个 OpenClaw 同步关键上下文，支持跨人协作接力。 |
+| [换 Agent 不重新讲一遍：共享记忆的纠正与接棒实验](../usecases/memory/cross-agent-memory-handoff.md) | 用Sno准备可追溯的记忆纠正与接棒实验，公开输入、隔离入口与服务尚未跑通的实际状态。 |
 
 ## 夜间自动化 (16)
 
@@ -263,7 +268,7 @@
 | [SSH 密钥扫描器](../usecases/security/09-ssh-key-scanner.md) | 查找暴露的 SSH 密钥 |
 | [Agent 隔离身份启动（独立账号边界）](../usecases/security/01-agent-isolated-identity-bootstrap.md) | 先建立专用账号边界，再开放执行权限，降低主账号风险。 |
 
-## 工具开发 (11)
+## 工具开发 (12)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -278,3 +283,4 @@
 | [Crabbox 临时应用实验室：边聊天边看远程界面](../usecases/tools/crabbox-disposable-app-playground.md) | 在会话附属的临时机器上打开 Web 或桌面应用，旁观界面、接管操作并明确保存与停止。 |
 | [MCP Apps 交互工作台：在聊天旁查看、选择与编辑](../usecases/tools/mcp-apps-interactive-chat-workbench.md) | 开启标准 MCP Apps 视图，并在服务声明支持时把选中资源或文件操作接回当前会话。 |
 | [把成功任务变成 Skill：审阅提案后再复用](../usecases/tools/skill-workshop-learn-from-success.md) | 用 /learn 提炼素材包检查方法，审阅并应用提案，再换一组输入验证复用。 |
+| [让 Agent 举起教学卡：人来选择，桌面回传答案](../usecases/tools/interactive-desktop-coach.md) | 用Bigarrow把看成果、选路线、查条件变成三张教学卡；真实CLI解析与启动已检查，真人回传待验收。 |

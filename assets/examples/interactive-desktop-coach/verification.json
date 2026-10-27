@@ -1,0 +1,17 @@
+{
+  "testedAt": "2026-10-27",
+  "upstream": "franzenzenhofer/big-arrow-on-the-screen",
+  "tag": "v0.5.1",
+  "commit": "4ad1ce1d82368139b2ceec7b2e29ade837acc722",
+  "license": "MIT",
+  "swift": "6.3.3",
+  "releaseBuild": "passed",
+  "pureTestFilter": "CardDocumentTests",
+  "pureTestsPassed": 8,
+  "dryRunCardsPassed": 3,
+  "invalidUnknownKeyExitCode": 2,
+  "desktopLaunch": {"step": 1, "cliReturnedOk": true, "controlRectanglesReturned": true},
+  "humanAnswerToWaitVerified": false,
+  "realAgentIntegrationVerified": false,
+  "desktopNote": "主任务执行第1张真实桌面卡，CLI返回ok:true与控件矩形；未验证真人回答到wait回传。未保存截图或会话资料。"
+}

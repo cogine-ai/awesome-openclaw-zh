@@ -1,0 +1,123 @@
+{
+  "version": "0.5.1",
+  "commit": "4ad1ce1d82368139b2ceec7b2e29ade837acc722",
+  "testedAt": "2026-10-27",
+  "mode": "real CLI --dry-run; no desktop UI or human reply",
+  "cards": [
+    {
+      "name": "01-open",
+      "inputSha256": "576e95657d50f04477a3f189c36ae65d24b28f3bace01c967738691ad97103f2",
+      "exitCode": 0,
+      "output": {
+        "color": "green",
+        "rows": [
+          {
+            "type": "text",
+            "value": "这是一张人工操作教学卡。打开公开案例，先看两版经验卡的实际成果；本卡不会替你点击或登录。"
+          },
+          {
+            "label": "公开经验卡教程",
+            "type": "link",
+            "url": "https://www.opcboost.com/usecases/productivity/experience-interview-record-card/"
+          },
+          {
+            "id": "first-step",
+            "items": [
+              {
+                "id": "read",
+                "label": "我已查看成果"
+              },
+              {
+                "id": "pause",
+                "label": "先暂停"
+              }
+            ],
+            "type": "actions"
+          }
+        ],
+        "theme": "light",
+        "title": "第 1 步：先看清楚你将得到什么"
+      }
+    },
+    {
+      "name": "02-choose",
+      "inputSha256": "d8991b54dfa44ade1b848c6578b25935e244c1bb1d906bf185252a6406e6f0db",
+      "exitCode": 0,
+      "output": {
+        "color": "blue",
+        "rows": [
+          {
+            "type": "text",
+            "value": "离线重放不需要模型或账号；真实访谈需要你回答、确认，并使用已配置的模型。本例没有替你做出选择。"
+          },
+          {
+            "id": "route",
+            "items": [
+              {
+                "detail": "运行公开输入，核对建卡与修订输出",
+                "id": "offline",
+                "label": "先离线重放"
+              },
+              {
+                "detail": "使用自己的经历和模型配置，逐段确认内容",
+                "id": "interview",
+                "label": "准备真实访谈"
+              }
+            ],
+            "type": "choice"
+          }
+        ],
+        "theme": "light",
+        "title": "第 2 步：选择你这次要做的体验"
+      }
+    },
+    {
+      "name": "03-check",
+      "inputSha256": "860b93d31ea6b13fc41560a47e321974f59ada99289270e75d2d682706a7dcee",
+      "exitCode": 0,
+      "output": {
+        "color": "green",
+        "rows": [
+          {
+            "type": "text",
+            "value": "以下勾选只代表你的自报确认，不是脚本自动检测，也不代表 Agent 已完成真实访谈。"
+          },
+          {
+            "label": "只读检查 Python 版本",
+            "type": "code",
+            "value": "python3 --version"
+          },
+          {
+            "id": "readiness",
+            "items": [
+              {
+                "id": "public-data",
+                "label": "我将使用公开演练输入，不放账号和秘密"
+              },
+              {
+                "id": "python",
+                "label": "我已检查 Python 3.10 或更新版本"
+              },
+              {
+                "id": "scope",
+                "label": "我理解离线脚本成功与完整 Agent 访谈是两项验证"
+              }
+            ],
+            "type": "checklist"
+          }
+        ],
+        "theme": "light",
+        "title": "第 3 步：在复现前核对公开输入与运行条件"
+      }
+    }
+  ],
+  "invalidInput": {
+    "description": "unknown row key colour",
+    "exitCode": 2,
+    "error": {
+      "code": 2,
+      "error": "row 1: unknown key 'colour', known: id, items, label, masked, multiline, path, point, progress, secret, type, url, value",
+      "ok": false
+    }
+  }
+}

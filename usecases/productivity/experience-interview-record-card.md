@@ -5,6 +5,19 @@ category: "生产力"
 published: "2026-10-23"
 updated: "2026-10-23"
 validation: "上游建卡与修订CLI离线复现通过；公开资料演练，非完整人工访谈"
+showcase:
+  verification: script-reproduced
+  verificationNote: "离线建卡与修订脚本已复现；材料是公开资料演练，未完成模型访谈。"
+  platforms: [macos, browser]
+  account: none
+  cost: local-free
+  artifactPath: assets/examples/experience-card/gallery.html
+  artifactLabel: "查看 v1/v2 经验卡"
+  previewPath: assets/examples/experience-card/preview.svg
+  bundlePath: assets/bundles/experience-card-2026-10-27.zip
+  testedAt: 2026-10-27
+  testedVersion: "Python 3.12；Easel a097ddf；OpenClaw 2026.9.8 调用返回401"
+  beginner: true
 ---
 
 # 把做成的事沉淀成经验卡：保留原话与版本演进
@@ -96,3 +109,13 @@ EASEL_ROOT=/path/to/easel python3 skills/builtin/skill-record-card/scripts/card.
 字段为空时应补充真实材料，不能为了通过而写空话；修订失败先保留旧卡，核对编号、历史段落和输入。访谈被打断时，未确认草稿也不能冒充已经存档的确认稿。
 
 由 Cogine 团队整理。欢迎用自己的真实经历重跑，并贡献带来源、版本和验证边界的案例。
+
+## 重建站点预览
+
+复现脚本负责主要产物，不会自动更新站点预览图。在仓库或完整复现包根目录执行：
+
+```bash
+python3 scripts/generate-showcase-previews.py --pack experience-card
+```
+
+它只读取本包实际 gallery 中的 v1/v2 核心要点，生成确定性的 `assets/examples/experience-card/preview.svg`。这是文字内容的预览，不会生成角色图像、视频或新的模型回答。

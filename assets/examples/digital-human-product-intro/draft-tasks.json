@@ -1,0 +1,59 @@
+{
+  "status": "offline-preparation",
+  "readyToSubmit": false,
+  "estimatedCredits": null,
+  "priceStatus": "not-quoted",
+  "generatedVideo": false,
+  "upstreamCommit": "5fa9b19f52fb8920c83567468fa30e8391b8c503",
+  "durationBasis": "upstream text heuristic, not recorded audio",
+  "tasks": [
+    {
+      "model": "REPLACE_WITH_LIVE_MODEL_ID",
+      "kind": "video",
+      "ratio": "9:16",
+      "resolution": "720p",
+      "duration": 9,
+      "label": "口播 s1",
+      "idempotencyKey": "dh-script-s1-v1",
+      "references": [
+        {
+          "ref": "REPLACE_WITH_YOUR_OWN_UPLOADED_REFERENCE",
+          "role": "reference_image"
+        }
+      ],
+      "prompt": "@REPLACE_WITH_YOUR_OWN_UPLOADED_REFERENCE. Purpose: introducing the OPCBoost reproducible case library. Present to camera with restrained gestures. Voice: An original licensed presenter speaking clear Mandarin Chinese; voice to be selected by the owner.. Speak Mandarin Chinese: 想试试龙虾，却不知道从哪里开始？在 OPCBoost，先看真实成果，再选适合自己的案例。"
+    },
+    {
+      "model": "REPLACE_WITH_LIVE_MODEL_ID",
+      "kind": "video",
+      "ratio": "9:16",
+      "resolution": "480p",
+      "duration": 8,
+      "label": "口播 s2",
+      "idempotencyKey": "dh-script-s2-v1",
+      "references": [
+        {
+          "ref": "REPLACE_WITH_YOUR_OWN_UPLOADED_REFERENCE",
+          "role": "reference_image"
+        }
+      ],
+      "prompt": "@REPLACE_WITH_YOUR_OWN_UPLOADED_REFERENCE. Purpose: introducing the OPCBoost reproducible case library. Present in a small overlay; keep the center clear for the owner's product footage. Voice: An original licensed presenter speaking clear Mandarin Chinese; voice to be selected by the owner.. Speak Mandarin Chinese: 经验卡、手绘项目战报、原创分镜，每篇说明来源、运行条件，以及实际验证到了哪一步。"
+    },
+    {
+      "model": "REPLACE_WITH_LIVE_MODEL_ID",
+      "kind": "video",
+      "ratio": "9:16",
+      "resolution": "720p",
+      "duration": 9,
+      "label": "口播 s3",
+      "idempotencyKey": "dh-script-s3-v1",
+      "references": [
+        {
+          "ref": "REPLACE_WITH_YOUR_OWN_UPLOADED_REFERENCE",
+          "role": "reference_image"
+        }
+      ],
+      "prompt": "@REPLACE_WITH_YOUR_OWN_UPLOADED_REFERENCE. Purpose: introducing the OPCBoost reproducible case library. Present to camera with restrained gestures. Voice: An original licensed presenter speaking clear Mandarin Chinese; voice to be selected by the owner.. Speak Mandarin Chinese: 下载输入和复现脚本，换成自己的内容再跑一次。Cogine 团队邀请你带着真实成果参与共建。"
+    }
+  ]
+}

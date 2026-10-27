@@ -1,0 +1,53 @@
+{
+  "mode": "fixture",
+  "fetchedAt": "2026-10-27",
+  "upstream": {
+    "repository": "kukemc/bili-cli",
+    "revision": "e17ab4da33a5b32a5fb4706e0a6dbb9ed994085a",
+    "version": "1.2.1"
+  },
+  "video": {
+    "title": "龙虾本地部署课堂（虚构素材）",
+    "url": null,
+    "bvid": null,
+    "stat": null
+  },
+  "comments": [
+    {
+      "id": "fixture-1",
+      "text": "Windows安装以后提示找不到npm，应该从哪一步查？"
+    },
+    {
+      "id": "fixture-2",
+      "text": "Gateway启动报错，怎样区别网络问题和配置问题？"
+    },
+    {
+      "id": "fixture-3",
+      "text": "飞书已经接入，为什么只能收到消息却回不去？"
+    },
+    {
+      "id": "fixture-4",
+      "text": "微信和飞书的接入测试，可以有同一份检查表吗？"
+    },
+    {
+      "id": "fixture-5",
+      "text": "有聊天订阅以后，API还会另外收费吗？"
+    },
+    {
+      "id": "fixture-6",
+      "text": "想先试一次，不知道模型额度够不够，费用怎么看？"
+    },
+    {
+      "id": "fixture-7",
+      "text": "装完以后怎么用，能先完成一份工作成果吗？"
+    },
+    {
+      "id": "fixture-8",
+      "text": "我不想看功能介绍，能展示输入到实际文件的全过程吗？"
+    }
+  ],
+  "collection": {
+    "anonymous": true,
+    "scope": "原创虚构提问，不来自真实观众或真实视频。"
+  }
+}

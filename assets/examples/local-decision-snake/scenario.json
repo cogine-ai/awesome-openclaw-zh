@@ -1,0 +1,7 @@
+{
+  "width": 8,
+  "height": 8,
+  "seed": 7,
+  "steps": 64,
+  "description": "单种子、64步的特征辅助决策实验。BFS提供路线特征，Laya仅排序，保护规则过滤不安全动作。"
+}

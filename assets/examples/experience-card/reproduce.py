@@ -129,7 +129,7 @@ footer{border-top:1px solid #bcc8bd;padding-top:20px;margin-top:30px;font-size:1
 <article class="card notes"><h2>AI 补充与提炼 · 未经受访者确认</h2><ul id="notes"></ul><h3>用户原话</h3><p class="text">无。没有用模拟回答冒充用户口述；脚本 Markdown 的空摘录占位不表示发生过访谈。</p></article></section>
 <aside><article class="card"><h2>公开事实与出处</h2><div id="sources"></div><p class="meta">F4 是本轮直接访问旧路径的 404，只作文字记录；页面当前实际链接使用 F2 的 GitHub 目标。单个链接观察不代表全站审计。</p></article>
 <article class="card"><h2>下载与复现</h2><p class="text"><a href="card-v1.md">v1 Markdown</a><br><a href="card-v2.md">v2 Markdown（含完整 v1）</a><br><a href="input-v1.json">v1 输入</a> · <a href="input-v2.json">v2 修订输入</a><br><a href="reproduce.py">离线复现脚本</a> · <a href="provenance.json">固定版本与来源</a></p></article></aside></div>
-<footer>Easel skill-record-card · 固定提交 a097ddfbb704c9d1eeb1db49a056fdbca9c2351a。上游两份 Python 脚本未修改，按 Apache-2.0 保留；本页面与演练输入由本仓库制作。<br>页面自含，无外链加载资源；建卡与修订不调用模型。<a href="LICENSE.apache-2.0.txt">上游许可</a></footer>
+<footer><p><a href="https://www.opcboost.com/usecases/productivity/experience-interview-record-card/">完整案例与复现步骤</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine 维护团队</a></p>Easel skill-record-card · 固定提交 a097ddfbb704c9d1eeb1db49a056fdbca9c2351a。上游两份 Python 脚本未修改，按 Apache-2.0 保留；本页面与演练输入由本仓库制作。<br>页面自含，无外链加载资源；建卡与修订不调用模型。<a href="LICENSE.apache-2.0.txt">上游许可</a></footer>
 </main><script type="application/json" id="card-data">__CARD_DATA__</script><script>
 const data=JSON.parse(document.getElementById('card-data').textContent);
 const labels={point:'核心要点',mechanism:'机理',method:'具体方法',scope_use:'使用范围 · 适用',scope_nouse:'使用范围 · 不适用'};

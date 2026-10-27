@@ -1,0 +1,10 @@
+{
+  "title": "第 1 步：先看清楚你将得到什么",
+  "color": "green",
+  "theme": "light",
+  "rows": [
+    {"type": "text", "value": "这是一张人工操作教学卡。打开公开案例，先看两版经验卡的实际成果；本卡不会替你点击或登录。"},
+    {"type": "link", "label": "公开经验卡教程", "url": "https://www.opcboost.com/usecases/productivity/experience-interview-record-card/"},
+    {"type": "actions", "id": "first-step", "items": [{"id": "read", "label": "我已查看成果"}, {"id": "pause", "label": "先暂停"}]}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "_notice": "Offline schema fixture only. Unit prices of 1 are arithmetic test units, NOT Renoise pricing. No real presenter, reference or model selected.",
+  "voice": {"speed_cps": 5.4, "desc": "An original licensed presenter speaking clear Mandarin Chinese; voice to be selected by the owner."},
+  "model": {"name": "REPLACE_WITH_LIVE_MODEL_ID", "max_seconds": 15, "ratio": "9:16", "full_shot_resolution": "720p", "pip_shot_resolution": "480p", "price_per_second": {"720p": 1, "480p": 1}},
+  "renoise": {"reference_material": "REPLACE_WITH_YOUR_OWN_UPLOADED_REFERENCE"},
+  "acts": {"full": "Present to camera with restrained gestures.", "pip": "Present in a small overlay; keep the center clear for the owner's product footage."},
+  "prompt_template": "{ref}. Purpose: {purpose}. {act} Voice: {voice}. Speak Mandarin Chinese: {line}"
+}

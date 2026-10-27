@@ -1,0 +1,9 @@
+{
+  "title": "第 2 步：选择你这次要做的体验",
+  "color": "blue",
+  "theme": "light",
+  "rows": [
+    {"type": "text", "value": "离线重放不需要模型或账号；真实访谈需要你回答、确认，并使用已配置的模型。本例没有替你做出选择。"},
+    {"type": "choice", "id": "route", "items": [{"id": "offline", "label": "先离线重放", "detail": "运行公开输入，核对建卡与修订输出"}, {"id": "interview", "label": "准备真实访谈", "detail": "使用自己的经历和模型配置，逐段确认内容"}]}
+  ]
+}
