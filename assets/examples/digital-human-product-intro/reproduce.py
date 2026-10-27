@@ -16,7 +16,7 @@ UPSTREAM_SHA = "5fa9b19f52fb8920c83567468fa30e8391b8c503"
 
 def planned_tasks(script, persona):
     source = HERE / "upstream/scripts/build_tasks.py"
-    expected = json.loads((HERE / "provenance.json").read_text())["builderSha256"]
+    expected = json.loads((HERE / "provenance.json").read_text(encoding="utf-8"))["builderSha256"]
     if hashlib.sha256(source.read_bytes()).hexdigest() != expected:
         raise ValueError("Pinned upstream builder changed")
     if not isinstance(script, list) or not script or len(script) > 10:
@@ -33,15 +33,15 @@ def planned_tasks(script, persona):
         root = Path(temporary)
         (root / "scripts").mkdir()
         shutil.copyfile(source, root / "scripts/build_tasks.py")
-        (root / "persona.json").write_text(json.dumps(persona, ensure_ascii=False))
-        (root / "script.json").write_text(json.dumps(script, ensure_ascii=False))
-        result = subprocess.run([sys.executable, str(root / "scripts/build_tasks.py"),
+        (root / "persona.json").write_text(json.dumps(persona, ensure_ascii=False), encoding="utf-8")
+        (root / "script.json").write_text(json.dumps(script, ensure_ascii=False), encoding="utf-8")
+        result = subprocess.run([sys.executable, "-X", "utf8", str(root / "scripts/build_tasks.py"),
                                  str(root / "script.json"), str(root / "tasks.json"),
                                  "--purpose", "introducing the OPCBoost reproducible case library"],
-                                text=True, capture_output=True, timeout=15)
+                                text=True, encoding="utf-8", capture_output=True, timeout=15)
         if result.returncode:
             raise ValueError(result.stderr.strip() or "Upstream planning failed")
-        tasks = json.loads((root / "tasks.json").read_text())
+        tasks = json.loads((root / "tasks.json").read_text(encoding="utf-8"))
     if len(tasks) != len(script) or any(not 4 <= task["duration"] <= 15 for task in tasks):
         raise ValueError("Unexpected upstream task structure")
     # Its internal fixture-unit cost is deliberately not published as a service quote.
@@ -60,7 +60,8 @@ def outputs(plan, script):
     seconds, subtitles, rows = 0, [], []
     for index, (task, item) in enumerate(zip(plan["tasks"], script), 1):
         end = seconds + task["duration"]
-        subtitles.append(f"{index}\n{timestamp(seconds)} --> {timestamp(end)}\n{item['t']}\n")
+        subtitle_text = " ".join(item["t"].split())
+        subtitles.append(f"{index}\n{timestamp(seconds)} --> {timestamp(end)}\n{subtitle_text}\n")
         rows.append(f'<article><span>{seconds:02}–{end:02}s · {html.escape(item["shot"])}</span>'
                     f'<h2>{html.escape(task["label"])}</h2><p>{html.escape(item["t"])}</p>'
                     f'<small>{html.escape(task["resolution"])} · 计划 {task["duration"]} 秒</small></article>')
@@ -90,8 +91,8 @@ def main():
     standalone = args.output_dir.resolve() != HERE.resolve()
     if standalone and args.output_dir.exists():
         parser.error("--output-dir must name a new directory")
-    script = json.loads((HERE / "script.json").read_text())
-    persona = json.loads((HERE / "persona.offline.json").read_text())
+    script = json.loads((HERE / "script.json").read_text(encoding="utf-8"))
+    persona = json.loads((HERE / "persona.offline.json").read_text(encoding="utf-8"))
     try:
         plan = planned_tasks(script, persona)
         rendered = outputs(plan, script)

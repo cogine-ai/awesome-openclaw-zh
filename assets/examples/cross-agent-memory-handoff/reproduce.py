@@ -44,9 +44,12 @@ def validate(receipt):
     steps = receipt["steps"]
     if steps[0]["text"] != fixture["original"] or steps[1]["text"] != fixture["original"] or steps[2]["text"] != fixture["corrected"]:
         raise ValueError("recorded memory text does not match the public fixture")
-    if steps[3]["text"] != fixture["original"] or steps[3]["supersededBy"] != "memory-v2":
+    if (steps[3]["text"] != fixture["original"] + "\nretired; superseded by memory-v2"
+            or steps[3]["supersededBy"] != "memory-v2"
+            or steps[3].get("normalization") != "Verified runtime successor ID in annotated text and metadata is replaced with alias memory-v2."):
         raise ValueError("missing correction history")
-    if steps[4]["currentText"] != fixture["corrected"] or steps[4]["oldTextExcluded"] is not True:
+    if (steps[4]["currentText"] != fixture["corrected"] or steps[4]["oldTextExcluded"] is not True
+            or steps[4].get("source") != "auto" or steps[4].get("injectionPhase") != "prompt"):
         raise ValueError("missing current-only recall check")
     if steps[5]["readerGet"] is not None:
         raise ValueError("forgotten temporary memory remains readable")
@@ -62,16 +65,16 @@ python3 reproduce.py --run --runtime /path/to/isolated-runtime --out /tmp/memory
     sections = []
     for index, (label, step) in enumerate(zip(labels, receipt["steps"], strict=True), 1):
         detail = step.get("text", step.get("currentText", ""))
-        extra = "<p>旧版仍可按 ID 检查，superseded_by 指向 memory-v2。</p>" if step["operation"] == "get-history" else ""
+        extra = "<p>inspect 的旧版文本保留原文并追加 retired 标记，metadata 的 superseded_by 指向同一新版；本页将实际新版 ID 归一为 memory-v2。</p>" if step["operation"] == "get-history" else ""
         if step["operation"] == "recall-current":
-            extra = "<p>查询：" + esc(step["query"]) + "</p><p>已检查：当前召回含 10 月 31 日，不包含旧的 10 月 30 日文本。</p>"
+            extra = "<p>查询：" + esc(step["query"]) + "</p><p>使用 source=auto、injectionPhase=prompt；已检查：当前召回包含新版 ID 与文本，不包含旧版 ID 或文本。</p>"
         if step["operation"] == "store-and-forget":
             extra = "<p>第二客户端按同一 ID 读取结果：null。这里只删除自己新建的公开演练记录。</p>"
         sections.append('<section><div class="tag">' + str(index) + ' · PASS · ' + esc(step["client"]) + '</div><h2>' + esc(label) + '</h2><p class="fact">' + esc(detail) + '</p>' + extra + '</section>')
     return '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>记忆纠正与接棒准备 · 真实 Sno 服务演练</title><style>
 *{box-sizing:border-box}body{margin:0;background:#0a1721;color:#e0ebee;font:16px/1.75 system-ui,sans-serif}main{max-width:960px;margin:auto;padding:30px 18px 64px}h1{font-size:clamp(30px,5vw,47px);line-height:1.25}h2{font-size:23px;line-height:1.4}a{color:#6fe4bd;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:18px}section,.notice{border:1px solid #294352;border-radius:17px;padding:23px;background:#11232f;min-width:0}.notice{margin:24px 0;background:#18352f;border-color:#397b61}.tag{color:#73dcaf;font-size:14px;font-weight:700}.fact{border-left:3px solid #6fe4bd;padding-left:14px;overflow-wrap:anywhere}code{overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#071019;padding:15px;border-radius:9px}footer{margin-top:36px;color:#a9bec6}a:focus-visible{outline:3px solid #dca84a;outline-offset:4px}</style><main>
 <p class="tag">COGINE · LOCAL MEMORY REHEARSAL</p><h1>旧事实保留历史，新客户端取回修订后的版本</h1><div class="notice"><strong>真实 Sno 1.6.0 内存服务演练，未调用真实 Agent。</strong><p>数据是原创公开练习：将虚构交接日期从 10 月 30 日改为 10 月 31 日。writer / reader 是两个 API 客户端，不是 Codex、OpenClaw 或人的实际会话。没有读取真实记忆、自动接棒或夜间学习。</p></div>
-<p>已运行：Local First · 加密 SQLite · 本地 embedding · store / get / correct / history / recall / forget。重排关闭；全部模型调用关闭；遥测关闭。记录日期：2026-10-27。</p><div class="grid">''' + "".join(sections) + '''</div><section style="margin-top:24px"><h2>两种重放，边界不同</h2><pre><code>python3 reproduce.py --verify
+<p>已运行：Local First · 加密 SQLite · 本地 embedding · store / get / correct / history / recall / forget。重排关闭；全部模型调用关闭；遥测关闭。记录日期：''' + esc(receipt["testedAt"]) + '''。</p><div class="grid">''' + "".join(sections) + '''</div><section style="margin-top:24px"><h2>两种重放，边界不同</h2><pre><code>python3 reproduce.py --verify
 python3 reproduce.py --run --runtime /path/to/isolated-runtime --out /tmp/memory-replay</code></pre><p>第一条离线核对公开输入、已记录结果与 HTML，不重新运行 Sno。第二条实际启动新的隔离 profile，在本机重跑服务与内存操作；首次会下载约 639MB embedding 模型。不会安装 Agent 或修改全局配置。运行完成后删除临时 profile 和随机密钥，只导出白名单公开字段。</p><p><a href="fixture.json">公开输入</a> · <a href="receipt.json">实际运行结果</a> · <a href="reproduce.py" download>重放脚本</a> · <a href="run-memory.mjs" download>真实服务入口</a> · <a href="LICENSE-upstream.txt">Apache-2.0 许可</a></p></section>
 <footer>由 Cogine 编写公开演练与展示适配，基础服务来自 <a href="https://github.com/sno-ai/sno-station/tree/''' + COMMIT + '''">Sno Station v1.6.0</a>。<p><a href="https://www.opcboost.com/usecases/memory/cross-agent-memory-handoff/">返回完整教程</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">案例仓库</a> · <a href="https://www.cogine.ai/">Cogine</a></p></footer></main></html>'''
 

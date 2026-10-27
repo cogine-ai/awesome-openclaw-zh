@@ -1,4 +1,5 @@
 """Regression checks for the public, offline desktop-coach delivery."""
+import importlib.util
 import json
 from pathlib import Path
 import shutil
@@ -6,8 +7,12 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 SOURCE = Path(__file__).resolve().parents[1] / "assets/examples/interactive-desktop-coach"
+SPEC = importlib.util.spec_from_file_location("desktop_coach", SOURCE / "reproduce.py")
+MODULE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MODULE)
 
 
 class DesktopCoachTest(unittest.TestCase):
@@ -52,6 +57,15 @@ class DesktopCoachTest(unittest.TestCase):
         result = self.run_script(SOURCE, "--desktop")
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("require an explicit --cli", result.stderr)
+
+    def test_version_probe_is_bounded_before_any_card(self):
+        # Contract-only timeout fixture; it does not run the upstream CLI.
+        with patch.object(MODULE.subprocess, "run", side_effect=subprocess.TimeoutExpired(["fixture-binary", "--version"], 20)) as run:
+            with self.assertRaises(subprocess.TimeoutExpired):
+                MODULE.run_cli(Path("fixture-binary"))
+        self.assertEqual(run.call_count, 1)
+        self.assertEqual(run.call_args.args[0], ["fixture-binary", "--version"])
+        self.assertEqual(run.call_args.kwargs["timeout"], 20)
 
 
 if __name__ == "__main__":

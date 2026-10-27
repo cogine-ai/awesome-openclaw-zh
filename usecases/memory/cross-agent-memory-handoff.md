@@ -82,6 +82,10 @@ python3 assets/examples/cross-agent-memory-handoff/reproduce.py --out /tmp/memor
 
 准备检查的顺序：`store → reader get → correct → reader get old/new → recall current → store/forget temporary`。目标是旧条目保留 `superseded_by` 关联、当前召回只出现修订文本、临时演练记忆删除后不可按原 ID 读取。这些是代码中的**待运行断言**，当前未通过运行证明。
 
+固定 1.6.0 的 API 有两个需要分清的细节：`inspect(get)` 读取退役条目时，会在原文后追加 `\nretired; superseded by <新ID>`；检查器同时核对这个后缀、原文与 metadata 中的 `superseded_by`，而不是要求返回文本仍与原文完全相同。显式 `source:"manual"` 召回会保留退役历史，因此当前事实检查使用 `source:"auto", injectionPhase:"prompt"`，并验证新版 ID/文本出现、旧版 ID/文本均排除。未来成功回执只将已经验证一致的真实新版 ID 替换为 `memory-v2` 别名，明确保留这项归一说明。
+
+本轮只用固定契约形状的内存测试回复检查这些断言，没有启动 Sno 服务；测试通过不等于服务或 Agent 路径已复现，现有 `receipt.json` 仍为 `blocked`。
+
 ## 在隔离目录实际运行
 
 这是开发者实验入口。以下步骤会安装临时依赖和下载公开模型；本轮依赖安装未完成，后续步骤仍待运行验收。不要对已有的真实 profile 重跑初始化：随机密钥会让原库无法读取。
@@ -118,6 +122,7 @@ python3 assets/examples/cross-agent-memory-handoff/reproduce.py \
 - [固定版本记忆服务设置](https://github.com/sno-ai/sno-station/blob/5c4ee17f3ef4f12dc6514e2bd78ec6e580b9c363/docs/memory-setup.md)
 - [官方独立 profile 与 MemoryClient 接口](https://github.com/sno-ai/sno-station/blob/5c4ee17f3ef4f12dc6514e2bd78ec6e580b9c363/packages/memory/src/contract/client.ts)
 - [store / correct / forget / inspect 请求类型](https://github.com/sno-ai/sno-station/blob/5c4ee17f3ef4f12dc6514e2bd78ec6e580b9c363/packages/memory/src/contract/inputs.ts)
+- [固定 API 的退役条目显示与自动召回实现](https://github.com/sno-ai/sno-station/blob/5c4ee17f3ef4f12dc6514e2bd78ec6e580b9c363/packages/memory/src/engine/contract-runtime.ts)
 - [上游纠正与历史回归](https://github.com/sno-ai/sno-station/blob/5c4ee17f3ef4f12dc6514e2bd78ec6e580b9c363/tests/packages/memory/integration/mem-update.test.ts)：本轮只审阅，没有运行该套测试。
 - [Apache-2.0 许可副本](../../assets/examples/cross-agent-memory-handoff/LICENSE-upstream.txt)与 [NOTICE](../../assets/examples/cross-agent-memory-handoff/NOTICE-upstream.txt)
 

@@ -45,7 +45,7 @@ def check_recording() -> dict:
 
 
 def run_cli(binary: Path) -> dict:
-    version = subprocess.run([str(binary), "--version"], text=True, capture_output=True, check=True).stdout.strip().removeprefix("bigarrow ")
+    version = subprocess.run([str(binary), "--version"], text=True, capture_output=True, check=True, timeout=20).stdout.strip().removeprefix("bigarrow ")
     if version != "0.5.1":
         raise ValueError("this example requires bigarrow --version = 0.5.1")
     rows = []
@@ -88,7 +88,9 @@ def render(recording: dict) -> str:
 <p class="tag">COGINE · HUMAN IN THE LOOP</p><h1>把一段操作说明，变成三张桌面教学卡</h1>
 <div class="notice"><strong>这是自含 HTML 预览，不是 macOS 截图或真实问答回放。</strong><p>已在 Bigarrow v0.5.1 运行三张卡片的真实 CLI dry-run，以及一个坏输入拒绝检查。主任务还实际启动第 1 张桌面卡，CLI 返回 ok:true 和控件矩形；真人回答到 wait 回传及 OpenClaw 接入待验证。此页只呈现公开输入，没有模拟用户点击、勾选或 Agent 完成。</p></div>
 <nav aria-label="教学步骤"><a href="#step-1">1 看成果</a><a href="#step-2">2 选路线</a><a href="#step-3">3 查条件</a></nav>''' + "".join(sections) + '''<section><h2>在自己的 Mac 真正弹出一张卡</h2><p>从固定源码构建后，先只检查输入：</p><pre><code>python3 reproduce.py --cli /path/to/bigarrow --verify
-python3 reproduce.py --cli /path/to/bigarrow --desktop --step 1</code></pre><p>第二条会启动真实桌面卡并打印 PID。随后使用 <code>bigarrow wait PID --timeout 30</code> 读取真实回答；超时只代表 pending，不代表完成。点击卡片 X 是取消；只用 <code>bigarrow stop --pid PID</code> 关闭自己的卡。不要全局清除其他人的卡。</p><p><a href="reproduce.py" download>复现脚本</a> · <a href="dry-run-results.json">真实解析产物</a> · <a href="LICENSE-upstream.txt">上游 MIT 许可</a></p></section>
+python3 reproduce.py --cli /path/to/bigarrow --desktop --step 1
+/path/to/bigarrow wait PID --timeout 30
+/path/to/bigarrow stop --pid PID</code></pre><p>先把所有 <code>/path/to/bigarrow</code> 换成同一个已构建二进制的实际路径；例如按完整教程构建时为 <code>/tmp/bigarrow-coach-source/.build/release/bigarrow</code>。第二条会启动真实桌面卡并打印 PID，再把 <code>PID</code> 换成刚返回的数字，用第三条读取真实回答；超时只代表 pending，不代表完成。点击卡片 X 是取消；需要清理时只用第四条关闭自己的卡。不要全局清除其他人的卡。</p><p><a href="reproduce.py" download>复现脚本</a> · <a href="dry-run-results.json">真实解析产物</a> · <a href="LICENSE-upstream.txt">上游 MIT 许可</a></p></section>
 <footer>由 Cogine 整理原创公开教学输入；卡片能力来自 <a href="''' + UPSTREAM + '/tree/' + COMMIT + '''">Franz Enzenhofer 的 Bigarrow v0.5.1</a>。<a href="verification.json">构建与验证范围</a>。<p><a href="https://www.opcboost.com/usecases/tools/interactive-desktop-coach/">返回完整教程</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">案例仓库</a> · <a href="https://www.cogine.ai/">Cogine</a></p></footer></main></html>'''
 
 

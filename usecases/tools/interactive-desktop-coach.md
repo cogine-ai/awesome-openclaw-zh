@@ -102,9 +102,21 @@ python3 assets/examples/interactive-desktop-coach/reproduce.py \
   --cli /tmp/bigarrow-coach-source/.build/release/bigarrow --desktop --step 1
 ```
 
-命令先检查三张卡，再启动第 1 张并返回 `pid`。在同一环境中运行 `bigarrow wait <pid> --timeout 30`，读取你实际按下的回答；第 2、3 张分别使用 `--step 2` 与 `--step 3`。不要把文档里的 `<pid>` 原样执行，替换为刚返回的数字。
+命令先检查三张卡，再启动第 1 张并返回 `pid`。继续使用同一个已构建二进制的显式路径读取回答；本例不要求全局安装：
 
-回答时 exit 0；点击 X 且没有回答时 exit 1；超时的 JSON 为 `pending`，不是完成。只关闭自己这张卡时用 `bigarrow stop --pid <pid>`。卡片创建成功或答案收到，都不代表经验卡访谈、Python 命令或后续业务操作已经完成，仍要检查实际产物。
+```bash
+/tmp/bigarrow-coach-source/.build/release/bigarrow wait <pid> --timeout 30
+```
+
+第 2、3 张分别使用 `--step 2` 与 `--step 3`。不要把文档里的 `<pid>` 原样执行，替换为刚返回的数字；如果你换了源码目录，也要同步替换二进制路径。
+
+回答时 exit 0；点击 X 且没有回答时 exit 1；超时的 JSON 为 `pending`，不是完成。只关闭自己这张卡时使用同一个路径：
+
+```bash
+/tmp/bigarrow-coach-source/.build/release/bigarrow stop --pid <pid>
+```
+
+卡片创建成功或答案收到，都不代表经验卡访谈、Python 命令或后续业务操作已经完成，仍要检查实际产物。版本检查与每次 dry-run 最多各等 20 秒，超时会失败退出，不继续弹卡。
 
 供 Agent 的最小提示词：
 

@@ -109,6 +109,19 @@ def check_probabilities(probabilities):
         raise ValueError("Invalid direction probability distribution")
 
 
+def select_moves(moves, probabilities=None):
+    """Use the same deterministic selection/tie rules for play and replay checks."""
+    safe = [name for name in DIRS if moves[name]["safe"]]
+    if not safe:
+        raise ValueError("No safe move can be executed")
+    if probabilities is None:
+        preferred, _, _ = decision_input(moves)
+        return preferred, preferred
+    proposed = max(DIRS, key=probabilities.__getitem__)
+    executed = proposed if proposed in safe else max(safe, key=probabilities.__getitem__)
+    return proposed, executed
+
+
 def play(scenario, predictor=None):
     validate_scenario(scenario)
     width, height = scenario["width"], scenario["height"]
@@ -119,7 +132,7 @@ def play(scenario, predictor=None):
     stopped = "step-limit"
     for step in range(scenario["steps"]):
         moves = plan(snake, food, width, height)
-        preferred, state, questions = decision_input(moves)
+        _, state, questions = decision_input(moves)
         safe = [name for name in DIRS if moves[name]["safe"]]
         if not safe:
             stopped = "no-safe-move"  # Stop without executing a collision.
@@ -131,12 +144,9 @@ def play(scenario, predictor=None):
             elapsed = round((time.perf_counter() - start) * 1000, 3)
             probabilities = answer["probabilities"]
             check_probabilities(probabilities)
-            proposed = max(DIRS, key=probabilities.__getitem__)
             confidence = answer.get("confidence")
             answer_confidence = answer.get("answer_confidence")
-            executed = proposed if proposed in safe else max(safe, key=probabilities.__getitem__)
-        else:
-            proposed = executed = preferred
+        proposed, executed = select_moves(moves, probabilities)
         shield = proposed != executed
         interventions += int(shield)
         before, before_food = [list(p) for p in snake], list(food)
@@ -183,10 +193,13 @@ def validate_trace(trace):
                 raise ValueError("Unsafe or falsified executed move")
             if arm["mode"] == "laya-local-sdk":
                 check_probabilities(frame["probabilities"])
-                if frame["proposed"] != max(DIRS, key=frame["probabilities"].__getitem__):
-                    raise ValueError("Proposed move differs from the recorded model distribution")
             elif frame["probabilities"] is not None:
                 raise ValueError("Planner baseline must not invent model probabilities")
+            expected_proposed, expected_executed = select_moves(moves, frame["probabilities"])
+            if frame["proposed"] != expected_proposed:
+                raise ValueError("Proposed move differs from the model distribution or BFS preference")
+            if frame["executed"] != expected_executed:
+                raise ValueError("Executed move differs from the recorded selection rule")
             dx, dy = DIRS[frame["executed"]]
             head = snake[0][0] + dx, snake[0][1] + dy
             expected = [head] + (snake if head == food else snake[:-1])

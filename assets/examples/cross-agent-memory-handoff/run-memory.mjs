@@ -8,6 +8,28 @@ import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 
+// Fixed Sno 1.6.0 contract-runtime.ts explicitEntry annotates an inspected retired row.
+// These checks can be imported for contract tests without starting a service or profile.
+export function assertCorrectionHistory(oldEntry, currentEntry, fixture, newId) {
+  const expected = `${fixture.original}\nretired; superseded by ${newId}`;
+  const metadata = JSON.parse(oldEntry?.metadata ?? '{}');
+  if (oldEntry?.text !== expected || currentEntry?.text !== fixture.corrected || metadata.superseded_by !== newId)
+    throw new Error('correction did not retain annotated history and matching metadata link');
+  return metadata;
+}
+
+export async function recallCurrent(client, fixture, scope, oldId, newId) {
+  // manual recall deliberately includes retired history in this fixed release.
+  const reply = await client.getRecall(fixture.query, scope,
+    { source: 'auto', injectionPhase: 'prompt', limit: 5, minScore: 0, maxChars: 2000 });
+  if (reply.degraded || !Array.isArray(reply.memoryIds) || !reply.memoryIds.includes(newId)
+      || reply.memoryIds.includes(oldId) || !reply.contextText?.includes(fixture.corrected)
+      || reply.contextText.includes(fixture.original))
+    throw new Error('automatic recall did not select the current text and exclude retired memory');
+  return reply;
+}
+
+async function main() {
 const here = dirname(fileURLToPath(import.meta.url));
 const [runtimeArg, profileArg, resultArg] = process.argv.slice(2);
 if (!runtimeArg || !profileArg || !resultArg) throw new Error('usage: node run-memory.mjs RUNTIME_PREFIX NEW_PROFILE RESULT_JSON');
@@ -75,10 +97,8 @@ try {
   if (typeof newId !== 'string' || newId === oldId) throw new Error('correction did not create a successor');
   const old = ensure(await clientB.inspect({ op: 'get', id: oldId }, scopeB), 'get history');
   const current = ensure(await clientB.inspect({ op: 'get', id: newId }, scopeB), 'get successor');
-  const oldMetadata = JSON.parse(old.result.entry?.metadata ?? '{}');
-  if (old.result.entry?.text !== fixture.original || current.result.entry?.text !== fixture.corrected || oldMetadata.superseded_by !== newId) throw new Error('correction did not retain linked history');
-  const recall = ensure(await clientB.getRecall(fixture.query, scopeB, { source: 'manual', limit: 5, minScore: 0 }), 'recall');
-  if (!recall.contextText.includes(fixture.corrected) || recall.contextText.includes(fixture.original)) throw new Error('recall did not select only current text');
+  assertCorrectionHistory(old.result.entry, current.result.entry, fixture, newId);
+  await recallCurrent(clientB, fixture, scopeB, oldId, newId);
   const temporary = ensure(await clientA.mutate({ op: 'store', content: fixture.temporary, category: 'episodic' }, scopeA), 'store temporary');
   const temporaryId = temporary.result.details.id;
   if (typeof temporaryId !== 'string') throw new Error('temporary store returned no id');
@@ -94,8 +114,11 @@ try {
       { operation: 'store', client: 'writer', id: 'memory-v1', text: fixture.original, passed: true },
       { operation: 'get', client: 'reader', id: 'memory-v1', text: before.result.entry.text, passed: true },
       { operation: 'correct', client: 'writer', from: 'memory-v1', to: 'memory-v2', text: fixture.corrected, passed: true },
-      { operation: 'get-history', client: 'reader', id: 'memory-v1', text: old.result.entry.text, supersededBy: 'memory-v2', passed: true },
-      { operation: 'recall-current', client: 'reader', query: fixture.query, currentText: fixture.corrected, oldTextExcluded: true, passed: true },
+      { operation: 'get-history', client: 'reader', id: 'memory-v1',
+        text: old.result.entry.text.slice(0, -newId.length) + 'memory-v2', supersededBy: 'memory-v2',
+        normalization: 'Verified runtime successor ID in annotated text and metadata is replaced with alias memory-v2.', passed: true },
+      { operation: 'recall-current', client: 'reader', query: fixture.query, source: 'auto', injectionPhase: 'prompt',
+        currentText: fixture.corrected, oldTextExcluded: true, passed: true },
       { operation: 'store-and-forget', client: 'writer', text: fixture.temporary, readerGet: null, passed: true }
     ]
   };
@@ -107,3 +130,6 @@ try {
   for (let i = 0; i < 100 && server.exitCode === null; i++) await delay(100);
   if (server.exitCode === null) server.kill('SIGKILL');
 }
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) await main();

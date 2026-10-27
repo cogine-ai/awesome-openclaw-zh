@@ -12,13 +12,13 @@ spec.loader.exec_module(module)
 
 class CopyArena(unittest.TestCase):
     def test_exact_rehearsal_with_explicit_assistant_attribution(self):
-        result=module.render(json.loads((HERE/'brief.json').read_text()))
-        self.assertEqual(result,(HERE/'index.html').read_text())
+        result=module.render(json.loads((HERE/'brief.json').read_text(encoding="utf-8")))
+        self.assertEqual(result,(HERE/'index.html').read_text(encoding="utf-8"))
         self.assertIn('预置演练',result)
         self.assertIn('不是已执行的 OpenClaw 原生盲测',result)
 
     def test_invalid_candidate_rejected(self):
-        brief=json.loads((HERE/'brief.json').read_text())
+        brief=json.loads((HERE/'brief.json').read_text(encoding="utf-8"))
         brief['candidates'][0]['text']='过长'*100
         with self.assertRaisesRegex(ValueError,'55'):
             module.render(brief)

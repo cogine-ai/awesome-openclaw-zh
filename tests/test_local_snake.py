@@ -32,7 +32,7 @@ class LocalSnake(unittest.TestCase):
                            check=True, capture_output=True, timeout=20)
             for name in ("run.json", "scenario.json", "LICENSE.laya.txt", "LICENSE.snake-reference.txt"):
                 self.assertTrue((output / name).is_file())
-            self.assertIn("/usecases/creative/local-decision-snake-lab/", (output / "index.html").read_text())
+            self.assertIn("/usecases/creative/local-decision-snake-lab/", (output / "index.html").read_text(encoding="utf-8"))
 
     def test_baseline_is_deterministic_and_has_no_fake_model_statistics(self):
         first, second = snake.play(self.scenario), snake.play(self.scenario)
@@ -106,6 +106,48 @@ class LocalSnake(unittest.TestCase):
         changed["runs"][0]["score"] += 10
         with self.assertRaisesRegex(ValueError, "Run summary"):
             snake.validate_trace(changed)
+
+    def test_recorded_replay_rejects_another_safe_direction(self):
+        trace = json.loads((EXAMPLE / "run.json").read_text(encoding="utf-8"))
+        for mode in ("laya-local-sdk", "planner-baseline"):
+            with self.subTest(mode=mode):
+                changed = copy.deepcopy(trace)
+                arm = next(run for run in changed["runs"] if run["mode"] == mode)
+                frame = arm["frames"][0]
+                self.assertEqual(frame["executed"], "LEFT")
+                self.assertTrue(frame["features"]["RIGHT"]["safe"])
+                # Keep state, score and shield internally consistent with the
+                # forged safe move, so only the actual selection rule catches it.
+                frame["executed"] = "RIGHT"
+                frame["snake"] = [[frame["before"][0][0] + 1, frame["before"][0][1]]] + frame["before"][:-1]
+                if mode == "planner-baseline":
+                    frame["proposed"] = "RIGHT"
+                frame["shield"] = frame["proposed"] != frame["executed"]
+                arm.update(frames=[frame], steps=1, score=frame["score"],
+                           shieldInterventions=int(frame["shield"]))
+                changed["runs"] = [arm]
+                with self.assertRaisesRegex(ValueError, "selection rule|BFS preference"):
+                    snake.validate_trace(changed)
+
+    def test_guard_replay_enforces_safe_ranking_and_tie_order(self):
+        scenario = {"width": 4, "height": 4, "seed": 7, "steps": 1}
+        for left, right in ((.15, .05), (.1, .1)):
+            with self.subTest(left=left, right=right):
+                # Synthetic probabilities exercise the guard only; no mock result
+                # is exported or claimed to be a real model inference.
+                def unit_predictor(state, questions):
+                    return {"answers": {"move": {"probabilities": {
+                        "UP": .1, "DOWN": .7, "LEFT": left, "RIGHT": right}}}}
+                arm = snake.play(scenario, unit_predictor)
+                trace = {"scenario": scenario, "model": {"weightSha256": snake.WEIGHT_SHA256}, "runs": [arm]}
+                snake.validate_trace(trace)
+                frame = arm["frames"][0]
+                self.assertEqual(frame["executed"], "LEFT")
+                self.assertTrue(frame["features"]["RIGHT"]["safe"])
+                frame["executed"] = "RIGHT"
+                frame["snake"] = [[frame["before"][0][0] + 1, frame["before"][0][1]]] + frame["before"][:-1]
+                with self.assertRaisesRegex(ValueError, "selection rule"):
+                    snake.validate_trace(trace)
 
 
 if __name__ == "__main__":

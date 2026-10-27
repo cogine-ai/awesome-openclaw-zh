@@ -29,7 +29,7 @@ class BilibiliBrief(unittest.TestCase):
                            check=True, capture_output=True, timeout=20)
             for name in ("audience-input.json", "fixture-input.json", "LICENSE.upstream.txt"):
                 self.assertTrue((output / name).is_file())
-            self.assertIn("/usecases/social/bilibili-audience-to-topic-brief/", (output / "index.html").read_text())
+            self.assertIn("/usecases/social/bilibili-audience-to-topic-brief/", (output / "index.html").read_text(encoding="utf-8"))
 
     def test_all_proposals_trace_back_to_actual_input_ids(self):
         fixture = json.loads((EXAMPLE / "fixture-input.json").read_text(encoding="utf-8"))
@@ -50,6 +50,47 @@ class BilibiliBrief(unittest.TestCase):
         document, markdown = brief.render(data)
         self.assertIn("样本不足", document)
         self.assertIn("暂不生成选题", markdown)
+
+    def test_cost_statements_and_sales_are_not_questions(self):
+        for text in ("API费用低至九折，欢迎选购套餐", "本月API费用已经更新", "API套餐低至九元，还不买吗？"):
+            with self.subTest(text=text):
+                self.assertFalse(brief.qualified_question(text))
+        for text in ("API费用是多少？", "请问API会另外收费吗", "安装后提示配置错误，求助"):
+            with self.subTest(text=text):
+                self.assertTrue(brief.qualified_question(text))
+
+    def test_full_comment_promotion_flag_survives_excerpt_truncation(self):
+        content = "API费用是多少？" + "先看看这段安装说明和常见问题。" * 5 + "点击获取私信资料"
+        def read(binary, arguments, state):
+            if arguments == ["--version"]:
+                return {"version": brief.VERSION}
+            if arguments[0] == "video":
+                return self.snapshot["video"]
+            return {"items": [{"rpid": 12345, "content": content, "user": {"name": "private viewer"}}]}
+        with patch.object(brief, "read_cli", side_effect=read):
+            result = brief.collect(Path("/temporary/bili"), self.snapshot["video"]["bvid"])
+        row = result["comments"][0]
+        self.assertTrue(row["promotion"])
+        self.assertNotIn("点击获取", row["text"])
+        self.assertEqual(set(row), {"id", "text", "promotion"})
+        self.assertLessEqual(len(row["text"]), 40)
+        self.assertNotIn(content, json.dumps(result, ensure_ascii=False))
+        self.assertEqual(brief.build_topics(result), [])
+        document, markdown = brief.render(result)
+        self.assertIn("合格提问：0条", document)
+        self.assertIn("合格提问0条", markdown)
+        self.assertIn("→ 0 条提问 → 0 条选题", brief.preview(result))
+
+    def test_promotion_flag_is_optional_strict_boolean_and_cannot_override_text(self):
+        for flag in ("false", 0, 1, None, []):
+            with self.subTest(flag=flag):
+                data = copy.deepcopy(self.snapshot)
+                data["comments"][0]["promotion"] = flag
+                with self.assertRaisesRegex(ValueError, "boolean"):
+                    brief.validate_snapshot(data)
+        data = copy.deepcopy(self.snapshot)
+        data["comments"] = [{"id": "12345", "text": "API费用多少？点击获取套餐", "promotion": False}]
+        self.assertEqual(brief.build_topics(data), [])
 
     def test_fixture_cannot_claim_real_video_or_metrics(self):
         fixture = copy.deepcopy(self.snapshot)

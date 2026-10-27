@@ -70,7 +70,7 @@ def main():
     if standalone and args.output_dir.exists():
         parser.error('--output-dir must name a new directory')
     try:
-        brief=json.loads((HERE/'brief.json').read_text())
+        brief=json.loads((HERE/'brief.json').read_text(encoding="utf-8"))
         content=render(brief)
     except (ValueError,KeyError) as error:
         parser.error(str(error))

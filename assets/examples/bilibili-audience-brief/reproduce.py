@@ -34,11 +34,23 @@ TOPICS = (
 )
 
 
-def qualified_question(text):
-    # A topic word in a giveaway/advertisement is not an audience pain point.
-    if len(text.strip()) < 5 or re.search(r"抱走|商单|学习咨询|点击获取|http|敲.{0,6}666", text, re.I):
+def is_promotion(text):
+    return bool(re.search(
+        r"抱走|商单|学习咨询|点击获取|http|敲.{0,6}666|欢迎.{0,6}(?:选购|购买|下单|咨询)|"
+        r"低至.{0,8}(?:折|元)|(?:扫码|私信).{0,8}(?:获取|领取|购买)", text, re.I))
+
+
+def qualified_question(text, *, promotion=False):
+    # Cost/topic nouns alone are not questions. A full-content promotion flag
+    # survives excerpt truncation; legacy reviewed inputs still use their text.
+    if promotion or len(text.strip()) < 5 or is_promotion(text):
         return False
-    return bool(re.search(r"[？?]|怎么|为什么|报错|错误|无法|不能|不支持|多少|费用|怎样", text))
+    return bool(re.search(r"[？?]|怎么|为什么|怎样|如何|多少|能否|是否|请问|请教|求助|"
+                          r"不知道|报错|无法|不能|不支持|(?:遇到|出现|提示).{0,12}错误", text))
+
+
+def is_qualified(row):
+    return qualified_question(row["text"], promotion=row.get("promotion", False))
 
 
 def validate_snapshot(data):
@@ -67,6 +79,8 @@ def validate_snapshot(data):
             raise ValueError("Missing/duplicate comment id or empty text")
         if len(text) > 180:
             raise ValueError("Comment excerpts must be bounded")
+        if "promotion" in row and type(row["promotion"]) is not bool:
+            raise ValueError("Comment promotion flag must be a boolean when present")
         if data["mode"] == "live-public" and not ident.isdigit():
             raise ValueError("Public comment id must be an actual rpid")
         if "user" in row or "mid" in row or "name" in row:
@@ -79,7 +93,7 @@ def build_topics(snapshot):
     validate_snapshot(snapshot)
     topics = []
     for ident, title, words, angle, artifact in TOPICS:
-        matches = [row for row in snapshot["comments"] if qualified_question(row["text"])
+        matches = [row for row in snapshot["comments"] if is_qualified(row)
                    and any(word in row["text"].lower() for word in words)]
         if matches:
             topics.append({"id": ident, "title": title, "angle": angle, "artifact": artifact,
@@ -117,13 +131,19 @@ def collect(binary, bvid):
             raise ValueError("Video id mismatch")
         if (state / "credential.json").exists():
             raise ValueError("Anonymous read unexpectedly wrote a credential")
-    rows = [{"id": str(row["rpid"]), "text": " ".join(str(row["content"]).split()[:20])[:40]}
-            for row in comments.get("items", [])[:12] if row.get("content")]
+    rows = []
+    for row in comments.get("items", [])[:12]:
+        if not row.get("content"):
+            continue
+        content = str(row["content"])
+        promotion = is_promotion(content)  # Inspect before truncation; never export the full content.
+        excerpt = " ".join(content.split()[:20])[:40]
+        rows.append({"id": str(row["rpid"]), "text": excerpt, "promotion": promotion})
     snapshot = {"mode": "live-public", "fetchedAt": dt.datetime.now(dt.timezone.utc).isoformat(),
                 "upstream": {"repository": REPOSITORY, "revision": REVISION, "version": VERSION},
                 "video": {key: video.get(key) for key in ("bvid", "url", "title", "duration", "pubdate", "stat")},
                 "comments": rows, "collection": {"anonymous": True, "page": 1, "sort": "hot",
-                    "scope": "公开热门评论第一页中的至多12条节选；省略用户身份和楼中楼，不是完整观众调查"}}
+                    "scope": "公开热门评论第一页中的至多12条节选；推广标记按截短前完整文本计算；省略用户身份和楼中楼，不是完整观众调查"}}
     return validate_snapshot(snapshot)
 
 
@@ -133,7 +153,7 @@ def render(snapshot):
     fixture = snapshot["mode"] == "fixture"
     badge = "虚构观众提问 · fixture演练" if fixture else "真实公开数据 · 匿名读取快照"
     scope = "本页输入为明确虚构的课堂素材，不是实抓评论，不代表真实受众或平台趋势。" if fixture else snapshot["collection"]["scope"]
-    qualified = sum(qualified_question(row["text"]) for row in snapshot["comments"])
+    qualified = sum(is_qualified(row) for row in snapshot["comments"])
     by_id = {row["id"]: row for row in snapshot["comments"]}
     cards, markdown = [], ["# 观众提问 → 下期选题简报", "", badge, "", scope, "",
                             f'输入{len(snapshot["comments"])}条，合格提问{qualified}条，形成{len(topics)}条选题提案。', ""]
@@ -147,18 +167,19 @@ def render(snapshot):
         cards.append('<article><h2>样本不足，暂不生成选题</h2><p>本次未发现可归类的观众问题。资料推广、口令和无具体问题的回复不会被当成需求；不从视频播放量推断选题有市场。</p><p><a href="fixture.html">切换到明确虚构的提问演练 →</a></p></article>')
     source = ('无真实视频链接；输入完全虚构。' if fixture else
               f'<a href="{esc(snapshot["video"]["url"])}" rel="noreferrer">{esc(snapshot["video"]["title"])}</a>')
-    refs = "".join(f'<li id="evidence-{esc(row["id"])}"><code>{esc(row["id"])}</code> {esc(row["text"])} <small>— {"纳入问题归类" if qualified_question(row["text"]) else "未纳入：没有明确问题或属于推广/口令"}</small></li>' for row in snapshot["comments"])
+    refs = "".join(f'<li id="evidence-{esc(row["id"])}"><code>{esc(row["id"])}</code> {esc(row["text"])} <small>— {"纳入问题归类" if is_qualified(row) else "未纳入：没有明确问题或属于推广/口令"}</small></li>' for row in snapshot["comments"])
     document = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>观众提问 → 下期选题简报</title><style>
 *{{box-sizing:border-box}}body{{margin:0;background:#f3f4ef;color:#172e2b;font:16px/1.7 system-ui,sans-serif}}main{{max-width:1160px;margin:auto;padding:44px 22px}}header{{max-width:860px}}h1{{font-size:clamp(30px,5vw,55px);line-height:1.2;margin:18px 0}}.eyebrow{{font-size:12px;letter-spacing:.07em;color:#526c65}}.badge{{display:inline-block;background:#ffe1a6;border:1px solid #a77216;border-radius:8px;padding:5px 12px;font-weight:700}}.scope{{border-left:4px solid #b57b25;padding:8px 16px;background:#fff7e8}}.grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:30px 0}}article{{min-width:0;background:white;border:1px solid #d5ded7;border-radius:18px;padding:24px;box-shadow:0 6px 22px #153d3010}}h2{{font-size:23px;line-height:1.4}}.num{{font-size:30px;color:#558b73;font-weight:800}}.deliver{{padding:13px;background:#edf5ef;border-radius:10px}}a{{color:#006e61}}li{{overflow-wrap:anywhere;margin:10px 0}}details{{margin-top:18px}}summary{{cursor:pointer}}.notes{{padding:22px;background:#e6ede7;border-radius:16px}}code{{font-size:12px}}footer{{font-size:13px;margin-top:30px;color:#526c65}}@media(max-width:850px){{.grid{{grid-template-columns:1fr}}main{{padding:26px 16px}}}}</style>
-<main><header><p class="eyebrow">COGINE / OPENCLAW CONTENT LAB</p><span class="badge">{badge}</span><h1>先听见问题，<br>再决定下一期拍什么。</h1><p class="scope">{esc(scope)}</p><p>样本：{len(snapshot["comments"])}条 · 合格提问：{qualified}条 · 主题：{len(topics)}个 · 采样／制作日期：{esc(snapshot["fetchedAt"])}</p><p><a href="index.html">真实公开样本</a> · <a href="fixture.html">虚构提问演练</a></p></header><section class="grid">{''.join(cards)}</section><section class="notes"><h2>这是编辑简报，不是受众画像</h2><p>关键词归类可复现，一条留言可属于多个主题。条数是本样本内的留言数，不是独立人数、需求比例、增长率或转化预测。选题角度由本案例编辑规则提出，尚未发布或验证流量。</p><p>来源：{source}</p><details><summary>全部输入与出处</summary><ol>{refs}</ol></details><p><a href="{'fixture-input.json' if fixture else 'audience-input.json'}">输入JSON</a> · <a href="{'fixture-brief.md' if fixture else 'topic-brief.md'}">Markdown简报</a> · <a href="reproduce.py">复现脚本</a></p></section><footer>固定上游：{REPOSITORY}@{REVISION[:12]} / bili-agent {VERSION}。脚本只读本地输入或匿名公开页面；未运行OpenClaw会话，也没有登录、私信、互动或投稿。<p><a href="https://www.opcboost.com/usecases/social/bilibili-audience-to-topic-brief/">返回完整教程</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine</a></p></footer></main></html>'''
+<main><header><p class="eyebrow">COGINE / OPENCLAW CONTENT LAB</p><span class="badge">{badge}</span><h1>先听见问题，<br>再决定下一期拍什么。</h1><p class="scope">{esc(scope)}</p><p>样本：{len(snapshot["comments"])}条 · 合格提问：{qualified}条 · 主题：{len(topics)}个 · 采样／制作日期：{esc(snapshot["fetchedAt"])}</p><p><a href="index.html">真实公开样本</a> · <a href="fixture.html">虚构提问演练</a></p></header><section class="grid">{''.join(cards)}</section><section class="notes"><h2>这是编辑简报，不是受众画像</h2><p>关键词归类可复现，一条留言可属于多个主题。条数是本样本内的留言数，不是独立人数、需求比例、增长率或转化预测。选题角度由本案例编辑规则提出，尚未发布或验证流量。</p><p>刷新时先用完整留言判定推广，再只保存有限节选与布尔标记；原有未带标记的已审核输入仍按节选判定。费用等主题词本身不算疑问或求助。规则不能替代人工审核。</p><p>来源：{source}</p><details><summary>全部输入与出处</summary><ol>{refs}</ol></details><p><a href="{'fixture-input.json' if fixture else 'audience-input.json'}">输入JSON</a> · <a href="{'fixture-brief.md' if fixture else 'topic-brief.md'}">Markdown简报</a> · <a href="reproduce.py">复现脚本</a></p></section><footer>固定上游：{REPOSITORY}@{REVISION[:12]} / bili-agent {VERSION}。脚本只读本地输入或匿名公开页面；未运行OpenClaw会话，也没有登录、私信、互动或投稿。<p><a href="https://www.opcboost.com/usecases/social/bilibili-audience-to-topic-brief/">返回完整教程</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine</a></p></footer></main></html>'''
     markdown += ["## 来源与边界", "", scope, snapshot["video"].get("url") or "无真实视频链接（fixture）",
+                 "", "刷新先按完整留言判定推广，只保存节选与布尔标记；原有无标记输入按节选判定。费用等主题词本身不算疑问或求助，规则仍需人工审核。",
                  "", "归类为规则输出，选题角度为编辑提案；未发布、未验证增长。"]
     return document, "\n".join(markdown) + "\n"
 
 
 def preview(snapshot):
     count = len(snapshot["comments"])
-    questions = sum(qualified_question(row["text"]) for row in snapshot["comments"])
+    questions = sum(is_qualified(row) for row in snapshot["comments"])
     topics = len(build_topics(snapshot))
     label = "真实公开样本" if snapshot["mode"] == "live-public" else "明确虚构的fixture"
     outcome = "样本不足，不硬造需求" if not topics else "规则归类，编辑提案待验证"
