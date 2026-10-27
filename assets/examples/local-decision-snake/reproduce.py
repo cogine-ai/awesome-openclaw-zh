@@ -19,6 +19,7 @@ import math
 import os
 from pathlib import Path
 import random
+import shutil
 import sys
 import tempfile
 import time
@@ -302,11 +303,12 @@ async def mcp_probe():
 def render(trace):
     validate_trace(trace)
     payload = json.dumps(trace, ensure_ascii=False).replace("<", "\\u003c").replace("&", "\\u0026").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
+    recorded_day = html.escape(trace["createdAt"][:10])
     real = any(run["mode"] == "laya-local-sdk" for run in trace["runs"])
     status = "真实本地模型 + 规划器 + 保护规则" if real else "仅规划器基线 · 未运行Laya"
     return '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>本地决策蛇：谁决定了下一步？</title><style>
 *{box-sizing:border-box}body{margin:0;background:#111d29;color:#e4eef2;font:15px/1.6 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:32px 20px}header{max-width:900px}h1{font-size:clamp(30px,5vw,49px);line-height:1.2}.badge{display:inline-block;border:1px solid #558d7e;border-radius:8px;padding:5px 12px;color:#96e6c7}.muted{color:#9eafbf}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px;margin-top:24px}.panel{background:#1a2b3b;border:1px solid #32495b;border-radius:17px;padding:20px;min-width:0}canvas{width:100%;height:auto;display:block;border-radius:10px;background:#0b1520}button,select{font:inherit;background:#274356;border:1px solid #52708a;border-radius:8px;color:#fff;padding:9px 13px;cursor:pointer}label{display:inline-block;margin:5px 5px 5px 0}input[type=range]{width:100%}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{padding:13px;border-radius:10px;background:#132432}.stat b{display:block;font-size:25px;color:#90e4c3}.barrow{display:grid;grid-template-columns:60px minmax(0,1fr) 52px;gap:10px;align-items:center;margin:11px 0}.track{height:9px;background:#0e1c28;border-radius:10px;overflow:hidden}.bar{height:100%;background:#68b7d1}.shield{color:#ffd282}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;color:#b9d3e2;max-height:260px;overflow:auto}a{color:#8cddd4}summary{cursor:pointer}footer{padding:25px 0;color:#9eafbf;font-size:13px}#rangeLabel{display:block}#reason{min-height:50px}code{overflow-wrap:anywhere}@media(max-width:780px){.layout{grid-template-columns:1fr}main{padding:24px 15px}.panel{padding:15px}}
-</style><main><header><p class="muted">COGINE / LOCAL DECISION LAB</p><span class="badge">''' + html.escape(status) + '''</span><h1>下一步向哪走？<br>把每一次建议和拦截摊开看。</h1><p class="muted">这是已记录数据的可交互回放，浏览器不运行模型。BFS先计算特征，Laya给四个方向排序，保护规则只执行安全候选。不能把整条流水线的成绩归给Laya。</p></header><div class="controls"><label>实验分支 <select id="arm"></select></label><label>速度 <select id="speed"><option value="650">慢速</option><option value="220" selected>标准</option><option value="70">快速</option></select></label><button id="play" type="button">播放</button><button id="restart" type="button">回到起点</button></div><div class="layout"><section class="panel"><canvas id="board" width="512" height="512" aria-label="蛇的位置与食物回放"></canvas><label id="rangeLabel" for="step">步骤</label><input id="step" type="range" min="0" value="0"><div class="stats"><div class="stat">本次得分<b id="score"></b></div><div class="stat">已发生拦截<b id="shields"></b></div><div class="stat">单次推理<b id="latency"></b></div></div></section><section class="panel"><h2 id="mode"></h2><p id="reason"></p><div id="probabilities"></div><p class="muted" id="confidence"></p><details open><summary>这一步的规划特征与模型输入</summary><pre id="features"></pre></details><details><summary>实验范围与版本</summary><pre id="metadata"></pre></details></section></div><section class="panel" style="margin-top:22px"><h2>怎样读这场实验</h2><p>概率来自已记录的模型回复；基线不显示虚构概率。保护规则可能改写模型的第一选择。单种子、单次小样本不能证明长期成绩、校准精度、相对其他模型的优势或速度收益。</p><p>真实SDK推理、官方MCP工具发现/状态调用、OpenClaw会话分别标记。工具检查不会下载第二份模型，也不能当作OpenClaw端到端运行。</p><p><a href="run.json">原始回放数据</a> · <a href="scenario.json">实验输入</a> · <a href="reproduce.py">复现脚本</a></p></section><footer>实验日期：2026-10-27。模型权重不随包分发；默认复现只读本地记录，不联网、不启动后台服务。</footer></main><script>
+</style><main><header><p class="muted">COGINE / LOCAL DECISION LAB</p><span class="badge">''' + html.escape(status) + '''</span><h1>下一步向哪走？<br>把每一次建议和拦截摊开看。</h1><p class="muted">这是已记录数据的可交互回放，浏览器不运行模型。BFS先计算特征，Laya给四个方向排序，保护规则只执行安全候选。不能把整条流水线的成绩归给Laya。</p></header><div class="controls"><label>实验分支 <select id="arm"></select></label><label>速度 <select id="speed"><option value="650">慢速</option><option value="220" selected>标准</option><option value="70">快速</option></select></label><button id="play" type="button">播放</button><button id="restart" type="button">回到起点</button></div><div class="layout"><section class="panel"><canvas id="board" width="512" height="512" aria-label="蛇的位置与食物回放"></canvas><label id="rangeLabel" for="step">步骤</label><input id="step" type="range" min="0" value="0"><div class="stats"><div class="stat">本次得分<b id="score"></b></div><div class="stat">已发生拦截<b id="shields"></b></div><div class="stat">单次推理<b id="latency"></b></div></div></section><section class="panel"><h2 id="mode"></h2><p id="reason"></p><div id="probabilities"></div><p class="muted" id="confidence"></p><details open><summary>这一步的规划特征与模型输入</summary><pre id="features"></pre></details><details><summary>实验范围与版本</summary><pre id="metadata"></pre></details></section></div><section class="panel" style="margin-top:22px"><h2>怎样读这场实验</h2><p>概率来自已记录的模型回复；基线不显示虚构概率。保护规则可能改写模型的第一选择。单种子、单次小样本不能证明长期成绩、校准精度、相对其他模型的优势或速度收益。</p><p>真实SDK推理、官方MCP工具发现/状态调用、OpenClaw会话分别标记。工具检查不会下载第二份模型，也不能当作OpenClaw端到端运行。</p><p><a href="run.json">原始回放数据</a> · <a href="scenario.json">实验输入</a> · <a href="reproduce.py">复现脚本</a></p></section><footer>实验日期：''' + recorded_day + '''。模型权重不随包分发；默认复现只读本地记录，不联网、不启动后台服务。<p><a href="https://www.opcboost.com/usecases/creative/local-decision-snake-lab/">返回完整教程</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine</a></p></footer></main><script>
 const DATA = ''' + payload + ''';
 const $=id=>document.getElementById(id), arm=$('arm'), slider=$('step'), canvas=$('board'), ctx=canvas.getContext('2d');
 let timer=null,index=0;
@@ -336,7 +338,7 @@ def preview(trace):
     if frame["food"]:
         x, y = frame["food"]
         cells.append(f'<circle cx="{827+x*30}" cy="{203+y*30}" r="9" fill="#ffb36d"/>')
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="本地决策蛇实验预览"><rect width="1200" height="630" fill="#111d29"/><g fill="#e4eef2" font-family="system-ui,sans-serif"><text x="70" y="105" font-size="25" fill="#90cbb9">COGINE / LOCAL DECISION LAB</text><text x="70" y="180" font-size="48" font-weight="700">谁决定了下一步？</text><text x="70" y="235" font-size="23">{label}</text><text x="70" y="330" font-size="42">{run["steps"]} 步 · 得分 {run["score"]} · 拦截 {run["shieldInterventions"]} 次</text><text x="70" y="400" font-size="23" fill="#ffce91">只代表一次小样本，不是模型能力排名。</text><text x="70" y="510" font-size="21">可解释回放 / 2026-10-27 / OpenClaw未端到端运行</text></g><rect x="802" y="178" width="{width*30+22}" height="{height*30+22}" rx="14" fill="#0b1520" stroke="#3d5b70"/>{''.join(cells)}</svg>'''
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="本地决策蛇实验预览"><rect width="1200" height="630" fill="#111d29"/><g fill="#e4eef2" font-family="system-ui,sans-serif"><text x="70" y="105" font-size="25" fill="#90cbb9">COGINE / LOCAL DECISION LAB</text><text x="70" y="180" font-size="48" font-weight="700">谁决定了下一步？</text><text x="70" y="235" font-size="23">{label}</text><text x="70" y="330" font-size="42">{run["steps"]} 步 · 得分 {run["score"]} · 拦截 {run["shieldInterventions"]} 次</text><text x="70" y="400" font-size="23" fill="#ffce91">只代表一次小样本，不是模型能力排名。</text><text x="70" y="510" font-size="21">可解释回放 / {html.escape(trace["createdAt"][:10])} / OpenClaw未端到端运行</text></g><rect x="802" y="178" width="{width*30+22}" height="{height*30+22}" rx="14" fill="#0b1520" stroke="#3d5b70"/>{''.join(cells)}</svg>'''
 
 
 def main():
@@ -347,6 +349,9 @@ def main():
     parser.add_argument("--check-mcp", action="store_true")
     parser.add_argument("--output-dir", type=Path, default=ROOT)
     args = parser.parse_args()
+    standalone = args.output_dir.resolve() != ROOT.resolve()
+    if standalone and args.output_dir.exists():
+        parser.error("--output-dir must name a new directory")
     if (args.run_model or args.download_model) and not args.model_dir:
         parser.error("Use an explicit --model-dir; no global model cache is selected")
     if args.download_model:
@@ -383,8 +388,11 @@ def main():
         trace["mcp"] = asyncio.run(asyncio.wait_for(mcp_probe(), timeout=90))
     document = render(trace)
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    if standalone:
+        for name in ("scenario.json", "LICENSE.laya.txt", "LICENSE.snake-reference.txt", "reproduce.py"):
+            shutil.copyfile(ROOT / name, args.output_dir / name)
     outputs = {"index.html": document, "preview.svg": preview(trace)}
-    if args.run_model or args.check_mcp:
+    if args.run_model or args.check_mcp or standalone:
         outputs["run.json"] = json.dumps(trace, ensure_ascii=False, indent=2) + "\n"
     for name, text in outputs.items():
         with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=args.output_dir, delete=False) as handle:

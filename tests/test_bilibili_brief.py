@@ -4,6 +4,8 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -17,6 +19,17 @@ spec.loader.exec_module(brief)
 class BilibiliBrief(unittest.TestCase):
     def setUp(self):
         self.snapshot = json.loads((EXAMPLE / "audience-input.json").read_text(encoding="utf-8"))
+
+    def test_standalone_export_retains_inputs_replay_and_return_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "bili"
+            subprocess.run([sys.executable, str(EXAMPLE / "reproduce.py"), "--output-dir", str(output)],
+                           check=True, capture_output=True, timeout=20)
+            subprocess.run([sys.executable, str(output / "reproduce.py")],
+                           check=True, capture_output=True, timeout=20)
+            for name in ("audience-input.json", "fixture-input.json", "LICENSE.upstream.txt"):
+                self.assertTrue((output / name).is_file())
+            self.assertIn("/usecases/social/bilibili-audience-to-topic-brief/", (output / "index.html").read_text())
 
     def test_all_proposals_trace_back_to_actual_input_ids(self):
         fixture = json.loads((EXAMPLE / "fixture-input.json").read_text(encoding="utf-8"))
@@ -83,7 +96,8 @@ class BilibiliBrief(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)
             (target / "index.html").write_text("previous artifact", encoding="utf-8")
-            with patch.object(brief, "collect", side_effect=ValueError("risk control: stop")), \
+            with patch.object(brief, "ROOT", target), \
+                 patch.object(brief, "collect", side_effect=ValueError("risk control: stop")), \
                  patch.object(brief.os.sys, "argv", ["reproduce.py", "--refresh", "--bili", "/temporary/bili", "--output-dir", directory]):
                 with self.assertRaisesRegex(ValueError, "stop"):
                     brief.main()

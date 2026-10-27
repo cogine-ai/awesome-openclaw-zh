@@ -13,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import tempfile
 
@@ -149,7 +150,7 @@ def render(snapshot):
     refs = "".join(f'<li id="evidence-{esc(row["id"])}"><code>{esc(row["id"])}</code> {esc(row["text"])} <small>— {"纳入问题归类" if qualified_question(row["text"]) else "未纳入：没有明确问题或属于推广/口令"}</small></li>' for row in snapshot["comments"])
     document = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>观众提问 → 下期选题简报</title><style>
 *{{box-sizing:border-box}}body{{margin:0;background:#f3f4ef;color:#172e2b;font:16px/1.7 system-ui,sans-serif}}main{{max-width:1160px;margin:auto;padding:44px 22px}}header{{max-width:860px}}h1{{font-size:clamp(30px,5vw,55px);line-height:1.2;margin:18px 0}}.eyebrow{{font-size:12px;letter-spacing:.07em;color:#526c65}}.badge{{display:inline-block;background:#ffe1a6;border:1px solid #a77216;border-radius:8px;padding:5px 12px;font-weight:700}}.scope{{border-left:4px solid #b57b25;padding:8px 16px;background:#fff7e8}}.grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:30px 0}}article{{min-width:0;background:white;border:1px solid #d5ded7;border-radius:18px;padding:24px;box-shadow:0 6px 22px #153d3010}}h2{{font-size:23px;line-height:1.4}}.num{{font-size:30px;color:#558b73;font-weight:800}}.deliver{{padding:13px;background:#edf5ef;border-radius:10px}}a{{color:#006e61}}li{{overflow-wrap:anywhere;margin:10px 0}}details{{margin-top:18px}}summary{{cursor:pointer}}.notes{{padding:22px;background:#e6ede7;border-radius:16px}}code{{font-size:12px}}footer{{font-size:13px;margin-top:30px;color:#526c65}}@media(max-width:850px){{.grid{{grid-template-columns:1fr}}main{{padding:26px 16px}}}}</style>
-<main><header><p class="eyebrow">COGINE / OPENCLAW CONTENT LAB</p><span class="badge">{badge}</span><h1>先听见问题，<br>再决定下一期拍什么。</h1><p class="scope">{esc(scope)}</p><p>样本：{len(snapshot["comments"])}条 · 合格提问：{qualified}条 · 主题：{len(topics)}个 · 采样／制作日期：{esc(snapshot["fetchedAt"])}</p><p><a href="index.html">真实公开样本</a> · <a href="fixture.html">虚构提问演练</a></p></header><section class="grid">{''.join(cards)}</section><section class="notes"><h2>这是编辑简报，不是受众画像</h2><p>关键词归类可复现，一条留言可属于多个主题。条数是本样本内的留言数，不是独立人数、需求比例、增长率或转化预测。选题角度由本案例编辑规则提出，尚未发布或验证流量。</p><p>来源：{source}</p><details><summary>全部输入与出处</summary><ol>{refs}</ol></details><p><a href="{'fixture-input.json' if fixture else 'audience-input.json'}">输入JSON</a> · <a href="{'fixture-brief.md' if fixture else 'topic-brief.md'}">Markdown简报</a> · <a href="reproduce.py">复现脚本</a></p></section><footer>固定上游：{REPOSITORY}@{REVISION[:12]} / bili-agent {VERSION}。脚本只读本地输入或匿名公开页面；未运行OpenClaw会话，也没有登录、私信、互动或投稿。</footer></main></html>'''
+<main><header><p class="eyebrow">COGINE / OPENCLAW CONTENT LAB</p><span class="badge">{badge}</span><h1>先听见问题，<br>再决定下一期拍什么。</h1><p class="scope">{esc(scope)}</p><p>样本：{len(snapshot["comments"])}条 · 合格提问：{qualified}条 · 主题：{len(topics)}个 · 采样／制作日期：{esc(snapshot["fetchedAt"])}</p><p><a href="index.html">真实公开样本</a> · <a href="fixture.html">虚构提问演练</a></p></header><section class="grid">{''.join(cards)}</section><section class="notes"><h2>这是编辑简报，不是受众画像</h2><p>关键词归类可复现，一条留言可属于多个主题。条数是本样本内的留言数，不是独立人数、需求比例、增长率或转化预测。选题角度由本案例编辑规则提出，尚未发布或验证流量。</p><p>来源：{source}</p><details><summary>全部输入与出处</summary><ol>{refs}</ol></details><p><a href="{'fixture-input.json' if fixture else 'audience-input.json'}">输入JSON</a> · <a href="{'fixture-brief.md' if fixture else 'topic-brief.md'}">Markdown简报</a> · <a href="reproduce.py">复现脚本</a></p></section><footer>固定上游：{REPOSITORY}@{REVISION[:12]} / bili-agent {VERSION}。脚本只读本地输入或匿名公开页面；未运行OpenClaw会话，也没有登录、私信、互动或投稿。<p><a href="https://www.opcboost.com/usecases/social/bilibili-audience-to-topic-brief/">返回完整教程</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine</a></p></footer></main></html>'''
     markdown += ["## 来源与边界", "", scope, snapshot["video"].get("url") or "无真实视频链接（fixture）",
                  "", "归类为规则输出，选题角度为编辑提案；未发布、未验证增长。"]
     return document, "\n".join(markdown) + "\n"
@@ -161,7 +162,7 @@ def preview(snapshot):
     topics = len(build_topics(snapshot))
     label = "真实公开样本" if snapshot["mode"] == "live-public" else "明确虚构的fixture"
     outcome = "样本不足，不硬造需求" if not topics else "规则归类，编辑提案待验证"
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="观众提问选题简报预览"><rect width="1200" height="630" fill="#edf2ec"/><rect x="56" y="48" width="1088" height="534" rx="25" fill="#fff" stroke="#bfd1c4"/><g font-family="system-ui,sans-serif" fill="#173f36"><text x="94" y="110" font-size="24">COGINE / BILIBILI CONTENT LAB</text><text x="94" y="190" font-size="48" font-weight="700">先听见问题，再决定拍什么</text><text x="94" y="240" font-size="23">{label} · 2026-10-27 · 匿名读取</text><text x="94" y="350" font-size="62" font-weight="700">{count} 条输入 → {questions} 条提问 → {topics} 条选题</text><text x="94" y="420" font-size="31" fill="#9c651a">{outcome}</text><text x="94" y="500" font-size="21">另附独立标记的虚构提问演练；未发布、未验证转化。</text></g></svg>'''
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="观众提问选题简报预览"><rect width="1200" height="630" fill="#edf2ec"/><rect x="56" y="48" width="1088" height="534" rx="25" fill="#fff" stroke="#bfd1c4"/><g font-family="system-ui,sans-serif" fill="#173f36"><text x="94" y="110" font-size="24">COGINE / BILIBILI CONTENT LAB</text><text x="94" y="190" font-size="48" font-weight="700">先听见问题，再决定拍什么</text><text x="94" y="240" font-size="23">{label} · {html.escape(snapshot["fetchedAt"][:10])} · 匿名读取</text><text x="94" y="350" font-size="62" font-weight="700">{count} 条输入 → {questions} 条提问 → {topics} 条选题</text><text x="94" y="420" font-size="31" fill="#9c651a">{outcome}</text><text x="94" y="500" font-size="21">另附独立标记的虚构提问演练；未发布、未验证转化。</text></g></svg>'''
 
 
 def main():
@@ -171,18 +172,24 @@ def main():
     parser.add_argument("--video", default="BV1dCEX64EyY")
     parser.add_argument("--output-dir", type=Path, default=ROOT)
     args = parser.parse_args()
+    standalone = args.output_dir.resolve() != ROOT.resolve()
+    if standalone and args.output_dir.exists():
+        parser.error("--output-dir must name a new directory")
     if args.refresh and not args.bili:
         parser.error("--refresh requires --bili; no global executable is selected implicitly")
     snapshot = collect(args.bili, args.video) if args.refresh else json.loads(INPUT.read_text(encoding="utf-8"))
     document, brief = render(snapshot)  # Validate everything before changing existing outputs.
-    args.output_dir.mkdir(parents=True, exist_ok=True)
     fixture = json.loads((ROOT / "fixture-input.json").read_text(encoding="utf-8"))
     if fixture.get("mode") != "fixture":
         raise ValueError("The separate demonstration must remain labelled fixture")
     fixture_document, fixture_brief = render(fixture)
     outputs = {"index.html": document, "topic-brief.md": brief, "preview.svg": preview(snapshot),
                "fixture.html": fixture_document, "fixture-brief.md": fixture_brief}
-    if args.refresh:
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    if standalone:
+        for name in ("fixture-input.json", "LICENSE.upstream.txt", "reproduce.py"):
+            shutil.copyfile(ROOT / name, args.output_dir / name)
+    if args.refresh or standalone:
         outputs["audience-input.json"] = json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n"
     for name, text in outputs.items():
         with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=args.output_dir, delete=False) as handle:

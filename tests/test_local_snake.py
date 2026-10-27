@@ -5,6 +5,8 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -20,6 +22,17 @@ spec.loader.exec_module(snake)
 class LocalSnake(unittest.TestCase):
     def setUp(self):
         self.scenario = json.loads((EXAMPLE / "scenario.json").read_text(encoding="utf-8"))
+
+    def test_standalone_export_retains_trace_replay_and_return_links(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "snake"
+            subprocess.run([sys.executable, str(EXAMPLE / "reproduce.py"), "--output-dir", str(output)],
+                           check=True, capture_output=True, timeout=20)
+            subprocess.run([sys.executable, str(output / "reproduce.py")],
+                           check=True, capture_output=True, timeout=20)
+            for name in ("run.json", "scenario.json", "LICENSE.laya.txt", "LICENSE.snake-reference.txt"):
+                self.assertTrue((output / name).is_file())
+            self.assertIn("/usecases/creative/local-decision-snake-lab/", (output / "index.html").read_text())
 
     def test_baseline_is_deterministic_and_has_no_fake_model_statistics(self):
         first, second = snake.play(self.scenario), snake.play(self.scenario)
