@@ -1,0 +1,45 @@
+{
+  "mode": "live-public",
+  "fetchedAt": "2026-10-27T14:51:00.070923+00:00",
+  "upstream": {
+    "repository": "kukemc/bili-cli",
+    "revision": "e17ab4da33a5b32a5fb4706e0a6dbb9ed994085a",
+    "version": "1.2.1"
+  },
+  "video": {
+    "bvid": "BV1dCEX64EyY",
+    "url": "https://www.bilibili.com/video/BV1dCEX64EyY",
+    "title": "【9月最新】吊打付费！2026最强版小龙虾OpenClaw完整安装教学及保姆级教程，一个视频搞懂OpenClaw本地部署/接入微信/飞书/钉钉（附完整操作文档）",
+    "duration": 16421,
+    "pubdate": "2026-06-10T10:33:14+08:00",
+    "stat": {
+      "view": 139571,
+      "danmaku": 220,
+      "reply": 1697,
+      "favorite": 5765,
+      "coin": 3643,
+      "share": 547,
+      "like": 3152
+    }
+  },
+  "comments": [
+    {
+      "id": "305256009424",
+      "text": "视频中的安装文档，整合包，模型，工作流，都整理好啦！ 敲【666】均可抱走哦～只"
+    },
+    {
+      "id": "309145150736",
+      "text": "AI视频工具资料、学习咨询解答、AI商单、提示词合集👇👇👇【点击获取】 http"
+    },
+    {
+      "id": "306219064032",
+      "text": "666"
+    }
+  ],
+  "collection": {
+    "anonymous": true,
+    "page": 1,
+    "sort": "hot",
+    "scope": "公开热门评论第一页中的至多12条节选；省略用户身份和楼中楼，不是完整观众调查"
+  }
+}

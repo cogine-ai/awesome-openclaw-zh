@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="730" viewBox="0 0 1200 730">
+<rect width="100%" height="100%" fill="#f5f7f3"/>
+<g font-family="system-ui, sans-serif">
+<text x="60" y="55" font-size="20" fill="#047857">OPCBoost · Cogine</text>
+<text x="60" y="105" font-size="34" font-weight="700" fill="#17392c">帽子连纸袋一起跑 · 15 秒计划</text>
+<text x="60" y="150" font-size="19" fill="#52695d">实际四镜表的文字预览 · 未生成分镜图片或视频，字幕为计划时段</text>
+<rect x="60" y="190" width="520" height="240" rx="14" fill="white" stroke="#b9c8b9"/>
+<text x="80" y="230" font-size="22" font-weight="700" fill="#176c4e">S1 · 0–4秒</text>
+<text x="80" y="270" font-size="19" fill="#17392c">建立追逐与两个道具。阿禾追帽，小满带袋。脚步</text>
+<text x="80" y="298" font-size="19" fill="#17392c">、帽落地；无对白。出口：帽在地上，袋在右手</text>
+<rect x="600" y="190" width="520" height="240" rx="14" fill="white" stroke="#b9c8b9"/>
+<text x="620" y="230" font-size="22" font-weight="700" fill="#176c4e">S2 · 4–7秒</text>
+<text x="620" y="270" font-size="19" fill="#17392c">第一次落空。阿禾捞空，小满绕外弧展开袋。擦地</text>
+<text x="620" y="298" font-size="19" fill="#17392c">、纸张；无对白。出口：阿禾手空，袋张开</text>
+<rect x="60" y="450" width="520" height="240" rx="14" fill="white" stroke="#b9c8b9"/>
+<text x="80" y="490" font-size="22" font-weight="700" fill="#176c4e">S3 · 7–12秒</text>
+<text x="80" y="530" font-size="19" fill="#17392c">先成功再反转。小满引帽入袋，放手后袋滑走。纸</text>
+<text x="80" y="558" font-size="19" fill="#17392c">袋短响；无对白。出口：帽在袋内，两人手空</text>
+<rect x="600" y="450" width="520" height="240" rx="14" fill="white" stroke="#b9c8b9"/>
+<text x="620" y="490" font-size="22" font-weight="700" fill="#176c4e">S4 · 12–15秒</text>
+<text x="620" y="530" font-size="19" fill="#17392c">反应与追逐回环。阿禾看小满后一起追袋。“连袋</text>
+<text x="620" y="558" font-size="19" fill="#17392c">也跑？”。出口：道具与两人继续向西，保留运动</text>
+<text x="620" y="586" font-size="19" fill="#17392c">余量</text>
+</g></svg>

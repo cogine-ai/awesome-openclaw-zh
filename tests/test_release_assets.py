@@ -23,6 +23,7 @@ class ReviewedReleaseAssets(unittest.TestCase):
         self.root.mkdir()
         self.output = Path(self.temporary.name) / "release"
         files = {"LICENSE", *release.PACKS.values()}
+        files.update(path for shared in release.PACK_SHARED.values() for path in shared)
         for name, assets in release.PACK_ASSETS.items():
             files.update(f"assets/examples/{name}/{asset}" for asset in assets)
         for relative in files:
@@ -45,7 +46,7 @@ class ReviewedReleaseAssets(unittest.TestCase):
         with redirect_stdout(io.StringIO()):
             release.prepare_assets(self.root, self.output)
         archives = list(self.output.glob("*.zip"))
-        self.assertEqual(len(archives), 3)
+        self.assertEqual(len(archives), len(release.PACKS))
         for path in archives:
             with zipfile.ZipFile(path) as archive:
                 self.assertIsNone(archive.testzip())
@@ -53,6 +54,15 @@ class ReviewedReleaseAssets(unittest.TestCase):
                 self.assertFalse(any(b"do not publish" in archive.read(name) for name in archive.namelist()))
                 self.assertIn("LICENSE", archive.namelist())
                 self.assertIn("START-HERE.md", archive.namelist())
+                self.assertIn("BUNDLE-SOURCE.json", archive.namelist())
+
+    def test_same_committed_inputs_produce_byte_identical_zip_files(self):
+        second = self.output.with_name("second")
+        with redirect_stdout(io.StringIO()):
+            release.prepare_assets(self.root, self.output)
+            release.prepare_assets(self.root, second)
+        for path in self.output.glob("*.zip"):
+            self.assertEqual(path.read_bytes(), (second / path.name).read_bytes())
 
     def test_changed_reviewed_input_is_refused_before_any_archive_is_created(self):
         source = self.root / "assets/examples/experience-card/input-v1.json"

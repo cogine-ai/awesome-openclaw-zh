@@ -1,0 +1,11 @@
+{
+  "upstreamRepo": "openclaw/openclaw",
+  "upstreamCommit": "43dc38e6c1370e7682156b8a84ed6fc1abfaa0b7",
+  "sourcePath": "docs/plugins/sdk-runtime/background-work.md",
+  "checkedAt": "2026-10-27",
+  "requiredCapability": "native-subagent-blind-v1",
+  "localOpenClawVersion": "2026.10.6 (fe06181)",
+  "liveNativeTrialExecuted": false,
+  "artifact": "Prewritten assistant-drafted rehearsal copies; offline browser scoring only",
+  "adapterTest": "Contract regression using a fake host; no real provider execution"
+}

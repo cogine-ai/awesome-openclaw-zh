@@ -1,0 +1,14 @@
+{
+  "name": "opcboost-public-sno-rehearsal",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Isolated dependencies for the public Sno API rehearsal; installs no agent hooks or scheduler.",
+  "type": "module",
+  "dependencies": {
+    "@snoai/memory": "1.6.0",
+    "@snoai/embedder": "1.2.1"
+  },
+  "engines": {
+    "node": ">=22.22.3 <23 || >=24.15.0 <25 || >=25.9.0"
+  }
+}

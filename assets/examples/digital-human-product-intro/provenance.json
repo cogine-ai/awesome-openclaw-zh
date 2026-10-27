@@ -1,0 +1,7 @@
+{
+  "upstreamRepo": "andyhuo520/digital-human-koubo",
+  "upstreamCommit": "5fa9b19f52fb8920c83567468fa30e8391b8c503",
+  "checkedAt": "2026-10-27",
+  "builderSha256": "162c8a658b6f159089e3af026945b18eff137e3e364a1c2241ba5796cd799cfa",
+  "scope": "Unchanged upstream task planner plus original offline narration; no media/account/API call; fixture unit prices are not service quotes."
+}

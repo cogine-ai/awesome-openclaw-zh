@@ -1852,5 +1852,59 @@
     "sourceRepo": "lixiaoxiao9888-create/manju-laoli-skill",
     "sourcePath": "sd-real-engine/SKILL.md",
     "sourceUrl": "https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/sd-real-engine/SKILL.md"
+  },
+  {
+    "title": "让 Agent 举起教学卡：人来选择，桌面回传答案",
+    "desc": "用Bigarrow把看成果、选路线、查条件变成三张教学卡；真实CLI解析与启动已检查，真人回传待验收。",
+    "category": "工具开发",
+    "localPath": "usecases/tools/interactive-desktop-coach.md",
+    "sourceRepo": "franzenzenhofer/big-arrow-on-the-screen",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/franzenzenhofer/big-arrow-on-the-screen/blob/4ad1ce1d82368139b2ceec7b2e29ade837acc722/README.md"
+  },
+  {
+    "title": "换 Agent 不重新讲一遍：共享记忆的纠正与接棒实验",
+    "desc": "用Sno准备可追溯的记忆纠正与接棒实验，公开输入、隔离入口与服务尚未跑通的实际状态。",
+    "category": "内存管理",
+    "localPath": "usecases/memory/cross-agent-memory-handoff.md",
+    "sourceRepo": "sno-ai/sno-station",
+    "sourcePath": "docs/memory-setup.md",
+    "sourceUrl": "https://github.com/sno-ai/sno-station/blob/5c4ee17f3ef4f12dc6514e2bd78ec6e580b9c363/docs/memory-setup.md"
+  },
+  {
+    "title": "数字人口播制作台：先完成26秒离线准备",
+    "desc": "实跑固定上游规划器，制作三段26秒口播计划、字幕与任务草稿；尚未生成视频，报价未知。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/digital-human-product-intro.md",
+    "sourceRepo": "andyhuo520/digital-human-koubo",
+    "sourcePath": "skills/digital-human-koubo/scripts/build_tasks.py",
+    "sourceUrl": "https://github.com/andyhuo520/digital-human-koubo/blob/5fa9b19f52fb8920c83567468fa30e8391b8c503/skills/digital-human-koubo/scripts/build_tasks.py"
+  },
+  {
+    "title": "B站观众提问变选题简报：先挡住无效样本",
+    "desc": "从B站公开评论检查选题依据；真实样本不足就停止推断，另附明确标注的原创提问演练。",
+    "category": "社交媒体",
+    "localPath": "usecases/social/bilibili-audience-to-topic-brief.md",
+    "sourceRepo": "kukemc/bili-cli",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/kukemc/bili-cli/blob/e17ab4da33a5b32a5fb4706e0a6dbb9ed994085a/README.md"
+  },
+  {
+    "title": "文案匿名擂台：先打分，再揭晓写法",
+    "desc": "同一份Brief、三个预置候选、先评分再揭晓的离线擂台；附原生blind能力适配，原生试验未执行。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/blind-agent-copy-arena.md",
+    "sourceRepo": "openclaw/openclaw",
+    "sourcePath": "docs/plugins/sdk-runtime/background-work.md",
+    "sourceUrl": "https://github.com/openclaw/openclaw/blob/43dc38e6c1370e7682156b8a84ed6fc1abfaa0b7/docs/plugins/sdk-runtime/background-work.md"
+  },
+  {
+    "title": "本地决策蛇：把模型建议与保护规则摊开看",
+    "desc": "真实本地模型推理与蛇游戏轨迹回放，分清BFS、模型排序、保护规则与未执行的OpenClaw接入。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/local-decision-snake-lab.md",
+    "sourceRepo": "NandhaKishorM/laya",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/NandhaKishorM/laya/blob/7a77439b0923d6efe00052d50a7f787840bfce98/README.md"
   }
 ]

@@ -1,6 +1,19 @@
 ---
 published: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-27
+showcase:
+  verification: script-reproduced
+  verificationNote: "固定公开快照与原始 SVG 渲染器已复现；未在 OpenClaw 会话运行，未刷新数据。"
+  platforms: [macos, browser]
+  account: optional
+  cost: local-free
+  artifactPath: assets/examples/github-cards/index.html
+  artifactLabel: "查看三张手绘战报"
+  previewPath: assets/examples/github-cards/city.svg
+  bundlePath: assets/bundles/github-cards-2026-10-27.zip
+  testedAt: 2026-10-27
+  testedVersion: "Python 3.12；openclaw-profile-cards bc58949；2026-10-23 固定快照"
+  beginner: false
 ---
 
 # 把 GitHub 公开项目变成三张手绘风战报

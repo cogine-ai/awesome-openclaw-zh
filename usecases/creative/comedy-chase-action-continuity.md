@@ -5,6 +5,19 @@ category: "创意与构建"
 published: "2026-10-23"
 updated: "2026-10-23"
 validation: "M0制作包已离线校验并编译HTML；OpenClaw执行、图片与视频生成未验证"
+showcase:
+  verification: script-reproduced
+  verificationNote: "文本检查、计划字幕适配与看板编译已复现，保留已知警告；未生成图片或视频。"
+  platforms: [macos, browser]
+  account: none
+  cost: local-free
+  artifactPath: assets/examples/comedy-chase/board.html
+  artifactLabel: "查看文字分镜看板"
+  previewPath: assets/examples/comedy-chase/preview.svg
+  bundlePath: assets/bundles/comedy-chase-2026-10-27.zip
+  testedAt: 2026-10-27
+  testedVersion: "Python 3.12；漫剧老李 6f16955；M0 文本与 SRT 适配"
+  beginner: false
 ---
 
 # 帽子连纸袋一起跑：15秒无伤害喜剧追逐
@@ -141,3 +154,13 @@ python3 assets/examples/comedy-chase/reproduce.py --upstream-dir /path/to/manju-
 - [固定版本的HTML编译器](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/6f16955c57053d77ea0ffbdbbf3a7985a3e0080a/short-drama-director/scripts/build_board_lite.py)
 
 故事与复现胶水代码为本仓库原创；看板由上游MIT许可编译器生成，其许可随包保留为 [LICENSE.upstream.txt](../../assets/examples/comedy-chase/LICENSE.upstream.txt)。
+
+## 重建站点预览
+
+复现脚本负责主要产物，不会自动更新站点预览图。在仓库或完整复现包根目录执行：
+
+```bash
+python3 scripts/generate-showcase-previews.py --pack comedy-chase
+```
+
+它只读取本包project.md 中已经交付的 S1–S4 四镜表，生成确定性的 `assets/examples/comedy-chase/preview.svg`。这是文字内容的预览，不会生成角色图像、视频或新的模型回答。

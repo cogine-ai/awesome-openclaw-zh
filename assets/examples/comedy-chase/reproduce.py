@@ -217,7 +217,15 @@ def verify_and_compile(upstream: Path, output_dir: Path) -> None:
     run([sys.executable, str(compiler_path), str(ROOT / "project.md"), "--out", str(board)])
     if not board.is_file() or board.stat().st_size < 1000:
         raise RuntimeError("HTML board was not produced")
-    board.write_text(adapt_board_srt(board.read_text(encoding="utf-8"), board_captions), encoding="utf-8")
+    compiled = adapt_board_srt(board.read_text(encoding="utf-8"), board_captions)
+    if compiled.count("</body>") != 1:
+        raise RuntimeError("Unexpected board structure for return navigation")
+    footer = ('<footer id="opcboost-case-return" style="padding:24px;text-align:center;font:14px/1.8 system-ui">'
+              '<a href="https://www.opcboost.com/usecases/creative/comedy-chase-action-continuity/">完整案例与复现步骤</a> · '
+              '<a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · '
+              '<a href="https://www.cogine.ai/">Cogine 维护团队</a>'
+              '<p>文字分镜与计划字幕 · 未生成画面或视频 · 保留上游工具署名与许可</p></footer>')
+    board.write_text(compiled.replace("</body>", footer + "</body>"), encoding="utf-8")
     print("Applied documented Cogine SRT adapter: one planned caption at 12–15s; model input unchanged.")
     print(f"Completed: {board.resolve()}")
     print("Text checks and HTML compilation only; no images or videos were generated.")

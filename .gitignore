@@ -4,5 +4,6 @@ node_modules/
 resources/source-cache/
 /scripts/*
 !/scripts/generate-index.py
+!/scripts/generate-showcase-previews.py
 draft/
 __pycache__/

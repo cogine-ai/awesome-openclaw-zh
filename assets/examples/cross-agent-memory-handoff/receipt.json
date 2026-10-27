@@ -1,0 +1,18 @@
+{
+  "status": "blocked",
+  "testedAt": "2026-10-27",
+  "version": "1.6.0",
+  "sourceCommit": "5c4ee17f3ef4f12dc6514e2bd78ec6e580b9c363",
+  "nodeVersion": "v24.22.1",
+  "mode": "local-first",
+  "rerank": "none",
+  "llmCallsConfigured": "off",
+  "telemetry": false,
+  "realAgentsInvoked": false,
+  "memoryOperationsVerified": false,
+  "phase": "dependency-install",
+  "reason": "在独立临时 prefix 尝试安装 @snoai/memory@1.6.0 与 @snoai/embedder@1.2.1；必需的 ONNX 原生运行库下载未在本轮约11分钟依赖预算内完成，主动中止安装。尚未启动服务，也未开始下载约639MB的embedding模型；没有运行记忆CRUD、纠正召回或真实Agent接棒。",
+  "syntaxCheck": "node --check run-memory.mjs passed",
+  "fixtureSha256": "c68e2ac5f151033e4d3b194a7be013d974fc68f6a1cc926a9795ad76ab716331",
+  "steps": []
+}
