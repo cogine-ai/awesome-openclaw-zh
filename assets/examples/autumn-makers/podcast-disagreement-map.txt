@@ -1,0 +1,7 @@
+读取 assets/examples/autumn-makers/podcast-disagreement-map/input.json。
+围绕“知识库应该整理还是直接搜索”，比较三段示例访谈。
+为每条关系写出类型、结论、至少两段原文引用与对应ref。
+检查两段观点的对象和时间点是否一致，再选择共识、条件差异或补充。
+运行 python3 assets/examples/autumn-makers/podcast-disagreement-map/reproduce.py。
+打开 index.html，筛选一种关系，检查引文能跳到对应段落。
+输出观点页、relations.json和三份访谈文本。

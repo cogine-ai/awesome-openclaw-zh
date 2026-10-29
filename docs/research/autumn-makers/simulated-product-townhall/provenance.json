@@ -1,0 +1,17 @@
+{
+  "reviewedAt": "2026-10-30",
+  "upstreamRepo": "666ghj/MiroFish",
+  "upstreamCommit": "7657031ac01184afe2cb220f5ee3545573b5e843",
+  "upstreamReadme": "https://github.com/666ghj/MiroFish/blob/7657031ac01184afe2cb220f5ee3545573b5e843/README.md",
+  "inputOrigin": "Cogine original teaching fixture",
+  "generator": "Original Python stdlib offline builder; no upstream code copied",
+  "executedScope": "input validation and offline HTML/JSON/SVG generation",
+  "notExecuted": [
+    "OpenClaw agent session",
+    "upstream service",
+    "model inference",
+    "account authentication",
+    "paid requests"
+  ],
+  "license": "Repository MIT license for original fixture and generator"
+}

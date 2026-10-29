@@ -1,10 +1,8 @@
 # 用例总览
 
-当前共收录 **212** 个中文案例与实验方案。
+当前共收录 **218** 个中文案例与实验方案。
 
-案例是否经过本地实测，请查看各页的验证说明；收录和来源核对不等于端到端运行通过。
-
-[六个新玩法与实验](./07-new-playbooks-lab.md) · [本期可复刻成果](./06-reproducible-showcase.md) · [在线搜索](https://www.opcboost.com/usecases/)
+[龙虾造物工坊：六个新玩法](./08-autumn-makers.md) · [六个新玩法与实验](./07-new-playbooks-lab.md) · [本期可复刻成果](./06-reproducible-showcase.md) · [在线搜索](https://www.opcboost.com/usecases/)
 
 按分类浏览：
 
@@ -22,7 +20,7 @@
 | [小红书内容自动化](../usecases/social/08-xiaohongshu-content-automation.md) | 辅助完成小红书选题、文案、封面和排期发布。 |
 | [B站观众提问变选题简报：先挡住无效样本](../usecases/social/bilibili-audience-to-topic-brief.md) | 从B站公开评论检查选题依据；真实样本不足就停止推断，另附明确标注的原创提问演练。 |
 
-## 创意与构建 (18)
+## 创意与构建 (22)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -44,6 +42,10 @@
 | [数字人口播制作台：先完成26秒离线准备](../usecases/creative/digital-human-product-intro.md) | 实跑固定上游规划器，制作三段26秒口播计划、字幕与任务草稿；尚未生成视频，报价未知。 |
 | [文案匿名擂台：先打分，再揭晓写法](../usecases/creative/blind-agent-copy-arena.md) | 同一份Brief、三个预置候选、先评分再揭晓的离线擂台；附原生blind能力适配，原生试验未执行。 |
 | [本地决策蛇：把模型建议与保护规则摊开看](../usecases/creative/local-decision-snake-lab.md) | 真实本地模型推理与蛇游戏轨迹回放，分清BFS、模型排序、保护规则与未执行的OpenClaw接入。 |
+| [让龙虾当3D设计师：做一座微缩工作台](../usecases/creative/lobster-3d-workbench.md) | 用场景配置和Blender脚本搭建微缩桌面，自由修改配色、物件与镜头。 |
+| [更新日志变成30秒发布片：保留可修改工程](../usecases/creative/changelog-to-release-video.md) | 把三条更新做成横竖版30秒MP4，换一份输入即可制作下一个版本。 |
+| [给新品开一场模拟用户大会](../usecases/creative/simulated-product-townhall.md) | 从五种角色的目标出发，比较两种产品介绍，整理用户可能提出的问题与后续需求。 |
+| [让龙虾做能打印的桌牌、贴纸与折页](../usecases/creative/printable-event-kit.md) | 把活动名称、姓名和步骤做成可编辑SVG与三页打印PDF。 |
 
 ## 基础设施与 DevOps (13)
 
@@ -102,7 +104,7 @@
 | [让 Agent 进入会议：实时听、答与留下纪要](../usecases/productivity/live-meeting-agent-participant.md) | 使用会议插件从只观察字幕逐步到实时语音参加，并区分入会、可听性与纪要验证。 |
 | [让龙虾采访你：把一次经验做成可修订卡片](../usecases/productivity/experience-interview-record-card.md) | 用事实输入创建经验卡v1，再通过明确标记的编辑修订生成v2，保留版本和可复现脚本。 |
 
-## 研究与学习 (14)
+## 研究与学习 (15)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -120,6 +122,7 @@
 | [arXiv 论文阅读助手](../usecases/research/22-arxiv-paper-reader.md) | 直接按 arXiv ID 抓摘要、目录和全文，让 OpenClaw 变成可对话的论文阅读器。 |
 | [Suppr 文献检索与文档翻译](../usecases/research/23-suppr-literature-translation.md) | 用 Suppr MCP 或 Skills 接入学术文献检索、论文元数据整理和 PDF 翻译。 |
 | [新玩法雷达：从 GitHub 信号到周末复刻实验](../usecases/research/github-growth-to-remix-lab.md) | 区分累计 Star 与增长证据，选一个低门槛新玩法，留下可分享的最小二创产物。 |
+| [三份资料变学习包：测验、闪卡与音频接入](../usecases/research/sources-to-learning-kit.md) | 把同一组资料做成10道带依据的测验、12张闪卡和音频导读，适合复习课程、产品知识与团队资料。 |
 
 ## 金融与交易 (2)
 
@@ -166,7 +169,7 @@
 | [电话外呼提醒（Phone Call Notifications）](../usecases/everyday/phone-call-notifications.md) | 在真正重要的时候由 OpenClaw 主动给你打电话，减少关键通知遗漏。 |
 | [家庭 PM 周报](../usecases/everyday/family-pm-weekly-roundup.md) | 收集家庭话题、补做研究，并在固定时间发送一份集中周报。 |
 
-## 内容转换 (17)
+## 内容转换 (18)
 
 | 用例 | 能干什么 |
 |---|---|
@@ -187,6 +190,7 @@
 | [AI 视频编辑助手](../usecases/content/48-ai-video-editing-assistant.md) | 用聊天方式完成粗剪、加字幕、转竖屏和批量导出，把重复视频后处理交给 OpenClaw。 |
 | [微信公众号自动发布](../usecases/content/49-wechat-mp-automation.md) | 串起选题、写稿、排版和公众号草稿箱推送。 |
 | [一个知识点，三种讲法：卡片、漫画、短片内容擂台](../usecases/content/one-concept-three-formats-arena.md) | 同一份事实底稿生成三种表达，再用一致的口径与真实阅读反馈选择下一期方向。 |
+| [三期播客变成观点分歧地图](../usecases/content/podcast-disagreement-map.md) | 围绕同一个问题比较三段访谈，把共识、条件差异与补充观点连回原文和时间戳。 |
 
 ## 内存管理 (12)
 

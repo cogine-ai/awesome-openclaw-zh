@@ -1,0 +1,21 @@
+{
+  "recordedAt": "2026-10-30",
+  "type": "original design and script; not a Blender render",
+  "validation": [
+    "Python syntax parse",
+    "scene JSON parse",
+    "design SVG XML parse"
+  ],
+  "notRun": [
+    "Blender 4.5",
+    "CLI-Anything",
+    "OpenClaw",
+    "3D rendering",
+    "turntable video"
+  ],
+  "sources": [
+    "https://docs.blender.org/manual/en/4.5/advanced/command_line/arguments.html",
+    "https://docs.blender.org/api/4.5/",
+    "https://github.com/HKUDS/CLI-Anything/tree/34f519533bc175d2fe287ab8316b0dd99bb9cc43"
+  ]
+}

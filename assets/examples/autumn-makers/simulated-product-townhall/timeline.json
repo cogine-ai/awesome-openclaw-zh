@@ -1,0 +1,72 @@
+[
+  {
+    "id": "a1",
+    "scenario": "A",
+    "role": "student",
+    "kind": "提问",
+    "text": "“随时跟着你”是不是表示我能在手机接着看？"
+  },
+  {
+    "id": "a2",
+    "scenario": "A",
+    "role": "researcher",
+    "kind": "提问",
+    "text": "我更关心导出时能否保留出处，这句介绍没有回答。"
+  },
+  {
+    "id": "a3",
+    "scenario": "A",
+    "role": "operator",
+    "kind": "提问",
+    "text": "如果交给同事，是共享一个链接还是导出文件？"
+  },
+  {
+    "id": "a4",
+    "scenario": "A",
+    "role": "privacy",
+    "kind": "提醒",
+    "text": "需要单独说明本地保存的范围，不能只靠宣传语推断。"
+  },
+  {
+    "id": "a5",
+    "scenario": "A",
+    "role": "casual",
+    "kind": "提问",
+    "text": "我能否先放几个链接，再慢慢整理？"
+  },
+  {
+    "id": "b1",
+    "scenario": "B",
+    "role": "student",
+    "kind": "需求",
+    "text": "我需要手机继续阅读，当前不支持，我会先保留这个需求。"
+  },
+  {
+    "id": "b2",
+    "scenario": "B",
+    "role": "researcher",
+    "kind": "提问",
+    "text": "已知道可以导出Markdown，还应检查来源字段是否完整。"
+  },
+  {
+    "id": "b3",
+    "scenario": "B",
+    "role": "operator",
+    "kind": "提问",
+    "text": "当前不支持实时协作，那我可以先评估文件交接是否足够。"
+  },
+  {
+    "id": "b4",
+    "scenario": "B",
+    "role": "privacy",
+    "kind": "提醒",
+    "text": "单机本地模式说清楚了，仍需实际检查网络请求和数据去向。"
+  },
+  {
+    "id": "b5",
+    "scenario": "B",
+    "role": "casual",
+    "kind": "需求",
+    "text": "我会先尝试收藏和搜索，不把分类当作起步要求。"
+  }
+]

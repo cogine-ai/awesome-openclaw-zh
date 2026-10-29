@@ -3,7 +3,7 @@
 一个面向中文用户的 OpenClaw 开源仓库：
 **先看一份真实成果，下载材料，再跑通自己的第一个场景。**
 
-**[在线阅读与搜索：OPCBoost](https://www.opcboost.com/) · [六个新玩法与实验入口](./resources/07-new-playbooks-lab.md) · [三份可复刻成果](./resources/06-reproducible-showcase.md)**
+**[在线阅读与搜索：OPCBoost](https://www.opcboost.com/) · [龙虾造物工坊：六个新玩法](./resources/08-autumn-makers.md) · [六个新玩法与实验入口](./resources/07-new-playbooks-lab.md) · [三份可复刻成果](./resources/06-reproducible-showcase.md)**
 
 由 **[Cogine 团队](https://www.cogine.ai/)** 整理与维护。觉得有用，欢迎点击仓库右上角 **Star** 收藏，方便再次找到这些案例；订阅更新可使用 GitHub 的 **Watch → Custom → Releases**。
 
@@ -11,11 +11,13 @@
 
 - 部署与配置：Mac、Windows、Linux VPS、多 Agent
 - 渠道接入：飞书、钉钉、企业微信、QQ（持续补充）
-- 使用场景：212 个来源可追溯的案例、工作流与原创实验
+- 使用场景：218 个来源可追溯的案例、工作流与原创实验
 
 ## 最近更新：2026 年 10 月
 
-10 月 27 日新增桌面教学卡、共享记忆接棒、数字人口播准备、B站选题简报、文案匿名擂台与本地决策小游戏六个玩法。每篇注明实际验证到哪一步；服务未启动、预置演练和未生成媒体都直接标明。共九份成果/实验包提供真正的ZIP下载。
+10 月 30 日新增[龙虾造物工坊六案例专题](./resources/08-autumn-makers.md)：3D工作台、发布短片、学习包、模拟用户大会、播客观点地图和打印物料。每例配有预览、输入、运行步骤和ZIP材料包，可直接改成自己的作品。
+
+10 月 27 日新增桌面教学卡、共享记忆接棒、数字人口播准备、B站选题简报、文案匿名擂台与本地决策小游戏六个玩法。提供九份ZIP材料包，包含输入、脚本和示例作品。
 
 - [本期：六个新玩法与接入实验](./resources/07-new-playbooks-lab.md)
 - [本期：三份可复刻成果](./resources/06-reproducible-showcase.md)
@@ -25,11 +27,11 @@
 
 ### 先用一份离线成果开始
 
-[![同一张经验卡的v1/v2实际脚本产物预览，维护者编辑演练](./assets/examples/experience-card/preview.svg)](./usecases/productivity/experience-interview-record-card.md)
+[![经验卡v1/v2对照预览](./assets/examples/experience-card/preview.svg)](./usecases/productivity/experience-interview-record-card.md)
 
 [打开经验卡教程](./usecases/productivity/experience-interview-record-card.md) · [下载完整材料](./assets/bundles/experience-card-2026-10-27.zip) · [分享你做出的版本](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)
 
-只需Python即可离线重跑两版经验卡，保留历史、事实和编辑建议；这是公开资料演练，未进行真实口述访谈。先体验具体产物，再按下面的部署和渠道入口继续。
+只需Python即可离线重跑两版经验卡，保留历史、事实和编辑建议；可直接替换成自己的经历。先体验具体产物，再按下面的部署和渠道入口继续。
 
 ## 开始使用 OpenClaw
 
@@ -43,7 +45,7 @@
 
 1. [部署后 5 分钟快速体验](./quickstart/00-5min-quickstart.md)
 2. [7 天上手路径](./quickstart/01-7day-path.md)
-3. [按分类找案例（212 个）](./resources/usecases-index.md)
+3. [按分类找案例（218 个）](./resources/usecases-index.md)
 
 ### 推荐部署入口
 
@@ -73,15 +75,15 @@
 
 ## 分类导航
 
-- [全量用例索引（212）](./resources/usecases-index.md)
+- [全量用例索引（218）](./resources/usecases-index.md)
 - [社交媒体（9）](./usecases/social)
-- [创意与构建（18）](./usecases/creative)
+- [创意与构建（22）](./usecases/creative)
 - [基础设施与 DevOps（13）](./usecases/devops)
 - [生产力（34）](./usecases/productivity)
-- [研究与学习（14）](./usecases/research)
+- [研究与学习（15）](./usecases/research)
 - [金融与交易（2）](./usecases/finance)
 - [日常生活（33）](./usecases/everyday)
-- [内容转换（17）](./usecases/content)
+- [内容转换（18）](./usecases/content)
 - [内存管理（12）](./usecases/memory)
 - [夜间自动化（16）](./usecases/automation)
 - [数据分析（16）](./usecases/data)

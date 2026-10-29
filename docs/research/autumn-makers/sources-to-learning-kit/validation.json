@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "kind": "learning",
+  "checks": [
+    "input structure",
+    "unique identifiers",
+    "source references or role/scenario references",
+    "escaped static HTML generation"
+  ],
+  "scope": "Only the original offline fixture and renderer; no upstream or agent execution",
+  "verifiedAt": "2026-10-30"
+}

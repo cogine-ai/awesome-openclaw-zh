@@ -1,0 +1,22 @@
+{
+  "product": "示例阅读清单",
+  "audience": "给每天处理资料的人",
+  "updates": [
+    {
+      "title": "按主题找回资料",
+      "detail": "同一套工程，换一份输入。",
+      "demo": "搜索：知识库"
+    },
+    {
+      "title": "导出 Markdown",
+      "detail": "把整理好的条目带走，继续编辑。",
+      "demo": "reading-list.md"
+    },
+    {
+      "title": "更清楚的深色按钮",
+      "detail": "调整对比度，让下一步操作更容易看见。",
+      "demo": "继续阅读 →"
+    }
+  ],
+  "callToAction": "换成你的三条更新，再做一个版本"
+}

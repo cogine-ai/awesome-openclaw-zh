@@ -1,0 +1,122 @@
+{
+  "scope": "Explicit public files selected for the six 2026-10-30 materials packages",
+  "packs": [
+    {
+      "title": "让龙虾当3D设计师：做一座微缩工作台",
+      "case": "usecases/creative/lobster-3d-workbench.md",
+      "output": "assets/bundles/lobster-3d-workbench-2026-10-30.zip",
+      "files": [
+        "LICENSE",
+        "usecases/creative/lobster-3d-workbench.md",
+        "assets/examples/autumn-makers/lobster-3d-workbench.txt",
+        "assets/examples/autumn-makers/lobster-3d-workbench/START-HERE.md",
+        "assets/examples/autumn-makers/lobster-3d-workbench/build_scene.py",
+        "assets/examples/autumn-makers/lobster-3d-workbench/index.html",
+        "assets/examples/autumn-makers/lobster-3d-workbench/preview.svg",
+        "assets/examples/autumn-makers/lobster-3d-workbench/scene.json"
+      ]
+    },
+    {
+      "title": "更新日志变成30秒发布片：保留可修改工程",
+      "case": "usecases/creative/changelog-to-release-video.md",
+      "output": "assets/bundles/changelog-to-release-video-2026-10-30.zip",
+      "files": [
+        "LICENSE",
+        "usecases/creative/changelog-to-release-video.md",
+        "assets/examples/autumn-makers/changelog-to-release-video.txt",
+        "assets/examples/autumn-makers/changelog-to-release-video/START-HERE.md",
+        "assets/examples/autumn-makers/changelog-to-release-video/package.json",
+        "assets/examples/autumn-makers/changelog-to-release-video/package-lock.json",
+        "assets/examples/autumn-makers/changelog-to-release-video/src.tsx",
+        "assets/examples/autumn-makers/changelog-to-release-video/render.mjs",
+        "assets/examples/autumn-makers/changelog-to-release-video/props.json",
+        "assets/examples/autumn-makers/changelog-to-release-video/variant-props.json",
+        "assets/examples/autumn-makers/changelog-to-release-video/planned-subtitles.srt",
+        "assets/examples/autumn-makers/changelog-to-release-video/landscape.mp4",
+        "assets/examples/autumn-makers/changelog-to-release-video/portrait.mp4",
+        "assets/examples/autumn-makers/changelog-to-release-video/preview.png",
+        "assets/examples/autumn-makers/changelog-to-release-video/variant-preview.png",
+        "assets/examples/autumn-makers/changelog-to-release-video/index.html"
+      ]
+    },
+    {
+      "title": "三份资料变学习包：测验、闪卡与音频接入",
+      "case": "usecases/research/sources-to-learning-kit.md",
+      "output": "assets/bundles/sources-to-learning-kit-2026-10-30.zip",
+      "files": [
+        "LICENSE",
+        "usecases/research/sources-to-learning-kit.md",
+        "assets/examples/autumn-makers/sources-to-learning-kit.txt",
+        "assets/examples/autumn-makers/sources-to-learning-kit/START-HERE.md",
+        "assets/examples/autumn-makers/sources-to-learning-kit/input.json",
+        "assets/examples/autumn-makers/sources-to-learning-kit/reproduce.py",
+        "assets/examples/autumn-makers/sources-to-learning-kit/index.html",
+        "assets/examples/autumn-makers/sources-to-learning-kit/preview.svg",
+        "assets/examples/autumn-makers/sources-to-learning-kit/quiz.json",
+        "assets/examples/autumn-makers/sources-to-learning-kit/flashcards.json",
+        "assets/examples/autumn-makers/sources-to-learning-kit/sources/s1.md",
+        "assets/examples/autumn-makers/sources-to-learning-kit/sources/s2.md",
+        "assets/examples/autumn-makers/sources-to-learning-kit/sources/s3.md"
+      ]
+    },
+    {
+      "title": "给新品开一场模拟用户大会",
+      "case": "usecases/creative/simulated-product-townhall.md",
+      "output": "assets/bundles/simulated-product-townhall-2026-10-30.zip",
+      "files": [
+        "LICENSE",
+        "usecases/creative/simulated-product-townhall.md",
+        "assets/examples/autumn-makers/simulated-product-townhall.txt",
+        "assets/examples/autumn-makers/simulated-product-townhall/START-HERE.md",
+        "assets/examples/autumn-makers/simulated-product-townhall/input.json",
+        "assets/examples/autumn-makers/simulated-product-townhall/reproduce.py",
+        "assets/examples/autumn-makers/simulated-product-townhall/index.html",
+        "assets/examples/autumn-makers/simulated-product-townhall/preview.svg",
+        "assets/examples/autumn-makers/simulated-product-townhall/scenario-config.json",
+        "assets/examples/autumn-makers/simulated-product-townhall/timeline.json"
+      ]
+    },
+    {
+      "title": "三期播客变成观点分歧地图",
+      "case": "usecases/content/podcast-disagreement-map.md",
+      "output": "assets/bundles/podcast-disagreement-map-2026-10-30.zip",
+      "files": [
+        "LICENSE",
+        "usecases/content/podcast-disagreement-map.md",
+        "assets/examples/autumn-makers/podcast-disagreement-map.txt",
+        "assets/examples/autumn-makers/podcast-disagreement-map/START-HERE.md",
+        "assets/examples/autumn-makers/podcast-disagreement-map/input.json",
+        "assets/examples/autumn-makers/podcast-disagreement-map/reproduce.py",
+        "assets/examples/autumn-makers/podcast-disagreement-map/index.html",
+        "assets/examples/autumn-makers/podcast-disagreement-map/preview.svg",
+        "assets/examples/autumn-makers/podcast-disagreement-map/relations.json",
+        "assets/examples/autumn-makers/podcast-disagreement-map/transcripts/a.md",
+        "assets/examples/autumn-makers/podcast-disagreement-map/transcripts/b.md",
+        "assets/examples/autumn-makers/podcast-disagreement-map/transcripts/c.md"
+      ]
+    },
+    {
+      "title": "让龙虾做能打印的桌牌、贴纸与折页",
+      "case": "usecases/creative/printable-event-kit.md",
+      "output": "assets/bundles/printable-event-kit-2026-10-30.zip",
+      "files": [
+        "LICENSE",
+        "usecases/creative/printable-event-kit.md",
+        "assets/examples/autumn-makers/printable-event-kit.txt",
+        "assets/examples/autumn-makers/printable-event-kit/START-HERE.md",
+        "assets/examples/autumn-makers/printable-event-kit/event.json",
+        "assets/examples/autumn-makers/printable-event-kit/reproduce.py",
+        "assets/examples/autumn-makers/printable-event-kit/index.html",
+        "assets/examples/autumn-makers/printable-event-kit/preview.png",
+        "assets/examples/autumn-makers/printable-event-kit/print-checklist.md",
+        "assets/examples/autumn-makers/printable-event-kit/nameplate.svg",
+        "assets/examples/autumn-makers/printable-event-kit/stickers.svg",
+        "assets/examples/autumn-makers/printable-event-kit/trifold.svg",
+        "assets/examples/autumn-makers/printable-event-kit/event-kit.pdf",
+        "assets/examples/autumn-makers/printable-event-kit/NotoSansSC-Regular.subset.ttf",
+        "assets/examples/autumn-makers/printable-event-kit/OFL.txt",
+        "assets/examples/autumn-makers/printable-event-kit/font-manifest.json"
+      ]
+    }
+  ]
+}
