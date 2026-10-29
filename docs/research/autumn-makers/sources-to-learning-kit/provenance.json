@@ -1,0 +1,17 @@
+{
+  "reviewedAt": "2026-10-30",
+  "upstreamRepo": "teng-lin/notebooklm-py",
+  "upstreamCommit": "956400aa7af6b61b4cb988a24c9a081a3abc4ee8",
+  "upstreamReadme": "https://github.com/teng-lin/notebooklm-py/blob/956400aa7af6b61b4cb988a24c9a081a3abc4ee8/README.md",
+  "inputOrigin": "Cogine original teaching fixture",
+  "generator": "Original Python stdlib offline builder; no upstream code copied",
+  "executedScope": "input validation and offline HTML/JSON/SVG generation",
+  "notExecuted": [
+    "OpenClaw agent session",
+    "upstream service",
+    "model inference",
+    "account authentication",
+    "paid requests"
+  ],
+  "license": "Repository MIT license for original fixture and generator"
+}

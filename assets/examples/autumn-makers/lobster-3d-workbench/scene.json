@@ -1,0 +1,31 @@
+{
+  "title": "龙虾工作台",
+  "palette": {
+    "desk": "#18364c",
+    "lobster": "#f4683e",
+    "screen": "#b9eee3",
+    "lamp": "#fff1c7"
+  },
+  "resolution": [
+    960,
+    720
+  ],
+  "objects": [
+    "rounded desk",
+    "monitor",
+    "lamp",
+    "lobster made from spheres"
+  ],
+  "camera": {
+    "front": [
+      6,
+      -8,
+      6
+    ],
+    "side": [
+      -7,
+      -5,
+      4.5
+    ]
+  }
+}

@@ -1906,5 +1906,59 @@
     "sourceRepo": "NandhaKishorM/laya",
     "sourcePath": "README.md",
     "sourceUrl": "https://github.com/NandhaKishorM/laya/blob/7a77439b0923d6efe00052d50a7f787840bfce98/README.md"
+  },
+  {
+    "title": "让龙虾当3D设计师：做一座微缩工作台",
+    "desc": "用场景配置和Blender脚本搭建微缩桌面，自由修改配色、物件与镜头。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/lobster-3d-workbench.md",
+    "sourceRepo": "HKUDS/CLI-Anything",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/HKUDS/CLI-Anything"
+  },
+  {
+    "title": "更新日志变成30秒发布片：保留可修改工程",
+    "desc": "把三条更新做成横竖版30秒MP4，换一份输入即可制作下一个版本。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/changelog-to-release-video.md",
+    "sourceRepo": "remotion-dev/remotion",
+    "sourcePath": "docs/ai/skills",
+    "sourceUrl": "https://www.remotion.dev/docs/ai/skills"
+  },
+  {
+    "title": "三份资料变学习包：测验、闪卡与音频接入",
+    "desc": "把同一组资料做成10道带依据的测验、12张闪卡和音频导读，适合复习课程、产品知识与团队资料。",
+    "category": "研究与学习",
+    "localPath": "usecases/research/sources-to-learning-kit.md",
+    "sourceRepo": "teng-lin/notebooklm-py",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/teng-lin/notebooklm-py"
+  },
+  {
+    "title": "给新品开一场模拟用户大会",
+    "desc": "从五种角色的目标出发，比较两种产品介绍，整理用户可能提出的问题与后续需求。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/simulated-product-townhall.md",
+    "sourceRepo": "666ghj/MiroFish",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/666ghj/MiroFish"
+  },
+  {
+    "title": "三期播客变成观点分歧地图",
+    "desc": "围绕同一个问题比较三段访谈，把共识、条件差异与补充观点连回原文和时间戳。",
+    "category": "内容转换",
+    "localPath": "usecases/content/podcast-disagreement-map.md",
+    "sourceRepo": "jackwener/OpenCLI",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/jackwener/OpenCLI"
+  },
+  {
+    "title": "让龙虾做能打印的桌牌、贴纸与折页",
+    "desc": "把活动名称、姓名和步骤做成可编辑SVG与三页打印PDF。",
+    "category": "创意与构建",
+    "localPath": "usecases/creative/printable-event-kit.md",
+    "sourceRepo": "HKUDS/CLI-Anything",
+    "sourcePath": "README.md",
+    "sourceUrl": "https://github.com/HKUDS/CLI-Anything"
   }
 ]

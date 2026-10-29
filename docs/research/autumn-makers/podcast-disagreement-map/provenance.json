@@ -1,0 +1,17 @@
+{
+  "reviewedAt": "2026-10-30",
+  "upstreamRepo": "jackwener/OpenCLI",
+  "upstreamCommit": "97dc0cd5214b9602bcda78d7422f231ee8a803e9",
+  "upstreamReadme": "https://github.com/jackwener/OpenCLI/blob/97dc0cd5214b9602bcda78d7422f231ee8a803e9/README.md",
+  "inputOrigin": "Cogine original teaching fixture",
+  "generator": "Original Python stdlib offline builder; no upstream code copied",
+  "executedScope": "input validation and offline HTML/JSON/SVG generation",
+  "notExecuted": [
+    "OpenClaw agent session",
+    "upstream service",
+    "model inference",
+    "account authentication",
+    "paid requests"
+  ],
+  "license": "Repository MIT license for original fixture and generator"
+}

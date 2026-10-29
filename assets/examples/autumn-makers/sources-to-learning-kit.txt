@@ -1,0 +1,6 @@
+读取 assets/examples/autumn-makers/sources-to-learning-kit/input.json。
+以三份短文为来源，更新10道测验和12张闪卡。
+每道题保留正确答案、解释、ref和原文中的evidence；每张闪卡只问一个问题。
+运行 python3 assets/examples/autumn-makers/sources-to-learning-kit/reproduce.py。
+打开 index.html，完成两道题并翻开两张闪卡，检查依据链接。
+输出学习页、quiz.json、flashcards.json和三份来源文件。

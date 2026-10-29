@@ -1,0 +1,4 @@
+读取 scene.json 与 build_scene.py，制作“龙虾工作台”。
+使用 Blender 4.5 在新输出目录运行场景脚本，生成 front.png、side.png 和 scene.blend。
+打开两张图片检查构图，再重新打开工程确认物件与材质可继续编辑。
+把桌面改成我指定的颜色，重新渲染，保留原版与修改版。

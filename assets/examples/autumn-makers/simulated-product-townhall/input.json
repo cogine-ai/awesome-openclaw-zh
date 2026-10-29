@@ -1,0 +1,125 @@
+{
+  "kind": "townhall",
+  "title": "阅读清单工具的两种介绍",
+  "subtitle": "以桌面阅读清单工具为例，切换两种介绍，查看五个角色的关注点。",
+  "slug": "simulated-product-townhall",
+  "category": "creative",
+  "facts": {
+    "product": "桌面阅读清单工具",
+    "supported": [
+      "本地收藏",
+      "关键词搜索",
+      "Markdown导出"
+    ],
+    "unsupported": [
+      "手机同步",
+      "多人实时协作"
+    ],
+    "draftA": "把阅读资料整理好，让你的知识随时跟着你。",
+    "draftB": "在一台电脑本地收藏、搜索并导出阅读清单；当前不支持手机同步或多人实时协作。"
+  },
+  "roles": [
+    {
+      "id": "student",
+      "name": "学生",
+      "goal": "在电脑和手机之间继续阅读",
+      "assumption": "可能会把“随时跟着你”理解为手机同步"
+    },
+    {
+      "id": "researcher",
+      "name": "研究者",
+      "goal": "长期保存出处与本地文件",
+      "assumption": "需要知道导出是否保留来源"
+    },
+    {
+      "id": "operator",
+      "name": "运营",
+      "goal": "把资料交接给同事",
+      "assumption": "可能需要多人协作"
+    },
+    {
+      "id": "privacy",
+      "name": "隐私敏感用户",
+      "goal": "明确资料存在哪，是否上传",
+      "assumption": "不能从一句离线宣传推断所有数据行为"
+    },
+    {
+      "id": "casual",
+      "name": "偶尔阅读者",
+      "goal": "低成本开始收藏与搜索",
+      "assumption": "不想先建立复杂分类"
+    }
+  ],
+  "turns": [
+    {
+      "id": "a1",
+      "scenario": "A",
+      "role": "student",
+      "kind": "提问",
+      "text": "“随时跟着你”是不是表示我能在手机接着看？"
+    },
+    {
+      "id": "a2",
+      "scenario": "A",
+      "role": "researcher",
+      "kind": "提问",
+      "text": "我更关心导出时能否保留出处，这句介绍没有回答。"
+    },
+    {
+      "id": "a3",
+      "scenario": "A",
+      "role": "operator",
+      "kind": "提问",
+      "text": "如果交给同事，是共享一个链接还是导出文件？"
+    },
+    {
+      "id": "a4",
+      "scenario": "A",
+      "role": "privacy",
+      "kind": "提醒",
+      "text": "需要单独说明本地保存的范围，不能只靠宣传语推断。"
+    },
+    {
+      "id": "a5",
+      "scenario": "A",
+      "role": "casual",
+      "kind": "提问",
+      "text": "我能否先放几个链接，再慢慢整理？"
+    },
+    {
+      "id": "b1",
+      "scenario": "B",
+      "role": "student",
+      "kind": "需求",
+      "text": "我需要手机继续阅读，当前不支持，我会先保留这个需求。"
+    },
+    {
+      "id": "b2",
+      "scenario": "B",
+      "role": "researcher",
+      "kind": "提问",
+      "text": "已知道可以导出Markdown，还应检查来源字段是否完整。"
+    },
+    {
+      "id": "b3",
+      "scenario": "B",
+      "role": "operator",
+      "kind": "提问",
+      "text": "当前不支持实时协作，那我可以先评估文件交接是否足够。"
+    },
+    {
+      "id": "b4",
+      "scenario": "B",
+      "role": "privacy",
+      "kind": "提醒",
+      "text": "单机本地模式说清楚了，仍需实际检查网络请求和数据去向。"
+    },
+    {
+      "id": "b5",
+      "scenario": "B",
+      "role": "casual",
+      "kind": "需求",
+      "text": "我会先尝试收藏和搜索，不把分类当作起步要求。"
+    }
+  ]
+}

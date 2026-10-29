@@ -1,0 +1,43 @@
+{
+  "change": "Removed per-frame process footer; rendered the same Remotion compositions and still frames again",
+  "outputs": {
+    "landscape.mp4": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 960,
+          "height": 540,
+          "side_data_list": [
+            {}
+          ]
+        }
+      ],
+      "format": {
+        "duration": "30.000000",
+        "size": "488222"
+      }
+    },
+    "portrait.mp4": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 540,
+          "height": 960,
+          "side_data_list": [
+            {}
+          ]
+        }
+      ],
+      "format": {
+        "duration": "30.000000",
+        "size": "406229"
+      }
+    }
+  }
+}

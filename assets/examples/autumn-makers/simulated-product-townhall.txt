@@ -1,0 +1,7 @@
+读取 assets/examples/autumn-makers/simulated-product-townhall/input.json。
+把示例阅读清单工具替换为我提供的产品，写清主要功能和使用范围。
+保留五种角色，为每人写一个目标、一个假设，以及针对A/B两种介绍的问题。
+把发言标成提问、需求或提醒，并归纳三个值得继续追问的问题。
+运行 python3 assets/examples/autumn-makers/simulated-product-townhall/reproduce.py。
+打开 index.html，切换两种介绍并检查角色与发言对应。
+输出角色配置、timeline.json和讨论页面。

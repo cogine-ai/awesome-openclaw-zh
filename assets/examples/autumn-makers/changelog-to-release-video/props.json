@@ -1,0 +1,22 @@
+{
+  "product": "示例阅读清单",
+  "audience": "给每天处理资料的人",
+  "updates": [
+    {
+      "title": "关键词搜索",
+      "detail": "在自己的阅读清单里，快速找回那一条。",
+      "demo": "搜索：知识库"
+    },
+    {
+      "title": "导出 Markdown",
+      "detail": "把整理好的条目带走，继续编辑。",
+      "demo": "reading-list.md"
+    },
+    {
+      "title": "更清楚的深色按钮",
+      "detail": "调整对比度，让下一步操作更容易看见。",
+      "demo": "继续阅读 →"
+    }
+  ],
+  "callToAction": "换成你的三条更新，再做一个版本"
+}

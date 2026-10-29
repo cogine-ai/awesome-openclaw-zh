@@ -1,0 +1,68 @@
+{
+  "recordedAt": "2026-10-30",
+  "type": "actual Remotion local render of original fictional changelog",
+  "versions": {
+    "remotion": "4.0.539",
+    "@remotion/cli": "4.0.539",
+    "react": "19.2.0",
+    "node": "24.22.1",
+    "chrome": "156.0.8078.48"
+  },
+  "outputs": {
+    "landscape": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 960,
+          "height": 540,
+          "side_data_list": [
+            {}
+          ]
+        }
+      ],
+      "format": {
+        "duration": "30.000000",
+        "size": "497669"
+      }
+    },
+    "portrait": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 540,
+          "height": 960,
+          "side_data_list": [
+            {}
+          ]
+        }
+      ],
+      "format": {
+        "duration": "30.000000",
+        "size": "435321"
+      }
+    }
+  },
+  "validation": [
+    "two H.264 MP4s probed at 30 seconds",
+    "sampled landscape and portrait frames visually checked",
+    "modified props rendered to a second real still"
+  ],
+  "notRun": [
+    "OpenClaw session",
+    "voice generation",
+    "paid models",
+    "publication"
+  ],
+  "sources": [
+    "https://www.remotion.dev/docs/cli/render",
+    "https://www.remotion.dev/docs/cli/still",
+    "https://www.remotion.dev/docs/ai/skills",
+    "https://www.remotion.dev/license"
+  ]
+}

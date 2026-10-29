@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-10-30",
+  "type": "original local script output",
+  "python": "3.12.14",
+  "reportlab": "4.4.9",
+  "pdfPageSizesMm": [
+    [
+      210.0,
+      148.0
+    ],
+    [
+      210.0,
+      297.0
+    ],
+    [
+      297.0,
+      210.0
+    ]
+  ],
+  "validation": [
+    "XML parse",
+    "PDF 3-page structure and dimensions",
+    "Poppler rendering and visual inspection",
+    "Noto Sans SC TrueType subset embedded: pdffonts emb=yes sub=yes uni=yes"
+  ],
+  "notRun": [
+    "physical printing",
+    "Inkscape",
+    "CLI-Anything",
+    "OpenClaw"
+  ],
+  "sources": [
+    "https://inkscape.org/doc/inkscape-man.html",
+    "https://github.com/HKUDS/CLI-Anything/tree/34f519533bc175d2fe287ab8316b0dd99bb9cc43"
+  ],
+  "fontManifest": "font-manifest.json",
+  "fontLicense": "OFL.txt"
+}
