@@ -32,7 +32,7 @@ showcase:
 
 Sno Station v1.6.0 支持写入、检索和保留历史的纠正，并将检索后的重排放在本地。
 
-本例使用两个 API 客户端访问同一个新建 profile，依次完成写入、读取、纠正和当前事实召回。可以用它作为 Agent 共享记忆的起点。
+本例的运行流程是让两个 API 客户端访问同一个新建 profile，依次尝试写入、读取、纠正和当前事实召回。按下方步骤运行后，可以用它作为 Agent 共享记忆的起点。
 
 ## 前置条件与费用
 
@@ -85,11 +85,20 @@ python3 assets/examples/cross-agent-memory-handoff/reproduce.py --out /tmp/memor
 mkdir /tmp/sno-public-runtime
 cp assets/examples/cross-agent-memory-handoff/package.json /tmp/sno-public-runtime/package.json
 npm install --prefix /tmp/sno-public-runtime --legacy-peer-deps --no-audit --no-fund
+```
+
+依赖版本为 `@snoai/memory@1.6.0`、`@snoai/embedder@1.2.1`。若 `npm --version` 为 12 或更高版本，先在这个临时 runtime 中允许安装脚本并重建依赖：
+
+```bash
+(cd /tmp/sno-public-runtime && npm install-scripts approve --all && npm rebuild)
+```
+
+随后在仓库或完整材料包根目录运行：
+
+```bash
 python3 assets/examples/cross-agent-memory-handoff/reproduce.py \
   --run --runtime /tmp/sno-public-runtime --out /tmp/memory-handoff-real-run
 ```
-
-依赖版本为 `@snoai/memory@1.6.0`、`@snoai/embedder@1.2.1`。npm 12 需要按上游说明允许原生依赖的安装脚本。
 
 [run-memory.mjs](../../assets/examples/cross-agent-memory-handoff/run-memory.mjs)沿用官方 `SNO_PROFILE_DIR` 隔离接口，在临时目录创建独立加密库和随机密钥。它手动启动只属于本次演练的前台 sidecar，使用两个明确叫 `public-fixture-writer/reader` 的 API 客户端，设置所有 LLM 路由关闭，并拒绝覆盖已有 profile 或结果。
 

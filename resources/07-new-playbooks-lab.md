@@ -31,7 +31,7 @@ updated: 2026-11-07
 - [GitHub 手绘战报](../usecases/creative/github-handdrawn-project-cards.md)：[完整材料](../assets/bundles/github-cards-2026-10-27.zip)，把自己的公开仓库做成三张图。
 - [喜剧追逐分镜](../usecases/creative/comedy-chase-action-continuity.md)：[完整材料](../assets/bundles/comedy-chase-2026-10-27.zip)，安排一顶帽子、一只纸袋和 15 秒连续动作。
 
-下载后先阅读 `START-HERE.md`，再按教程替换输入、运行脚本。你还可以把几种玩法组合起来：用桌面卡引导经验整理，从观众提问中挑选题，再做成口播介绍。
+下载后先阅读 `START-HERE.md`，按教程运行原始示例，再替换输入，使用对应的运行命令制作自己的版本。你还可以把几种玩法组合起来：用桌面卡引导经验整理，从观众提问中挑选题，再做成口播介绍。
 
 欢迎[分享自己的版本](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)，或 [Star 收藏中文案例库](https://github.com/cogine-ai/awesome-openclaw-zh)。
 

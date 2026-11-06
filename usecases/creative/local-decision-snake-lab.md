@@ -70,8 +70,10 @@ python3 -m http.server 8765 --bind 127.0.0.1
 uv venv /tmp/snake-lab-venv --python 3.12
 UV_CACHE_DIR=/tmp/snake-lab-cache uv pip install --python /tmp/snake-lab-venv/bin/python "laya[mcp] @ git+https://github.com/NandhaKishorM/laya.git@7a77439b0923d6efe00052d50a7f787840bfce98" "torch==2.14.1" "transformers==5.21.0" "mcp==2.3.0"
 /tmp/snake-lab-venv/bin/python assets/examples/local-decision-snake/reproduce.py --download-model --model-dir /tmp/snake-lab-checkpoint
-HF_HUB_OFFLINE=1 /tmp/snake-lab-venv/bin/python assets/examples/local-decision-snake/reproduce.py --run-model --model-dir /tmp/snake-lab-checkpoint --check-mcp
+HF_HUB_OFFLINE=1 /tmp/snake-lab-venv/bin/python assets/examples/local-decision-snake/reproduce.py --run-model --model-dir /tmp/snake-lab-checkpoint --check-mcp --output-dir /tmp/snake-lab-run-1
 ```
+
+新回放写入尚不存在的 `/tmp/snake-lab-run-1`，打开其中的 `index.html` 查看。比较参数时，先备份 `scenario.json` 再修改；每轮用 `--run-model` 重跑并换一个输出目录，即可保留前后的场景与轨迹。
 
 `--download-model` 下载上面固定版本的英文模型，并检查文件哈希。已有完整且匹配的权重可省去下载步骤。
 

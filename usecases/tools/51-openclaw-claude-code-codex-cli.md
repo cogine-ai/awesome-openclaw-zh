@@ -44,6 +44,14 @@ openclaw config set plugins.entries.acpx.enabled true
 
 确认后端已启用且健康，并在 Gateway 所在机器上完成所选编码执行器的登录。下文的练习和 Agent 配置均以 `acpx` 插件已加载为前提。
 
+README 练习还需要文件写入和 Git 命令权限。检查 `acpx` 的 `permissionMode`：默认 `approve-reads` 只自动批准读取，写入或命令需要确认时，非交互会话会失败。可丢弃的练习环境可使用：
+
+```bash
+openclaw config set plugins.entries.acpx.config.permissionMode approve-all
+```
+
+这会自动批准 ACP 执行器的所有文件写入和 shell 命令；练习结束后恢复原设置。实际项目按[该版本的权限配置](https://github.com/openclaw/openclaw/blob/v2026.9.5/docs/tools/acp-agents-setup.md#permission-configuration)选择合适的模式。
+
 ### 准备练习仓库，再交给执行器
 
 准备一个可丢弃的练习仓库，确认 README 已提交，工作区和暂存区均干净（在该仓库运行 `git status --porcelain` 应无输出）。记下它在 Gateway 所在机器上的绝对路径，替换下面的路径占位后，再把完整任务交给 OpenClaw。优先使用你已经登录且配置完成的执行器：
@@ -65,7 +73,7 @@ openclaw config set plugins.entries.acpx.enabled true
 
 完成后，在练习仓库区分两种结果：
 
-- 修复了拼写错误：`git diff` 应只包含与回复一致的单处改动，`git diff --cached` 应为空。
+- 修复了拼写错误：`git diff` 应只包含与回复一致的单处改动，`git diff --cached` 应为空；`git status --porcelain --untracked-files=all` 应只列出 README 修改。
 - 未发现拼写错误：应没有新增改动，`git status --porcelain` 应仍无输出。
 
 后续再换成实际项目中的小任务。
@@ -116,12 +124,16 @@ openclaw agent --message "hi" --model codex-cli/gpt-5.4
 
 ### 3) ACP 持久会话配置（持续编码）
 
-先完成上面的插件安装、启用与 `/acp doctor` 检查。以下使用 v2026.9.5 的 `agents.entries` 配置形式；把 `cwd` 换成已确认的实际仓库绝对路径，并合并到现有配置中：
+先完成上面的插件安装、启用与 `/acp doctor` 检查。以下使用 v2026.9.5 的 `agents.entries` 配置形式；将编码条目加入现有配置，保留原 Agent 和 `bindings`。示例保留原来的 `main`；按现有设置替换它的 ID、工作目录，以及编码执行器的 `cwd`。
+
+多个 Agent 使用 `agents.ownership: "explicit"`。旧配置若有 `default: true`，先按 `openclaw doctor --fix` 的迁移提示处理，再合并；该标记不能与 `ownership: "explicit"` 并用。
 
 ```json5
 {
   agents: {
+    ownership: "explicit",
     entries: {
+      main: { workspace: "~/.openclaw/workspace" },
       codex: {
         runtime: {
           type: "acp",
@@ -148,6 +160,18 @@ openclaw agent --message "hi" --model codex-cli/gpt-5.4
   }
 }
 ```
+
+这段只定义编码执行器。原来使用单 Agent 的渠道还需添加指向原 Agent 的 `bindings`；例如原 Agent 为 `main`，飞书继续由它接收：
+
+```json5
+{
+  bindings: [
+    { agentId: "main", match: { channel: "feishu", accountId: "*" } }
+  ]
+}
+```
+
+将这条追加到原有绑定中，其他渠道同理；心跳、Talk 等服务也需指定各自使用的 Agent，见[该版本的多 Agent 路由](https://github.com/openclaw/openclaw/blob/v2026.9.5/docs/concepts/multi-agent.md#routing-rules)。
 
 ### 4) 典型操作命令
 

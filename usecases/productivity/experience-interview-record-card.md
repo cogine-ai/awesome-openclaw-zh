@@ -69,16 +69,18 @@ python3 assets/examples/experience-card/reproduce.py --out /tmp/experience-card-
 
 ## 直接使用建卡命令
 
-[v1 输入](../../assets/examples/experience-card/input-v1.json)包含标题、经历和五个正文字段。按自己的经历修改 JSON 后，使用上游接口：
+[v1 输入](../../assets/examples/experience-card/input-v1.json)包含标题、经历和五个正文字段。按自己的经历修改 JSON 后，在仓库或完整材料包根目录运行随包脚本：
 
 ```bash
-EASEL_ROOT=/path/to/easel python3 skills/builtin/skill-record-card/scripts/card.py new \
-  --topic "网站研究文档404修复演练" --data /path/to/input-v1.json --date 2026-10-23
+EASEL_ROOT=/path/to/easel python3 assets/examples/experience-card/upstream/skills/builtin/skill-record-card/scripts/card.py new \
+  --topic "网站研究文档404修复演练" --data /path/to/input-v1.json
 ```
 
-`EASEL_ROOT` 是存档项目根目录，输出位于 `outputs/<主题>/assets/cards/card-001.md`。主题用具体事件命名，方便以后查找。
+`EASEL_ROOT` 是存档项目根目录；命令返回 `card` 编号与 `path` 文件位置，日期默认为当天。主题用具体事件命名，方便以后查找。
 
-修订使用 `revise`：传入 `--card 001`、`--change` 和要更新的字段即可。本例的[修订输入](../../assets/examples/experience-card/input-v2.json)由复现脚本转换成这些参数；旧版全文保留，未修改字段继承。
+修订使用 `revise`：将建卡命令返回的 `card` 值传给 `--card`，再提供 `--change` 和要更新的字段。本例的[修订输入](../../assets/examples/experience-card/input-v2.json)由复现脚本转换成这些参数；旧版全文保留，未修改字段继承。
+
+要把示例图库改成自己的案例，还需一起更新 `provenance.json` 的 `facts`、案例链接与日期，以及 `reproduce.py` 的主题、页面标题和简介；没有对应出处时将 `facts` 设为 `[]`。保留 Easel 的上游提交与脚本校验信息。
 
 ## 更新预览图
 

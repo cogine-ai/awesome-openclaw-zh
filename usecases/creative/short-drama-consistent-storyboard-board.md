@@ -36,6 +36,7 @@ updated: "2026-10-11"
 ```bash
 git clone https://github.com/lixiaoxiao9888-create/manju-laoli-skill.git
 cd manju-laoli-skill
+git checkout --detach edebc10e4b2aed5e259deff673d58d2080fe5c29
 openclaw skills install ./short-drama-director --as short-drama-director
 python3 short-drama-director/scripts/check_package.py
 openclaw skills check

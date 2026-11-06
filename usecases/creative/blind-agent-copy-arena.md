@@ -67,7 +67,7 @@ const receipt = await runBlindTrial(api, reviewedTask, 'opcboost-copy-trial-a-v1
 // 审查 accepted 与 collected 的真实状态后再收录回答。
 ```
 
-适配函数使用主机提供的 `spawn/collect` 方法。同一试验保持 `requestId` 一致，改任务后换一个 ID，再收集完整回答。
+适配函数使用主机提供的 `spawn/collect` 方法。每个独立候选使用新的 `requestId`；重试同一次请求时，才复用原 ID 和原参数，再收集完整回答。
 
 一轮真正的文案试验可这样做：
 

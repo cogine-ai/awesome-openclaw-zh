@@ -129,7 +129,7 @@ footer{border-top:1px solid #bcc8bd;padding-top:20px;margin-top:30px;font-size:1
 <article class="card notes"><h2>补充建议</h2><ul id="notes"></ul></article></section>
 <aside><article class="card"><h2>公开事实与出处</h2><div id="sources"></div></article>
 <article class="card"><h2>下载与复现</h2><p class="text"><a href="card-v1.md">v1 Markdown</a><br><a href="card-v2.md">v2 Markdown（含完整 v1）</a><br><a href="input-v1.json">v1 输入</a> · <a href="input-v2.json">v2 修订输入</a><br><a href="reproduce.py">离线复现脚本</a> · <a href="provenance.json">固定版本与来源</a></p></article></aside></div>
-<footer><p><a href="https://www.opcboost.com/usecases/productivity/experience-interview-record-card/">完整案例与复现步骤</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine 维护团队</a></p>Easel skill-record-card · 固定提交 a097ddfbb704c9d1eeb1db49a056fdbca9c2351a。上游两份 Python 脚本未修改，按 Apache-2.0 保留；本示例根据公开项目资料整理。<br>可离线浏览，也可以替换输入，制作自己的卡片。<a href="LICENSE.apache-2.0.txt">上游许可</a></footer>
+<footer><p><a href="https://www.opcboost.com/usecases/productivity/experience-interview-record-card/">完整案例与复现步骤</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine 维护团队</a></p>Easel skill-record-card · 固定提交 a097ddfbb704c9d1eeb1db49a056fdbca9c2351a。上游两份 Python 脚本未修改，按 Apache-2.0 保留；本示例根据公开项目资料整理。<br>可离线浏览。制作自己的图库，请按完整教程同步修改输入、出处和页面信息。<a href="LICENSE.apache-2.0.txt">上游许可</a></footer>
 </main><script type="application/json" id="card-data">__CARD_DATA__</script><script>
 const data=JSON.parse(document.getElementById('card-data').textContent);
 const labels={point:'核心要点',mechanism:'机理',method:'具体方法',scope_use:'使用范围 · 适用',scope_nouse:'使用范围 · 不适用'};
