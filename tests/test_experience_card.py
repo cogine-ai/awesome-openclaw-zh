@@ -24,13 +24,16 @@ class ExperienceCard(unittest.TestCase):
             provenance = json.loads((fixture / "provenance.json").read_text())
             provenance["revision_date"] = "2026-10-24"
             (fixture / "provenance.json").write_text(json.dumps(provenance))
+            revision = json.loads((fixture / "input-v2.json").read_text())
+            revision["fields"]["quote"] = "修订时再核对目标文档的版本。"
+            (fixture / "input-v2.json").write_text(json.dumps(revision, ensure_ascii=False))
             with patch.object(cards, "HERE", fixture):
                 outputs = cards.replay()
             data = json.loads(outputs["gallery.html"].split('id="card-data">', 1)[1].split("</script>", 1)[0])
             first, revised = data["versions"]
             self.assertEqual([first["day"], revised["day"]], ["2026-10-23", "2026-10-24"])
             self.assertEqual(first["quotes"], initial["quotes"])
-            self.assertEqual(revised["quotes"], initial["quotes"])
+            self.assertEqual(revised["quotes"], initial["quotes"] + [revision["fields"]["quote"]])
             self.assertIn(initial["quotes"][0], outputs["card-v2.md"])
 
 

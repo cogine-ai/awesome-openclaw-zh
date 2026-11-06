@@ -92,7 +92,8 @@ def replay():
                 os.environ["EASEL_ROOT"] = previous_root
         assert [version["num"] for version in versions] == [1, 2]
         assert versions[0] == first[0], "Revision changed historical v1"
-        assert versions[1]["quotes"] == versions[0]["quotes"], "Revision changed original quotes"
+        original_quotes = versions[0]["quotes"]
+        assert versions[1]["quotes"][:len(original_quotes)] == original_quotes, "Revision changed original quotes"
         for field in upstream["FIELDS"]:
             assert versions[0]["fields"][field] == initial[field]
             assert versions[1]["fields"][field] == revision["fields"].get(field, initial[field])
