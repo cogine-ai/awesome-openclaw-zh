@@ -1,11 +1,18 @@
 # OpenClaw 中文最佳实践库（awesome-openclaw-zh）
 
-一个面向中文用户的 OpenClaw 开源仓库：
-**先看一份真实成果，下载材料，再跑通自己的第一个场景。**
+**把 OpenClaw 用进真实工作。** 从飞书周报、AI 编程协作到部署排错，找到可复制的输入、配置和操作步骤。
 
-**[在线阅读与搜索：OPCBoost](https://www.opcboost.com/) · [龙虾造物工坊：六个新玩法](./resources/08-autumn-makers.md) · [六个新玩法与实验入口](./resources/07-new-playbooks-lab.md) · [三份可复刻成果](./resources/06-reproducible-showcase.md)**
+**[在线阅读与搜索：OPCBoost](https://www.opcboost.com/) · [先整理一份周报](./quickstart/03-weekly-report.md) · [查找全部案例](./resources/usecases-index.md)**
 
-由 **[Cogine 团队](https://www.cogine.ai/)** 整理与维护。觉得有用，欢迎点击仓库右上角 **Star** 收藏，方便再次找到这些案例；订阅更新可使用 GitHub 的 **Watch → Custom → Releases**。
+由 **[Cogine 团队](https://www.cogine.ai/)** 整理与维护。**Star 收藏这份工作流与配置手册**，下次遇到接入、使用或排错问题时继续查阅。跑通了自己的版本，也欢迎[分享结果](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)。
+
+## 从你手上的工作开始
+
+| 你想完成什么 | 从这里开始 | 接下来做什么 |
+|---|---|---|
+| 把一周的零散进度整理成周报 | [复制笔记与周报提示词](./quickstart/03-weekly-report.md) | [接入飞书](./channels/02-feishu-basic.md)或[企业微信](./channels/01-wecom-intelligent-bot.md)，在机器人对话里使用 |
+| 让 OpenClaw 配合 Codex / Claude Code 写代码 | [AI 编程协作：CLI 与 ACP 两条路线](./usecases/tools/51-openclaw-claude-code-codex-cli.md) | 先确认执行器可用，再尝试一个范围明确的任务 |
+| 安装 OpenClaw，或解决运行问题 | [部署与接入目录](./deploy/README.md) | 选择 [Windows / WSL2](./deploy/02-windows.md)、[Mac](./deploy/01-macos-local.md)或 [Linux VPS](./deploy/03-linux-vps-baseline.md) |
 
 本仓库当前覆盖三类核心内容：
 
@@ -13,7 +20,14 @@
 - 渠道接入：飞书、钉钉、企业微信、QQ（持续补充）
 - 使用场景：218 个来源可追溯的案例、工作流与原创实验
 
-## 最近更新：2026 年 10 月
+## 最近更新：2026 年 11 月
+
+11 月 7 日新增[零散进度变周报的完整练习](./quickstart/03-weekly-report.md)：包含五天笔记、可复制任务、周报示例和修改方法。已经能与 OpenClaw 对话，就可以开始；飞书和企微按需接入。
+
+- [三个中文工作场景：纪要、简报与任务拆解](./quickstart/02-first-three-workflows.md)
+- [更新记录](./CHANGELOG.md)
+
+### 创作与实验专题
 
 10 月 30 日新增[龙虾造物工坊六案例专题](./resources/08-autumn-makers.md)：3D工作台、发布短片、学习包、模拟用户大会、播客观点地图和打印物料。每例配有预览、输入、运行步骤和ZIP材料包，可直接改成自己的作品。
 
@@ -22,16 +36,7 @@
 - [本期：六个新玩法与接入实验](./resources/07-new-playbooks-lab.md)
 - [本期：三份可复刻成果](./resources/06-reproducible-showcase.md)
 - [10 月新玩法与选题依据](./resources/05-october-new-playbooks.md)
-- [第一次体验：三个中文工作场景](./quickstart/02-first-three-workflows.md)
-- [更新记录](./CHANGELOG.md)
-
-### 先用一份离线成果开始
-
-[![经验卡v1/v2对照预览](./assets/examples/experience-card/preview.svg)](./usecases/productivity/experience-interview-record-card.md)
-
-[打开经验卡教程](./usecases/productivity/experience-interview-record-card.md) · [下载完整材料](./assets/bundles/experience-card-2026-10-27.zip) · [分享你做出的版本](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)
-
-只需Python即可离线重跑两版经验卡，保留历史、事实和编辑建议；可直接替换成自己的经历。先体验具体产物，再按下面的部署和渠道入口继续。
+- [经验卡：输入、脚本与两版示例](./usecases/productivity/experience-interview-record-card.md)
 
 ## 开始使用 OpenClaw
 
