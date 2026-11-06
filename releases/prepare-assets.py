@@ -120,11 +120,13 @@ def prepare_assets(root, output):
             preview_command = (f"\n文字预览重建：`python3 scripts/generate-showcase-previews.py --pack {name}`。\n"
                                if name in PACK_SHARED else "")
             case_url = "https://www.opcboost.com/" + PACKS[name].removesuffix(".md") + "/"
+            custom_command = ("\nGitHub 图卡：先复制材料目录，按教程修改脚本的 `OWNER` 和 `REPOSITORIES`，"
+                              "再运行 `--refresh` 采集自己的公开仓库。\n" if name == "github-cards" else "")
             write_member(archive, "START-HERE.md", (
                 f"# {name}\n\n解压后从本目录阅读 `{PACKS[name]}`。\n"
-                f"输入、实际产物、复现脚本和上游许可在 `assets/examples/{name}/`。\n"
-                "先阅读案例的前置条件和验证范围，再执行命令。此包不含模型凭证或已生成视频。\n"
-                + preview_command + f"\n[完整教程与更新]({case_url}) · "
+                f"输入、示例产物与复现脚本在 `assets/examples/{name}/`。\n"
+                "先按教程准备工具、运行原始示例，再替换输入，使用对应的运行命令制作自己的版本。\n"
+                + custom_command + preview_command + f"\n[完整教程与更新]({case_url}) · "
                 "[案例仓库与共建](https://github.com/cogine-ai/awesome-openclaw-zh) · "
                 "[Cogine](https://www.cogine.ai/)\n"
             ))

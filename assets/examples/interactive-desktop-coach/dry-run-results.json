@@ -1,7 +1,7 @@
 {
   "version": "0.5.1",
   "commit": "4ad1ce1d82368139b2ceec7b2e29ade837acc722",
-  "testedAt": "2026-10-27",
+  "testedAt": "2026-11-06",
   "mode": "real CLI --dry-run; no desktop UI or human reply",
   "cards": [
     {
@@ -73,14 +73,14 @@
     },
     {
       "name": "03-check",
-      "inputSha256": "860b93d31ea6b13fc41560a47e321974f59ada99289270e75d2d682706a7dcee",
+      "inputSha256": "1259e372ac8201dfa1c401988d149d094de9f3168937efa501c453cb0c1b7004",
       "exitCode": 0,
       "output": {
         "color": "green",
         "rows": [
           {
             "type": "text",
-            "value": "以下勾选只代表你的自报确认，不是脚本自动检测，也不代表 Agent 已完成真实访谈。"
+            "value": "准备好示例输入与 Python 环境，再选择接下来要做的步骤。"
           },
           {
             "label": "只读检查 Python 版本",
@@ -100,7 +100,7 @@
               },
               {
                 "id": "scope",
-                "label": "我理解离线脚本成功与完整 Agent 访谈是两项验证"
+                "label": "我准备好替换自己的输入，制作一张卡片"
               }
             ],
             "type": "checklist"

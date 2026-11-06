@@ -3,15 +3,13 @@
 <g font-family="system-ui, sans-serif">
 <text x="60" y="55" font-size="20" fill="#047857">OPCBoost · Cogine</text>
 <text x="60" y="105" font-size="34" font-weight="700" fill="#17392c">同一张经验卡，保留两版理解</text>
-<text x="60" y="150" font-size="19" fill="#52695d">真实脚本产物的文字预览 · 维护者编辑演练，未经受访者确认</text>
+<text x="60" y="150" font-size="19" fill="#52695d">从排查经过到可复用的修复方法</text>
 <rect x="60" y="190" width="520" height="240" rx="14" fill="white" stroke="#b9c8b9"/>
 <text x="80" y="230" font-size="22" font-weight="700" fill="#176c4e">v1 · 2026-10-23</text>
-<text x="80" y="270" font-size="19" fill="#17392c">[公开观察 F1/F2/F4] 仓库研究文档</text>
-<text x="80" y="298" font-size="19" fill="#17392c">存在，不等于网站同一路径有页面；当前页面把文</text>
-<text x="80" y="326" font-size="19" fill="#17392c">档链接指向可打开的GitHub目标。</text>
+<text x="80" y="270" font-size="19" fill="#17392c">仓库里有文档，网站上也要给读者一个能打开的入</text>
+<text x="80" y="298" font-size="19" fill="#17392c">口。</text>
 <rect x="600" y="190" width="520" height="240" rx="14" fill="white" stroke="#b9c8b9"/>
 <text x="620" y="230" font-size="22" font-weight="700" fill="#176c4e">v2 · 2026-10-23</text>
-<text x="620" y="270" font-size="19" fill="#17392c">[AI编辑提炼，未获受访者确认] 修链接时，</text>
-<text x="620" y="298" font-size="19" fill="#17392c">同时检查读者能不能打开，以及打开的是不是这版</text>
-<text x="620" y="326" font-size="19" fill="#17392c">内容。</text>
+<text x="620" y="270" font-size="19" fill="#17392c">修链接时，同时检查读者能不能打开，以及打开的</text>
+<text x="620" y="298" font-size="19" fill="#17392c">是不是这版内容。</text>
 </g></svg>

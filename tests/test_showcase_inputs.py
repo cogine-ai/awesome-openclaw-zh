@@ -42,6 +42,27 @@ class PublicShowcaseInputs(unittest.TestCase):
         repo["languages"]["totalCount"] += 1
         self.assert_refresh_refused_without_overwriting(repo)
 
+    def test_custom_repository_selection_flows_from_collection_to_rendering(self):
+        repo = copy.deepcopy(self.snapshot["repositories"][0])
+        repo.update(nameWithOwner="example-team/demo", url="https://github.com/example-team/demo")
+        response = SimpleNamespace(returncode=0, stdout=json.dumps({"data": {"r0": repo}}))
+        modules = {"cards.theme": SimpleNamespace(apply=lambda name: None)}
+        for name in ("city", "languages", "rhythm"):
+            modules["cards.card_" + name] = SimpleNamespace(render=lambda data: '<svg xmlns="http://www.w3.org/2000/svg"></svg>')
+        with patch.object(cards, "OWNER", "example-team"), patch.object(cards, "REPOSITORIES", ("demo",)), \
+                patch.object(cards.subprocess, "run", return_value=response) as call, \
+                patch.object(cards.importlib, "import_module", side_effect=modules.__getitem__):
+            snapshot = cards.refresh()
+            data, outputs = cards.render(snapshot, EXAMPLE)
+            page = cards.gallery(snapshot, data)
+        self.assertIn('owner: "example-team", name: "demo"', call.call_args.args[0][-1])
+        self.assertEqual(data["login"], "example-team")
+        self.assertIn("example-team/demo", snapshot["scope"])
+        for svg in outputs.values():
+            self.assertIn("example-team/demo", svg)
+            self.assertNotIn("cogine-ai/awesome-openclaw-zh", svg)
+        self.assertIn("example-team/demo。采集", page)
+
     def refreshed_response(self):
         repo = copy.deepcopy(self.snapshot["repositories"][0])
         repo["stargazerCount"] += 1

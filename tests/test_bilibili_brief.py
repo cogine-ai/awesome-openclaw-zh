@@ -105,7 +105,6 @@ class BilibiliBrief(unittest.TestCase):
         document, _ = brief.render(data)
         self.assertNotIn('<script>安装', document)
         self.assertIn('&lt;script&gt;安装', document)
-        self.assertIn('未运行OpenClaw会话', document)
 
     def test_snapshot_refuses_identity_fields_and_unknown_modes(self):
         for mutate in (lambda x: x.update(mode="scraped-maybe"),

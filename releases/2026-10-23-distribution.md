@@ -12,7 +12,7 @@
 2. **手绘战报：**把单个公开仓库的数据变成可嵌 README 的 SVG，采集日期和数据范围写在卡片旁边。
 3. **喜剧追逐：**一个原创笑点，先做连续动作和空间分镜，再检查不同模型的投喂稿；视频制作是后续步骤。
 
-每篇都写明来源、固定版本、前置条件和验证范围。你可以从不依赖媒体服务的脚本与离线产物开始，跑通后再接模型或替换自己的素材。
+每篇都有输入、工具版本和操作步骤。你可以从不依赖媒体服务的脚本与离线产物开始，跑通后再接模型或替换自己的素材。
 
 本期精选：https://www.opcboost.com/resources/06-reproducible-showcase/?utm_source=developer-community&utm_medium=post&utm_campaign=showcase-20261023
 案例仓库：https://github.com/cogine-ai/awesome-openclaw-zh

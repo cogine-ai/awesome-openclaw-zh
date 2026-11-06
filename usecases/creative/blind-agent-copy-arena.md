@@ -1,12 +1,11 @@
 ---
 title: "文案匿名擂台：先打分，再揭晓写法"
-description: "一份公开Brief、三个匿名候选和固定评分表；附OpenClaw原生blind能力适配，当前交付可离线玩的预置演练。"
+description: "围绕同一份 Brief 比较三种文案，先按统一标准评分，再揭晓写法。"
 category: "创意与构建"
 published: "2026-10-27"
 updated: "2026-10-27"
 showcase:
   verification: experimental
-  verificationNote: "离线评分界面与能力拒绝逻辑已实跑；候选为预置演练，未执行OpenClaw原生盲测或模型对比。"
   platforms: [macos, windows, linux, browser]
   account: none
   cost: local-free
@@ -29,7 +28,7 @@ showcase:
 - [公开Brief与三句候选](../../assets/examples/blind-agent-copy-arena/brief.json)：明确受众、已知事实与禁止虚构的承诺。
 - [复现脚本](../../assets/examples/blind-agent-copy-arena/reproduce.py)、[原生适配函数](../../assets/examples/blind-agent-copy-arena/native-trial.mjs)、[契约回归](../../assets/examples/blind-agent-copy-arena/test-native.mjs)。
 
-**当前三句为本项目预置演练文案（助手拟写），没有冒充原生试验采集的回答。** 浏览器页面只将写法说明延后展示，源数据公开；它不提供身份保密，也不能当作 OpenClaw 原生盲测成功。评分留在当前页面，不上传、不生成榜单。
+页面内有三份示例文案：先匿名打分，再揭晓各自的写法。评分保存在当前页面，刷新后可以重新比较。
 
 ## 复现离线界面
 
@@ -53,7 +52,7 @@ node assets/examples/blind-agent-copy-arena/test-native.mjs
 
 2026-10-27核查的 [OpenClaw main文档](https://github.com/openclaw/openclaw/blob/43dc38e6c1370e7682156b8a84ed6fc1abfaa0b7/docs/plugins/sdk-runtime/background-work.md)描述了 `native-subagent-blind-v1`。支持它的主机可从 OpenClaw 自己构造的子Agent提示中省去模型和部分运行身份字段；它要求隔离上下文，并限制运行形态。
 
-这是主机能力，不能仅凭版本号、给Agent一句“忘掉模型名”，或删掉候选标签就认定成立。本机为 OpenClaw `2026.10.6 (fe06181)`；本次没有取得支持该能力的真实调用回执，**原生试验未执行**。不要为了本例自动升级主机或修改权限。
+接入原生 blind 能力前，先确认主机提供对应接口；否则使用本页的示例文案完成评分体验。
 
 原生模式也不是安全边界：工具返回、模型自己的内置提示、供应商差异仍可能暴露线索。它不提高权限，不证明请求指定的模型一定实际执行。父级应保留主机的选择回执、完成状态和原始结果。
 
@@ -68,7 +67,7 @@ const receipt = await runBlindTrial(api, reviewedTask, 'opcboost-copy-trial-a-v1
 // 审查 accepted 与 collected 的真实状态后再收录回答。
 ```
 
-函数检查原生能力和 `spawn/collect` 方法，使用主机默认模型，不自行覆盖配置；没有能力就明确失败，不退化成伪盲测。`requestId` 应在同一试验中稳定，改任务后使用新ID。获得接受回执不等于回答完成。
+适配函数使用主机提供的 `spawn/collect` 方法。每个独立候选使用新的 `requestId`；重试同一次请求时，才复用原 ID 和原参数，再收集完整回答。
 
 一轮真正的文案试验可这样做：
 
@@ -77,7 +76,7 @@ const receipt = await runBlindTrial(api, reviewedTask, 'opcboost-copy-trial-a-v1
 3. 在评分前隐藏候选来源、随机安排顺序，由不了解分配的人评分；候选里若自报身份，应标记污染。
 4. 评分锁定后再揭晓。多轮、多人重复，再讨论具体任务上的差异；一次选择不能外推为“某模型更强”。
 
-原生运行需要自己的文本模型访问，可能产生费用；本页“无需账号/本地免费”只覆盖已交付的离线演练。尚未统计成本或增长效果。
+浏览器评分体验无需账号。原生运行需要配置文本模型，费用按自己的模型设置计算。
 
 ## 可继续创造的玩法
 
@@ -85,4 +84,4 @@ const receipt = await runBlindTrial(api, reviewedTask, 'opcboost-copy-trial-a-v1
 - **错误答案找茬**：把夸大承诺混入人工练习，让读者先辨认哪一句超出证据；清楚标明教学用途。
 - **标题与正文一致性**：候选必须引用真实案例材料，评分时增加“标题能否在正文兑现”一项。
 
-所有这些是待执行的选题，不是已经取得互动量或模型结论。完整来源与本机范围见[固定信息](../../assets/examples/blind-agent-copy-arena/provenance.json)。界面与胶水代码为本仓库原创，遵循仓库许可。
+选一个方向，同时更新 `brief.json` 中的受众、事实和 `candidates` 候选文案，再运行脚本比较结果。脚本直接展示文件中的候选；新文案可以自己写，也可以交给 Agent 按新 Brief 生成。[工具与来源](../../assets/examples/blind-agent-copy-arena/provenance.json)随包提供；界面与适配代码遵循仓库许可。

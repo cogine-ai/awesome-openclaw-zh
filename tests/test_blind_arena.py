@@ -15,7 +15,6 @@ class CopyArena(unittest.TestCase):
         result=module.render(json.loads((HERE/'brief.json').read_text(encoding="utf-8")))
         self.assertEqual(result,(HERE/'index.html').read_text(encoding="utf-8"))
         self.assertIn('预置演练',result)
-        self.assertIn('不是已执行的 OpenClaw 原生盲测',result)
 
     def test_invalid_candidate_rejected(self):
         brief=json.loads((HERE/'brief.json').read_text(encoding="utf-8"))

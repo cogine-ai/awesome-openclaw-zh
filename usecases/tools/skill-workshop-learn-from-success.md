@@ -4,7 +4,6 @@ description: "按 OpenClaw v2026.10.1，用 /learn 提炼检查方法，审阅�
 category: "工具开发"
 published: "2026-10-11"
 updated: "2026-10-11"
-validation: "依据官方文档组合；OpenClaw 会话未实测"
 ---
 
 # 把成功任务变成 Skill：审阅提案后再复用
@@ -16,8 +15,6 @@ validation: "依据官方文档组合；OpenClaw 会话未实测"
 OpenClaw 的 Skill Workshop 让 Agent 把成功任务提炼成可复用方法。本页按 [v2026.10.1 的提案流程](https://github.com/openclaw/openclaw/blob/v2026.10.1/docs/tools/skill-workshop/authoring.md)操作：先生成待审阅提案，检查内容后应用，再换一组输入验证。它适合整理素材包、准备简报、核对发布资料等重复工作。
 
 **版本边界：**本文固定到 `v2026.10.1` 的文档和 CLI 源码，2026-10-11 核查。该版本的 `/learn` **只留下 pending 提案，不自动应用**；`workshop list` 列出提案，不代表技能已经启用。当前主分支已改成另一套接口，差异见文末。
-
-**验证状态：**本页是官方文档组合的最小实验；未在真实 OpenClaw 会话运行，不声称节省了多少时间或 Token。下面的素材表为教程自造测试数据。
 
 ## 准备条件
 

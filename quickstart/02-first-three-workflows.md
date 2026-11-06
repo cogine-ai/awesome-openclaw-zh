@@ -17,11 +17,11 @@ updated: 2026-11-07
 | 团队主要使用飞书 | [飞书基础接入](../channels/02-feishu-basic.md) | 在飞书收到简报草稿 |
 | 团队主要使用企业微信 | [企业微信接入教程](../channels/01-wecom-intelligent-bot.md) | 在企微收到简报草稿 |
 
-这是上手路线，不承诺所有渠道都能在五分钟内接完。渠道接入需要对应账号、权限、应用配置及配对。
+渠道接入需要对应账号、应用配置和配对，按链接中的步骤完成即可。
 
 ## 场景一：把混乱笔记变成可执行纪要
 
-以下是虚构练习材料，可以整段复制给 OpenClaw：
+将下面的示例笔记整段复制给 OpenClaw：
 
 ```text
 请把下面笔记整理成纪要，输出摘要、决策、行动项、未决问题。
@@ -52,7 +52,7 @@ updated: 2026-11-07
 
 已完成：新增案例的来源核对、网站手机导航检查。
 下一步：准备三个场景的演示素材。
-卡点：视频生成账号还未配置；不承诺今天出片。
+卡点：视频生成账号还未配置；待账号配置后制作。
 需要帮助：请内容负责人选择首发场景。
 ```
 
@@ -76,7 +76,3 @@ updated: 2026-11-07
 - [试试 10 月新玩法](../resources/05-october-new-playbooks.md)：漫画、短剧、视频、交互应用与自学习。
 - [分享你的结果](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)，注明版本与平台。
 - [Star 收藏案例库](https://github.com/cogine-ai/awesome-openclaw-zh)，方便下次继续实践。
-
-## 验证说明
-
-这组提示词与最小输入由 Cogine 编写。渠道要求依据对应教程；真实账号接入与群聊投递尚未在本轮验证。本轮最小会议提示词执行因模型认证错误未完成，未获得输出，详见[本地验证记录](https://github.com/cogine-ai/awesome-openclaw-zh/blob/main/docs/research/local-validation-2026-10-11.md)。

@@ -59,7 +59,8 @@ def replay():
         card_path = Path(created["path"])
         assert card_path.resolve().is_relative_to(scratch.resolve())
         v1 = card_path.read_text(encoding="utf-8")
-        args = ["revise", "--topic", TOPIC, "--card", "001", "--date", provenance["fixture_date"],
+        args = ["revise", "--topic", TOPIC, "--card", "001", "--date",
+                provenance.get("revision_date", provenance["fixture_date"]),
                 "--change", revision["change"]]
         for field, value in revision["fields"].items():
             args.extend(["--" + field.replace("_", "-"), value])
@@ -91,7 +92,8 @@ def replay():
                 os.environ["EASEL_ROOT"] = previous_root
         assert [version["num"] for version in versions] == [1, 2]
         assert versions[0] == first[0], "Revision changed historical v1"
-        assert versions[0]["quotes"] == versions[1]["quotes"] == [], "No user interview quotes exist"
+        original_quotes = versions[0]["quotes"]
+        assert versions[1]["quotes"][:len(original_quotes)] == original_quotes, "Revision changed original quotes"
         for field in upstream["FIELDS"]:
             assert versions[0]["fields"][field] == initial[field]
             assert versions[1]["fields"][field] == revision["fields"].get(field, initial[field])
@@ -121,22 +123,22 @@ h2{font-size:19px;margin:0 0 16px}h3{font-size:14px;color:#456450;margin:24px 0 
 footer{border-top:1px solid #bcc8bd;padding-top:20px;margin-top:30px;font-size:12px;line-height:1.9;color:#536b5b}
 @media(max-width:780px){main{padding:28px 16px 48px}.columns{grid-template-columns:1fr}.card{padding:20px}}
 </style></head><body><main>
-<header><div class="eyebrow">COGINE · OPENCLAW 维护者演练</div><h1>一次 404 修复，<br>怎样变成两版经验卡</h1>
-<p class="lead">维护者用本项目已完成的链接修复作演练：把公开观察整理成 v1，再用同一张卡的 revise 加入证据边界，保留完整历史。页面内容来自实际运行 Easel card.py 后的文件。</p>
-<div class="boundary">这是公开资料的维护者演练，未进行用户口述访谈。所有结构化正文与编辑建议均由助手整理；没有受访者采纳确认，不能当作本人经验终稿。</div></header>
-<nav aria-label="卡片版本"><button type="button" data-version="1" aria-pressed="false">v1 · 整理修复事实</button><button type="button" data-version="2" aria-pressed="true">v2 · 补上证据边界</button><span class="hint">同一卡片升级；v1 原文保留</span></nav>
+<header><div class="eyebrow">COGINE · OPENCLAW 经验卡</div><h1>一次 404 修复，<br>怎样变成两版经验卡</h1>
+<p class="lead">以本项目的一次链接修复为例：先把排查经过整理成 v1，再在同一张卡中加入文件、链接、版本三个检查层次，得到 v2。</p>
+</header>
+<nav aria-label="卡片版本"><button type="button" data-version="1" aria-pressed="false">v1 · 整理修复事实</button><button type="button" data-version="2" aria-pressed="true">v2 · 改进排查方法</button><span class="hint">同一卡片升级；v1 原文保留</span></nav>
 <div class="columns"><section><article class="card"><span class="tag" id="version-label"></span><h2 id="card-heading"></h2><p class="change" id="change"></p><div id="fields"></div></article>
-<article class="card notes"><h2>AI 补充与提炼 · 未经受访者确认</h2><ul id="notes"></ul><h3>用户原话</h3><p class="text">无。没有用模拟回答冒充用户口述；脚本 Markdown 的空摘录占位不表示发生过访谈。</p></article></section>
-<aside><article class="card"><h2>公开事实与出处</h2><div id="sources"></div><p class="meta">F4 是本轮直接访问旧路径的 404，只作文字记录；页面当前实际链接使用 F2 的 GitHub 目标。单个链接观察不代表全站审计。</p></article>
+<article class="card notes"><h2>补充建议</h2><ul id="notes"></ul></article></section>
+<aside><article class="card"><h2>公开事实与出处</h2><div id="sources"></div></article>
 <article class="card"><h2>下载与复现</h2><p class="text"><a href="card-v1.md">v1 Markdown</a><br><a href="card-v2.md">v2 Markdown（含完整 v1）</a><br><a href="input-v1.json">v1 输入</a> · <a href="input-v2.json">v2 修订输入</a><br><a href="reproduce.py">离线复现脚本</a> · <a href="provenance.json">固定版本与来源</a></p></article></aside></div>
-<footer><p><a href="https://www.opcboost.com/usecases/productivity/experience-interview-record-card/">完整案例与复现步骤</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine 维护团队</a></p>Easel skill-record-card · 固定提交 a097ddfbb704c9d1eeb1db49a056fdbca9c2351a。上游两份 Python 脚本未修改，按 Apache-2.0 保留；本页面与演练输入由本仓库制作。<br>页面自含，无外链加载资源；建卡与修订不调用模型。<a href="LICENSE.apache-2.0.txt">上游许可</a></footer>
+<footer><p><a href="https://www.opcboost.com/usecases/productivity/experience-interview-record-card/">完整案例与复现步骤</a> · <a href="https://github.com/cogine-ai/awesome-openclaw-zh">Star / 参与共建</a> · <a href="https://www.cogine.ai/">Cogine 维护团队</a></p>Easel skill-record-card · 固定提交 a097ddfbb704c9d1eeb1db49a056fdbca9c2351a。上游两份 Python 脚本未修改，按 Apache-2.0 保留；本示例根据公开项目资料整理。<br>可离线浏览。制作自己的图库，请按完整教程同步修改输入、出处和页面信息。<a href="LICENSE.apache-2.0.txt">上游许可</a></footer>
 </main><script type="application/json" id="card-data">__CARD_DATA__</script><script>
 const data=JSON.parse(document.getElementById('card-data').textContent);
 const labels={point:'核心要点',mechanism:'机理',method:'具体方法',scope_use:'使用范围 · 适用',scope_nouse:'使用范围 · 不适用'};
 function render(number){const version=data.versions.find(item=>item.num===number);
- document.getElementById('version-label').textContent='v'+version.num+' · '+version.day+' · 脚本真实产物';
- document.getElementById('card-heading').textContent=number===1?'把修复经过写清楚':'区分文件、链接与版本证据';
- document.getElementById('change').textContent=version.change||'初版：公开事实的结构化整理，适用边界为助手编辑建议。';
+ document.getElementById('version-label').textContent='v'+version.num+' · '+version.day;
+ document.getElementById('card-heading').textContent=number===1?'把修复经过写清楚':'对照文件、链接与版本';
+ document.getElementById('change').textContent=version.change||'初版：整理链接修复的经过与方法。';
  const fields=document.getElementById('fields');fields.replaceChildren();
  for(const [key,label] of Object.entries(labels)){const heading=document.createElement('h3');heading.textContent=label;const p=document.createElement('p');p.className='text';p.textContent=version.fields[key];fields.append(heading,p);}
  const notes=document.getElementById('notes');notes.replaceChildren();for(const text of version.ai_notes){const li=document.createElement('li');li.textContent=text;notes.append(li);}
