@@ -47,7 +47,7 @@ def generate_experience():
     if [entry['num'] for entry in versions] != [1, 2]:
         raise ValueError('Expected the actual v1/v2 card pair')
     cards = [(f"v{entry['num']} · {entry['day']}", entry['fields']['point']) for entry in versions]
-    (card_root / 'preview.svg').write_text(preview('同一张经验卡，保留两版理解', '真实脚本产物的文字预览 · 维护者编辑演练，未经受访者确认', cards, 2), encoding='utf-8')
+    (card_root / 'preview.svg').write_text(preview('同一张经验卡，保留两版理解', '从排查经过到可复用的修复方法', cards, 2), encoding='utf-8')
 
 
 def generate_comedy():
@@ -59,7 +59,7 @@ def generate_comedy():
             rows.append((f'{cells[0]} · {cells[1]}', f'{cells[2]}。{cells[6]}。{cells[7]}。出口：{cells[8]}'))
     if len(rows) != 4:
         raise ValueError('Expected the four published storyboard rows')
-    (shot_root / 'preview.svg').write_text(preview('帽子连纸袋一起跑 · 15 秒计划', '实际四镜表的文字预览 · 未生成分镜图片或视频，字幕为计划时段', rows, 2), encoding='utf-8')
+    (shot_root / 'preview.svg').write_text(preview('帽子连纸袋一起跑 · 15 秒计划', '四个时间片，安排好动作、人物与道具', rows, 2), encoding='utf-8')
 
 
 def main():

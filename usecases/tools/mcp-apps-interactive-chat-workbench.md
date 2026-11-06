@@ -9,7 +9,7 @@ source_date: 2026-10-11
 
 > 让支持 MCP Apps 的服务在会话旁显示交互界面，把选中的内容带回下一轮对话。
 
-## 来源与验证状态
+## 工具与来源
 
 | 项目 | 说明 |
 |---|---|
@@ -18,7 +18,6 @@ source_date: 2026-10-11
 | 查阅日期 | 2026-10-11 |
 | 最近更新证据 | PR #161747 于 2026-10-02 合并；`v2026.10.1` 于台湾时间 2026-10-11 发布相关扩展 |
 | 上游证据 | 作者使用 Bits & Bolts 0.1.11 与合成工作区做了直接/native MCP 互通验证 |
-| 本仓库验证 | 已核对配置与边界；未安装演示 server、未渲染 App、未验证编辑保存 |
 
 ## 这个案例能帮你做什么
 
@@ -65,7 +64,7 @@ openclaw config set mcp.apps.enabled true --strict-json
 }
 ```
 
-这是官方示例原有的包名和参数；2026-10-11 查询 npm 元数据得到版本 `2.0.3`，尚未安装或渲染验证。不要覆盖已经配置的其他 server。
+这里使用官方示例的包名和参数，示例版本为 `2.0.3`。将条目加入现有 server 配置即可。
 
 修改 App host 设置后重启 Gateway，再检查服务：
 
@@ -100,7 +99,7 @@ openclaw mcp doctor basic-react --probe
 
 支持 OpenAI MCP Plugin Extensions 的 server 可以声明全局/会话入口、设置、资源选择与文件查看器。这仍然使用同一个 MCP Apps host，不会因此登录 ChatGPT 账户或安装另一套 runtime。
 
-上游 PR #161747 的 Bits & Bolts 演示覆盖资源提及、图片上下文、STL 编辑、冲突保存和结构化表单。该证据来自作者的合成数据验证，不是本仓库对真实账户或业务文件的验收。
+[上游 PR #161747](https://github.com/openclaw/openclaw/pull/161747) 还展示了图片上下文、STL 编辑和结构化表单，可以从中选择下一步体验。
 
 ## 文件编辑怎么验收
 

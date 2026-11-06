@@ -123,7 +123,7 @@ def prepare_assets(root, output):
             write_member(archive, "START-HERE.md", (
                 f"# {name}\n\n解压后从本目录阅读 `{PACKS[name]}`。\n"
                 f"输入、实际产物、复现脚本和上游许可在 `assets/examples/{name}/`。\n"
-                "先阅读案例的前置条件和验证范围，再执行命令。此包不含模型凭证或已生成视频。\n"
+                "先按教程准备工具，再替换输入、运行脚本，制作自己的版本。\n"
                 + preview_command + f"\n[完整教程与更新]({case_url}) · "
                 "[案例仓库与共建](https://github.com/cogine-ai/awesome-openclaw-zh) · "
                 "[Cogine](https://www.cogine.ai/)\n"

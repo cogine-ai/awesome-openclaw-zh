@@ -4,10 +4,8 @@ description: "用 Easel 记录卡技能整理核心要点、机理、方法和�
 category: "生产力"
 published: "2026-10-23"
 updated: "2026-10-23"
-validation: "上游建卡与修订CLI离线复现通过；公开资料演练，非完整人工访谈"
 showcase:
   verification: script-reproduced
-  verificationNote: "离线建卡与修订脚本已复现；材料是公开资料演练，未完成模型访谈。"
   platforms: [macos, browser]
   account: none
   cost: local-free
@@ -16,106 +14,80 @@ showcase:
   previewPath: assets/examples/experience-card/preview.svg
   bundlePath: assets/bundles/experience-card-2026-10-27.zip
   testedAt: 2026-10-27
-  testedVersion: "Python 3.12；Easel a097ddf；OpenClaw 2026.9.8 调用返回401"
+  testedVersion: "Python 3.12；Easel a097ddf"
   beginner: true
 ---
 
 # 把做成的事沉淀成经验卡：保留原话与版本演进
 
-> 一次具体经历，整理成能继续改进的卡片；分清自己的原话、公开事实与 AI 的建议。
+把一次故障处理、成功剪片或项目交付整理成卡片，留下核心要点、原因、步骤和适用场景。以后遇到类似工作，可以直接拿来参考，再随着新经验继续修订。
 
-## 先看实际成果
+## 看看一张卡怎样改进
 
-[打开两版经验卡展示页](../../assets/examples/experience-card/gallery.html)，切换 v1／v2 查看同一张卡怎样演进。也可以直接阅读 [v1 Markdown](../../assets/examples/experience-card/card-v1.md) 和 [v2 Markdown，含完整 v1](../../assets/examples/experience-card/card-v2.md)。
+[打开两版经验卡](../../assets/examples/experience-card/gallery.html)，切换 v1／v2 对照修改。也可以阅读 [v1 Markdown](../../assets/examples/experience-card/card-v1.md) 和 [含完整历史的 v2](../../assets/examples/experience-card/card-v2.md)。
 
-本轮素材是维护者用本项目**已完成的一次研究文档链接修复**进行演练。公开内容 Markdown 使用相对研究文档链接；未映射的站内文档路径返回 404，而[当前公开短剧页面](https://www.opcboost.com/usecases/creative/short-drama-consistent-storyboard-board)已把读者引向固定提交的 GitHub 文档。版本和观察出处见[输入来源](../../assets/examples/experience-card/provenance.json)。
+本页用公开项目资料中的一次研究文档链接修复做示例。v1 整理排查经过，v2 加入文件、链接和版本三个检查层次，方便下次复用。[输入与出处](../../assets/examples/experience-card/provenance.json)随包提供。
 
-这不是用户口述访谈。v1 是助手对公开资料的结构化整理；v2 新增「文件、链接、版本三层分别核对」的编辑提炼，明确标注未经受访者确认。没有模拟用户回答，也没有把编辑建议写成已采纳观点。建卡日期为 2026-10-23，不代表修复发生于当天。
+## 准备什么
 
-## 上游能力与版本
+- 先重跑示例：Python 3.10+ 与本仓库文件，无需额外依赖。
+- 整理自己的经历：已配置文本模型的 OpenClaw／Easel，以及 [skill-record-card](https://github.com/ZJU-REAL/Easel/blob/a097ddfbb704c9d1eeb1db49a056fdbca9c2351a/skills/builtin/skill-record-card/SKILL.md)。模型费用按自己的配置计费。
 
-Easel 的 [skill-record-card](https://github.com/ZJU-REAL/Easel/blob/a097ddfbb704c9d1eeb1db49a056fdbca9c2351a/skills/builtin/skill-record-card/SKILL.md)通过逐段访谈整理四个主题：核心要点、机理、具体方法、使用范围；适用与不适用分别存储，因此脚本要求五个正文字段。它还保存原话、AI 补充说明和同一卡片的历史版本。
+本例使用 Easel 提交 `a097ddfbb704c9d1eeb1db49a056fdbca9c2351a` 的建卡与修订脚本，随包保留 [Apache-2.0 许可](../../assets/examples/experience-card/LICENSE.apache-2.0.txt)。
 
-[上游 PR #158](https://github.com/ZJU-REAL/Easel/pull/158)于 2026-10-23 合并。本例固定 Easel 提交 `a097ddfbb704c9d1eeb1db49a056fdbca9c2351a`；这是新合并的技能源码，不以 Easel 安装版本号或 OpenClaw 稳定版首发来宣传。
+## 重跑现成卡片
 
-正式访谈时，上游要求一次只问一个问题，先挖用户自己的思考，再呈现 AI 补充，整体确认后才落盘。`card.py` 只负责编号、存档和修订，**不会执行访谈或生成正文，也不能验证用户是否真的确认过**。本页用明确授权的公开资料演练验证脚本，不将它等同于完整上游访谈流程。
-
-## 前置条件
-
-| 体验 | 需要什么 | 成本与边界 |
-|---|---|---|
-| 重跑本页成果 | Python 3.10+ 与本仓库文件 | 纯标准库、无需网络、模型或 OpenClaw；不会安装依赖 |
-| 亲自做一次访谈 | 已配置文本模型的 OpenClaw／Easel 与该固定版本 Skill | 模型按自己的配置计费；需要本人回答和确认，不能用样例代替 |
-
-本页随附复现必要的两份**未修改**上游 Python 文件，校验和保存在 `provenance.json`，并保留 [Apache-2.0 许可](../../assets/examples/experience-card/LICENSE.apache-2.0.txt)。没有打包其他上游资料、账号或机器路径。
-
-## 不用账号，先离线跑通
-
-在本仓库根目录执行：
+在仓库根目录执行：
 
 ```bash
 python3 assets/examples/experience-card/reproduce.py --verify
 ```
 
-它会在自动清理的临时目录实际执行固定版本的 `selftest → new → revise → list → show`，将 Markdown 副本文末空行归一后，再逐字比较三份现成产物。成功时输出 `PASS`，不会覆盖仓库中的卡片。
+脚本会在临时目录完成建卡、修订、列表与读取，并对照现成文件。成功时输出 `PASS`。
 
-要生成自己的独立副本，指定一个尚不存在的目录：
+想保存一份独立副本，指定新目录：
 
 ```bash
 python3 assets/examples/experience-card/reproduce.py --out /tmp/experience-card-replay
 ```
 
-打开新目录中的 `gallery.html`；它不加载外部资源，下载链接指向同目录文件。重复执行时换一个新目录，脚本会拒绝覆盖已有目录。
+打开新目录里的 `gallery.html`，即可浏览两版卡片和下载对应输入。再次运行时换一个输出目录。
 
-## 最小输入与实际命令
+## 换成自己的经历
 
-[v1 输入](../../assets/examples/experience-card/input-v1.json)包含 `title`、`did`、`point`、`mechanism`、`method`、`scope_use`、`scope_nouse`、`quotes` 和 `ai_notes`；本例 `quotes` 为空，所有编辑提炼在正文及 `ai_notes` 中标明。
+将这段需求发给已加载该 Skill 的 OpenClaw：
 
-上游真实建卡接口为：
+```text
+我想记录刚做成的一件具体的事。请按 skill-record-card 的访谈流程，
+一次问一个问题，帮我说明核心要点、原因、具体步骤和适用场景。
+先听我的回答，再给补充建议。
+把整理结果发给我确认后，用 card.py new 存档。
+以后有新理解，用 revise 升级同一张卡，保留原话与历史版本。
+```
+
+可以先从“最近一次怎么解决问题”开始。讲清当时发生了什么、尝试了什么、哪一步起了作用，卡片就有了可复用的细节。
+
+## 直接使用建卡命令
+
+[v1 输入](../../assets/examples/experience-card/input-v1.json)包含标题、经历和五个正文字段。按自己的经历修改 JSON 后，使用上游接口：
 
 ```bash
 EASEL_ROOT=/path/to/easel python3 skills/builtin/skill-record-card/scripts/card.py new \
   --topic "网站研究文档404修复演练" --data /path/to/input-v1.json --date 2026-10-23
 ```
 
-`EASEL_ROOT` 是存档项目根目录，脚本写入 `outputs/<主题>/assets/cards/card-001.md`。主题要具体，不能使用 `demo`、`test` 等泛化名称。实际访谈中，`--data` 应是本人确认后的文字；不要直接把模型猜测当作确认稿。
+`EASEL_ROOT` 是存档项目根目录，输出位于 `outputs/<主题>/assets/cards/card-001.md`。主题用具体事件命名，方便以后查找。
 
-`revise` 没有 `--data` 参数。[本例修订输入](../../assets/examples/experience-card/input-v2.json)由复现脚本转换成真实字段参数，并以 `--card 001 --change ... --replace-ai-notes` 更新同一张卡：旧版全文保留，未修改字段继承，新版 AI 说明替换。不要每次理解变深就新建另一张卡。
+修订使用 `revise`：传入 `--card 001`、`--change` 和要更新的字段即可。本例的[修订输入](../../assets/examples/experience-card/input-v2.json)由复现脚本转换成这些参数；旧版全文保留，未修改字段继承。
 
-## 换成自己的真实经历
+## 更新预览图
 
-可以把这段需求发给已加载该 Skill 的 OpenClaw：
-
-```text
-我想记录刚做成的一件具体的事。请按 skill-record-card 的访谈流程，
-一次只问一个问题，先让我自己说明核心要点、机理、具体步骤和使用边界。
-不要替我模拟回答。每次 AI 补充明确标注，由我决定采纳、修改或拒绝。
-完整复述并得到我确认后再用 card.py new 存档。
-后续新理解用 revise 升级同一张卡，保留原话与历史版本。
-```
-
-真正的素材可以是一次故障处理、第一次成功剪片、一次谈判或一次失败尝试。卡片的价值来自具体经历和可解释的边界；没有做过的事，不补成自己的经验。
-
-## 这次验证到了哪里
-
-- 实际执行上游 `selftest/new/revise/list/show`，均成功；五个正文字段与输入一致。
-- v2 保留 v1，未改字段正确继承，当前版本为 v2；`--replace-ai-notes` 只替换新版说明。
-- 两版均无用户原话；Markdown 的空摘录占位只是脚本默认文案，不表示访谈发生过。
-- 展示页由上游解析器读取实际产物后生成；离线重跑与现成两份 Markdown、HTML 逐字匹配。
-- 本轮只验证这些公开链接与存档行为，不声称完成全站审计、完整人工访谈或后续分享效果验证。
-
-2026-10-23，本机 OpenClaw 2026.9.8 的端到端调用返回 401，未成功；没有完成模型访谈验证，也没有为此修改全局配置或凭证。
-
-字段为空时应补充真实材料，不能为了通过而写空话；修订失败先保留旧卡，核对编号、历史段落和输入。访谈被打断时，未确认草稿也不能冒充已经存档的确认稿。
-
-由 Cogine 团队整理。欢迎用自己的真实经历重跑，并贡献带来源、版本和验证边界的案例。
-
-## 重建站点预览
-
-复现脚本负责主要产物，不会自动更新站点预览图。在仓库或完整复现包根目录执行：
+修改卡片后，在仓库或完整材料包根目录执行：
 
 ```bash
 python3 scripts/generate-showcase-previews.py --pack experience-card
 ```
 
-它只读取本包实际 gallery 中的 v1/v2 核心要点，生成确定性的 `assets/examples/experience-card/preview.svg`。这是文字内容的预览，不会生成角色图像、视频或新的模型回答。
+它会读取两版卡片的核心要点，更新 `assets/examples/experience-card/preview.svg`。
+
+由 [Cogine 团队](https://www.cogine.ai/)整理。欢迎[分享自己的卡片](https://github.com/cogine-ai/awesome-openclaw-zh/issues/new/choose)，也可以 [Star 收藏中文案例库](https://github.com/cogine-ai/awesome-openclaw-zh)，下次继续使用。

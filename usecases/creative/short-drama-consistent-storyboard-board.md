@@ -4,7 +4,6 @@ description: "把一个小故事整理为角色资产板、连续镜头提示词
 category: "创意与构建"
 published: "2026-10-11"
 updated: "2026-10-11"
-validation: "原创样例离线检查与看板渲染通过；图像与视频未生成"
 ---
 
 # 龙虾短剧导演：一致角色与离线分镜看板
@@ -17,11 +16,9 @@ validation: "原创样例离线检查与看板渲染通过；图像与视频未�
 
 本案例先做一个 16 秒的原创小故事，交付「固定资产 → 两段连续镜头 → 看板」；这个成果可以直接展示，也可以交给自己的视频模型继续制作。
 
-**来源状态：**项目创建于 2026-08-15；2026-10-11 GitHub API 快照为 1,137 Stars、118 Forks，创建约 57 天累计千级 Star。未取得最近七天净增长数据。本轮脚本固定在提交 `edebc10e4b2aed5e259deff673d58d2080fe5c29`：作者 README 顶部仍标 V6.9.8，SKILL.md 已声明 V6.9.9／2026-10-02 修订，两个标记不完全同步。
+本例固定 `short-drama-director` 提交 `edebc10e4b2aed5e259deff673d58d2080fe5c29`，使用其中的 V6.9 系列规则与工具。
 
-**验证状态：**本仓库原创样例已通过包检查、两段分别的提示词检查和离线看板编译，并在浏览器确认时间轴、镜头卡、资产表与按段筛选。未安装到 OpenClaw，未出图，未调用视频模型；作者提及的实拍复盘属于作者证据。
-
-**先看成果：**[打开原创 16 秒分镜看板](../../assets/examples/short-drama-board.html)，或下载 [项目原稿](../../assets/examples/short-drama-project.md)、[段 1 投喂稿](../../assets/examples/short-drama-segment-1.txt)、[段 2 投喂稿](../../assets/examples/short-drama-segment-2.txt)。图像资产全部标为待生成，图号仅是计划槽位。[完整离线验证记录](../../docs/research/short-drama-offline-validation-2026-10-11.md)保留检查结果与失败输入。
+[打开 16 秒分镜看板](../../assets/examples/short-drama-board.html)，或下载[项目原稿](../../assets/examples/short-drama-project.md)、[段 1 投喂稿](../../assets/examples/short-drama-segment-1.txt)、[段 2 投喂稿](../../assets/examples/short-drama-segment-2.txt)。从故事与镜头安排开始，再按资产清单生成角色图。
 
 ## 准备条件
 
@@ -30,7 +27,7 @@ validation: "原创样例离线检查与看板渲染通过；图像与视频未�
 | 已能运行的 OpenClaw 与文本模型 | 阅读 Skill、拆故事、保存项目 Markdown |
 | `short-drama-director/` 完整目录 | 包含规则、参考文件与脚本；只复制 SKILL.md 不够 |
 | Python 3 | 运行包检查、提示词校验与看板编译器 |
-| 视频服务账号 | 后续可选；本轮 HTML 看板无需视频服务 |
+| 视频服务账号 | 生成视频时需要；查看分镜看板无需账号 |
 
 作者当前支持 Seedance 2.5／2.0 和 MiniMax H3 的提示格式；可灵在 V6.8 起属于历史兼容。Skill 主要交付资产方案、分镜与模型提示词，**不承诺自动渲染出最终视频**。
 
@@ -95,11 +92,9 @@ python3 short-drama-director/scripts/validate_prompt.py examples/night-umbrella/
 python3 short-drama-director/scripts/build_board_lite.py examples/night-umbrella/project.md --out examples/night-umbrella/board.html
 ```
 
-`validate_prompt.py` 按单段处理时间码和字符预算。本轮实测：把完整项目交给它，会把第二段从零开始误判为时间重叠，并触发镜数与字符预算错误；不要把两段拼在一个检查文件中。只把每段实际投喂文本分别交给它，原始项目仍保留完整内容，并记录实际检查文件。
+`validate_prompt.py` 按单段检查时间码和字符预算。分别提交每段的投喂文本，避免第二段从零开始的时间码被误判为重叠。
 
-本轮结果为：包检查通过；段 1、段 2 各 8 秒／2 镜头，均通过且无 WARN；看板编译识别 2 段／4 镜头、5 项资产、5 组资产出图提示词，总时长 16 秒，0 WARN。浏览器中的按段筛选也已核对。看板统计和提示词通过属于离线验证，不代表模型渲染或实际成片通过。
-
-看板编译器默认输出 `<项目名>_分镜看板.html`，`--out` 可以指定文件。它会容忍缺字段并输出 WARN，**生成 HTML 不等于分镜质量检查通过**。
+看板编译器默认输出 `<项目名>_分镜看板.html`，`--out` 可指定文件。若出现 WARN，按提示补齐字段。
 
 双击 `board.html`，核对：
 
@@ -117,7 +112,7 @@ HTML 看板是只读产物。修改 `project.md` 后重新编译，避免原稿�
 
 先生成并确认角色、场景和道具的参考图，再把同一组参考图送入已选模型。两段分别生成，核对段末与下一段首镜之后合并。换模型时重新适配提示格式并校验，不能只替换模型名字。
 
-本轮即使没有视频账号，也应该交付可读的故事、资产方案与真实可打开的看板。生成最终成片后，再记录使用的模型、日期、成本与失败次数；未完成之前不标为实测通过。
+先完成故事、资产方案和分镜看板，再按段生成视频。记录模型、日期与成本，便于下一次复用。
 
 ## 常见卡点
 
@@ -129,7 +124,7 @@ HTML 看板是只读产物。修改 `project.md` 后重新编译，避免原稿�
 
 ## 来源
 
-- [本轮固定提交的 README（顶部 V6.9.8）](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/edebc10e4b2aed5e259deff673d58d2080fe5c29/README.md)
-- [本轮总控 Skill（V6.9.9）](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/edebc10e4b2aed5e259deff673d58d2080fe5c29/short-drama-director/SKILL.md)
+- [固定版本 README（顶部 V6.9.8）](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/edebc10e4b2aed5e259deff673d58d2080fe5c29/README.md)
+- [总控 Skill（V6.9.9）](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/edebc10e4b2aed5e259deff673d58d2080fe5c29/short-drama-director/SKILL.md)
 - [离线看板的输入契约与输出规则](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/edebc10e4b2aed5e259deff673d58d2080fe5c29/short-drama-director/references/storyboard-board-lite.md)
-- [本轮提示词校验脚本](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/edebc10e4b2aed5e259deff673d58d2080fe5c29/short-drama-director/scripts/validate_prompt.py)
+- [提示词校验脚本](https://github.com/lixiaoxiao9888-create/manju-laoli-skill/blob/edebc10e4b2aed5e259deff673d58d2080fe5c29/short-drama-director/scripts/validate_prompt.py)

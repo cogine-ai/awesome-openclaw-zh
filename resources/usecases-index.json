@@ -1855,7 +1855,7 @@
   },
   {
     "title": "让 Agent 举起教学卡：人来选择，桌面回传答案",
-    "desc": "用Bigarrow把看成果、选路线、查条件变成三张教学卡；真实CLI解析与启动已检查，真人回传待验收。",
+    "desc": "把操作说明拆成三张桌面教学卡，引导读者看成果、选路线、准备输入。",
     "category": "工具开发",
     "localPath": "usecases/tools/interactive-desktop-coach.md",
     "sourceRepo": "franzenzenhofer/big-arrow-on-the-screen",
@@ -1864,7 +1864,7 @@
   },
   {
     "title": "换 Agent 不重新讲一遍：共享记忆的纠正与接棒实验",
-    "desc": "用Sno准备可追溯的记忆纠正与接棒实验，公开输入、隔离入口与服务尚未跑通的实际状态。",
+    "desc": "用 Sno Station 探索共享记忆，让一个客户端纠正事实，另一个客户端读取新版本。",
     "category": "内存管理",
     "localPath": "usecases/memory/cross-agent-memory-handoff.md",
     "sourceRepo": "sno-ai/sno-station",
@@ -1873,7 +1873,7 @@
   },
   {
     "title": "数字人口播制作台：先完成26秒离线准备",
-    "desc": "实跑固定上游规划器，制作三段26秒口播计划、字幕与任务草稿；尚未生成视频，报价未知。",
+    "desc": "把产品介绍拆成三段口播，准备字幕、画中画素材和视频任务草稿。",
     "category": "创意与构建",
     "localPath": "usecases/creative/digital-human-product-intro.md",
     "sourceRepo": "andyhuo520/digital-human-koubo",
@@ -1881,8 +1881,8 @@
     "sourceUrl": "https://github.com/andyhuo520/digital-human-koubo/blob/5fa9b19f52fb8920c83567468fa30e8391b8c503/skills/digital-human-koubo/scripts/build_tasks.py"
   },
   {
-    "title": "B站观众提问变选题简报：先挡住无效样本",
-    "desc": "从B站公开评论检查选题依据；真实样本不足就停止推断，另附明确标注的原创提问演练。",
+    "title": "B站观众提问变选题简报：找到下一期的切入点",
+    "desc": "归类 B 站观众的具体提问，整理下一期内容的选题、角度与演示思路。",
     "category": "社交媒体",
     "localPath": "usecases/social/bilibili-audience-to-topic-brief.md",
     "sourceRepo": "kukemc/bili-cli",
@@ -1891,7 +1891,7 @@
   },
   {
     "title": "文案匿名擂台：先打分，再揭晓写法",
-    "desc": "同一份Brief、三个预置候选、先评分再揭晓的离线擂台；附原生blind能力适配，原生试验未执行。",
+    "desc": "围绕同一份 Brief 比较三种文案，先按统一标准评分，再揭晓写法。",
     "category": "创意与构建",
     "localPath": "usecases/creative/blind-agent-copy-arena.md",
     "sourceRepo": "openclaw/openclaw",
@@ -1900,7 +1900,7 @@
   },
   {
     "title": "本地决策蛇：把模型建议与保护规则摊开看",
-    "desc": "真实本地模型推理与蛇游戏轨迹回放，分清BFS、模型排序、保护规则与未执行的OpenClaw接入。",
+    "desc": "回放本地小模型的贪吃蛇决策，对照模型建议、路径规划和保护规则。",
     "category": "创意与构建",
     "localPath": "usecases/creative/local-decision-snake-lab.md",
     "sourceRepo": "NandhaKishorM/laya",

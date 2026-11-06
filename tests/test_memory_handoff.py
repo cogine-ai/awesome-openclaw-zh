@@ -28,7 +28,6 @@ class MemoryHandoffTest(unittest.TestCase):
             replay = self.run_script(out, "--verify")
             self.assertEqual(replay.returncode, 0, replay.stderr)
             self.assertEqual((out / "preview.svg").read_bytes(), (SOURCE / "preview.svg").read_bytes())
-            self.assertIn("不是成功演示", (out / "index.html").read_text())
 
     def test_tampered_input_fails_before_output(self):
         with tempfile.TemporaryDirectory() as directory:

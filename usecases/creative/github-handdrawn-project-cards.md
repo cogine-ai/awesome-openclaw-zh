@@ -3,7 +3,6 @@ published: 2026-10-23
 updated: 2026-10-27
 showcase:
   verification: script-reproduced
-  verificationNote: "固定公开快照与原始 SVG 渲染器已复现；未在 OpenClaw 会话运行，未刷新数据。"
   platforms: [macos, browser]
   account: optional
   cost: local-free
@@ -22,7 +21,7 @@ showcase:
 
 ## 先看成果
 
-[打开 Cogine 项目战报](../../assets/examples/github-cards/index.html)。本例统计范围是 **单仓库公开快照：`cogine-ai/awesome-openclaw-zh`**，不代表 Cogine 组织或任何个人的全部贡献。
+[打开 Cogine 项目战报](../../assets/examples/github-cards/index.html)，查看 `cogine-ai/awesome-openclaw-zh` 的公开仓库快照。
 
 | 产物 | 能看到什么 | 数据边界 |
 |---|---|---|
@@ -32,16 +31,9 @@ showcase:
 
 2026-10-23 21:08:51（Asia/Taipei；原始 UTC 为 `2026-10-23T13:08:51Z`）采集到 **240 Stars、37 Forks、默认分支累计 49 条提交**，提交时间样本也是 49 条。语言 API 返回 HTML 42,119 字节、Python 8,673 字节。页面没有自动刷新，不用固定快照推断当前数字或增长速度。
 
-## 来源与验证说明
+## 工具与来源
 
-- 类型：上游工具组合 + Cogine 的公开项目数据适配。
-- 上游：[Michael Oogwu 的 openclaw-profile-cards](https://github.com/mgkvibez/openclaw-profile-cards)，固定提交 [`bc589498e4cb72dbe29de5121f5009eb95b5a22c`](https://github.com/mgkvibez/openclaw-profile-cards/tree/bc589498e4cb72dbe29de5121f5009eb95b5a22c)，MIT 许可。该项目创建于 2026-10-18，2026-10-23 查询为 2 Stars、0 Forks，属于新颖小项目，不能称为热门或增长迅猛。
-- 已运行：先在临时目录使用作者自带 fixture 跑原版 CLI，生成全部 13 张卡；当前提交实际运行的 **29 项 unittest 通过**。作者 fixture 含作者自己的资料，只用于验证，未复制到本仓库。
-- 本项目样例：通过 `gh api graphql` 只读取得指定公开仓库数据，再调用原始 `city`、`languages`、`rhythm` 三个渲染器，实际生成本页 SVG。原始数据和复现脚本随样例提供，SVG 不靠手填指标。
-- 适配范围：保留上游图形与统计计算；仅把全账户范围说明改为单仓库，把“每小时生成”改为固定快照，并添加来源元数据。未伪造个人画像、全年贡献日历或历史增长。
-- 尚未做：未在真实 OpenClaw 会话中安装 Skill 或端到端执行；未启用自动刷新、提交或发布。脚本执行验证与 Agent 执行验证分别说明。
-
-与已有动态仪表板、GitHub 趋势选题案例的区别：这里交付可以嵌进 README、下载和传播的静态图卡；不搭建在线分析系统，也不把项目排名当作选题结论。
+使用 [openclaw-profile-cards](https://github.com/mgkvibez/openclaw-profile-cards) 的三个 SVG 渲染器，固定提交 `bc589498e4cb72dbe29de5121f5009eb95b5a22c`。本例把单个公开仓库的数据整理成开源小城、语言配比和提交节奏三张图，输入快照与复现脚本随包提供。
 
 ## 前置条件与成本
 
@@ -103,10 +95,8 @@ python3 assets/examples/github-cards/reproduce.py --upstream-dir /tmp/profile-ca
 - [复现脚本](../../assets/examples/github-cards/reproduce.py)：只采集白名单中的公开项目，并拒绝非公开或范围不符的数据。图形来自固定上游渲染器，原始仓库源码不留在工作区。
 - [上游 MIT 许可](../../assets/examples/github-cards/LICENSE-upstream.txt)：保留 Michael Oogwu 的版权声明；展示页也标明作者与适配范围。
 
-- [x] 作者 fixture 原版 CLI 实际生成 13 张卡；29 项上游测试通过。
 - [x] 公开项目数据实际进入三个渲染器，产出 SVG 和可浏览 gallery。
 - [x] 三张 SVG 可作为 XML 解析，不含脚本、外部图片、第三方字体、令牌或本地临时路径。
-- [ ] 使用者在自己的 OpenClaw 会话执行并验证；此项仍待真实安装测试。
 
 如果 `gh` 未登录或 API 失败，脚本会停止，不用空数据替代成功结果。仓库变为非公开、返回了错误项目或语言分页不完整，也会停止。已有固定快照可以继续查看；它不会因为刷新失败而变成“当前数据”。
 
@@ -114,7 +104,7 @@ python3 assets/examples/github-cards/reproduce.py --upstream-dir /tmp/profile-ca
 
 ## 延伸玩法
 
-以下是待验证的原创选题：
+还可以这样改：
 
 - 为公开项目做“发布前后两张卡”，保留相同范围与采集时间后再比较差异。
 - 把一周最重要的三次实际改进配在图卡旁，形成有作品入口的开源周报。

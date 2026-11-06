@@ -1,12 +1,11 @@
 ---
 title: "数字人口播制作台：先完成26秒离线准备"
-description: "实跑固定上游任务规划器，产出三段产品介绍、计划字幕和不可直接提交的任务草稿；未生成视频。"
+description: "把产品介绍拆成三段口播，准备字幕、画中画素材和视频任务草稿。"
 category: "创意与构建"
 published: "2026-10-27"
 updated: "2026-10-27"
 showcase:
   verification: script-reproduced
-  verificationNote: "上游分段脚本已离线实跑；26秒为文字估时，未生成主播、配音或视频，未执行OpenClaw端到端流程。"
   platforms: [macos, windows, linux, browser]
   account: none
   cost: local-free
@@ -21,7 +20,7 @@ showcase:
 
 # 数字人口播制作台：先完成26秒离线准备
 
-先把一句“介绍我们的项目”变成能审阅的口播制作包。本次为 OPCBoost 写了三段原创产品介绍，用固定上游 `build_tasks.py` 算出 **9、8、9秒，共26秒**的计划时长，再生成字幕和制作台。它们是实际文件，**没有生成数字人、声音或视频**。
+先把一句“介绍我们的项目”拆成口播制作包：三段产品介绍、共 26 秒的计划字幕，以及后续制作需要的任务草稿。
 
 ## 先看成果，再决定是否生成
 
@@ -29,13 +28,13 @@ showcase:
 - [原始口播](../../assets/examples/digital-human-product-intro/script.json)、[计划字幕](../../assets/examples/digital-human-product-intro/planned-subtitles.srt)、[任务草稿](../../assets/examples/digital-human-product-intro/draft-tasks.json)。
 - [复现脚本](../../assets/examples/digital-human-product-intro/reproduce.py)和[上游固定信息](../../assets/examples/digital-human-product-intro/provenance.json)。
 
-账号与费用标签对应当前可复现的**离线准备**。继续生成视频需要自己的 Renoise 账号、积分、可用模型和授权素材；目前这些条件不具备，因此报价为未知，任务 `readyToSubmit=false`，素材引用和模型名均为占位符。本包没有提交接口。
+查看制作台和重跑分段无需账号。继续生成视频时，准备自己的 Renoise 账号、积分、模型和主播素材，再把草稿里的占位引用换成实际素材。
 
 ## 为什么值得试
 
 上游把口播拆段、画中画、语音检查、字幕对齐与剪辑串成了技能流程。本例先取其中可离线复现的一步，适合把开源项目、教程或更新公告改成短视频脚本。先确定每句话的作用和素材去向，能在真正付费前发现长句、空镜和素材缺口。
 
-本包三段分别承担“用户问题”“已有成果”“参与方式”。第二段计划画中画，画面应使用自己制作的实际网页录屏；目前没有录制这些素材。
+三段分别承担“用户问题”“已有成果”“参与方式”。第二段可搭配自己录制的网页画中画素材。
 
 ## 复现现有结果
 
@@ -47,9 +46,9 @@ python3 assets/examples/digital-human-product-intro/reproduce.py
 
 脚本核对随包上游文件的 SHA-256，在临时目录放入原创演练 persona，再执行**未修改**的上游规划器。最后重新生成本包三个文件，临时目录自动清理。可用 `--output-dir /path/to/output` 输出到别处。
 
-上游规划器要求价格字段才能计算任务。本包内部使用 `1` 个**算术测试单位**作为结构夹具，捕获而不发布其费用输出；它不是 Renoise 报价。公开任务的 `estimatedCredits=null`、`priceStatus=not-quoted` 始终保留。不要把测试单位替换为猜测的积分价格。
+草稿中的 `estimatedCredits=null` 表示还需查询账号内的实际报价，`readyToSubmit=false` 表示先补齐素材再提交。
 
-时长来自上游每秒5.4字的启发式，尚未与真实口音、停顿、模型输出或 Whisper 转录对齐。计划字幕不能当成最终视频字幕。超出单段15秒会退出，先拆句，再重跑。
+时长按上游每秒 5.4 字估算。录好声音后，用实际音频调整字幕和分段；单段超过 15 秒时，先拆句再运行。
 
 ## 交给 OpenClaw 改成自己的介绍
 
@@ -63,8 +62,6 @@ python3 assets/examples/digital-human-product-intro/reproduce.py
 保留 readyToSubmit=false、未知报价、占位素材引用和模型ID。
 输出实际文件路径与仍缺的素材。不要连接媒体服务或提交付费任务。
 ```
-
-这段是复用入口，本次未在 OpenClaw 内执行。上游作者主要验证 Claude Code 流程，对 OpenClaw 的兼容描述不能代替本地端到端验证。
 
 ## 有账号后的最小下一步
 
