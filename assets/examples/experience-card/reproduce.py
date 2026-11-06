@@ -59,7 +59,8 @@ def replay():
         card_path = Path(created["path"])
         assert card_path.resolve().is_relative_to(scratch.resolve())
         v1 = card_path.read_text(encoding="utf-8")
-        args = ["revise", "--topic", TOPIC, "--card", "001", "--date", provenance["fixture_date"],
+        args = ["revise", "--topic", TOPIC, "--card", "001", "--date",
+                provenance.get("revision_date", provenance["fixture_date"]),
                 "--change", revision["change"]]
         for field, value in revision["fields"].items():
             args.extend(["--" + field.replace("_", "-"), value])
@@ -91,7 +92,7 @@ def replay():
                 os.environ["EASEL_ROOT"] = previous_root
         assert [version["num"] for version in versions] == [1, 2]
         assert versions[0] == first[0], "Revision changed historical v1"
-        assert versions[0]["quotes"] == versions[1]["quotes"] == [], "No user interview quotes exist"
+        assert versions[1]["quotes"] == versions[0]["quotes"], "Revision changed original quotes"
         for field in upstream["FIELDS"]:
             assert versions[0]["fields"][field] == initial[field]
             assert versions[1]["fields"][field] == revision["fields"].get(field, initial[field])

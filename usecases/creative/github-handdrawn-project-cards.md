@@ -66,6 +66,29 @@ python3 assets/examples/github-cards/reproduce.py --refresh
 
 该命令会替换此样例的公开数据、三张 SVG 和展示页面，**不会推送 Git、安装定时任务或发布到网站**。刷新后应以新数据里的 `fetched_at` 为准；正文引用的 10-23 数字不会被脚本自动改写。
 
+### 换成自己的公开仓库
+
+先复制材料目录，保留原来的快照和图卡：
+
+```bash
+cp -R assets/examples/github-cards /tmp/my-github-cards
+```
+
+修改副本 `reproduce.py` 顶部的两项设置，填入自己的 GitHub 用户或组织名、仓库名：
+
+```python
+OWNER = "your-org"
+REPOSITORIES = ("your-repo",)
+```
+
+然后采集并生成图卡，打开副本中的 `index.html`：
+
+```bash
+python3 /tmp/my-github-cards/reproduce.py --refresh
+```
+
+采集、快照检查和图卡来源会一起使用这两项设置，无需手改快照。
+
 想复用已有的固定上游源码、免去再次下载，可先在单独目录准备：
 
 ```bash

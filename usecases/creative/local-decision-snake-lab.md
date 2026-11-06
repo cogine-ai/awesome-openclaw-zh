@@ -73,7 +73,7 @@ UV_CACHE_DIR=/tmp/snake-lab-cache uv pip install --python /tmp/snake-lab-venv/bi
 HF_HUB_OFFLINE=1 /tmp/snake-lab-venv/bin/python assets/examples/local-decision-snake/reproduce.py --run-model --model-dir /tmp/snake-lab-checkpoint --check-mcp --output-dir /tmp/snake-lab-run-1
 ```
 
-新回放写入尚不存在的 `/tmp/snake-lab-run-1`，打开其中的 `index.html` 查看。比较参数时，先备份 `scenario.json` 再修改；每轮用 `--run-model` 重跑并换一个输出目录，即可保留前后的场景与轨迹。
+新回放写入尚不存在的 `/tmp/snake-lab-run-1`，打开其中的 `index.html` 查看。比较参数时，先备份 `scenario.json` 再修改；每轮用 `--run-model` 重跑并换一个输出目录。新目录已包含本轮输入，完成后将原目录的 `scenario.json` 恢复为备份，便可分别查看前后的场景与轨迹。
 
 `--download-model` 下载上面固定版本的英文模型，并检查文件哈希。已有完整且匹配的权重可省去下载步骤。
 

@@ -84,4 +84,4 @@ const receipt = await runBlindTrial(api, reviewedTask, 'opcboost-copy-trial-a-v1
 - **错误答案找茬**：把夸大承诺混入人工练习，让读者先辨认哪一句超出证据；清楚标明教学用途。
 - **标题与正文一致性**：候选必须引用真实案例材料，评分时增加“标题能否在正文兑现”一项。
 
-选一个方向替换输入，再比较结果。[工具与来源](../../assets/examples/blind-agent-copy-arena/provenance.json)随包提供；界面与适配代码遵循仓库许可。
+选一个方向，同时更新 `brief.json` 中的受众、事实和 `candidates` 候选文案，再运行脚本比较结果。脚本直接展示文件中的候选；新文案可以自己写，也可以交给 Agent 按新 Brief 生成。[工具与来源](../../assets/examples/blind-agent-copy-arena/provenance.json)随包提供；界面与适配代码遵循仓库许可。

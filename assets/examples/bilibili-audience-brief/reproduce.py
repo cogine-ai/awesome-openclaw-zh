@@ -152,7 +152,7 @@ def render(snapshot):
     esc = lambda value: html.escape(str(value), quote=True)
     fixture = snapshot["mode"] == "fixture"
     badge = "虚构观众提问 · fixture演练" if fixture else "真实公开数据 · 匿名读取快照"
-    scope = "示例数据：八条课堂提问，用来体验主题归类和选题建议。" if fixture else snapshot["collection"]["scope"]
+    scope = f"示例数据：{len(snapshot['comments'])} 条课堂提问，用来体验主题归类和选题建议。" if fixture else snapshot["collection"]["scope"]
     qualified = sum(is_qualified(row) for row in snapshot["comments"])
     by_id = {row["id"]: row for row in snapshot["comments"]}
     cards, markdown = [], ["# 观众提问 → 下期选题简报", "", badge, "", scope, "",

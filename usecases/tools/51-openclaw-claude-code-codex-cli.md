@@ -52,6 +52,8 @@ openclaw config set plugins.entries.acpx.config.permissionMode approve-all
 
 这会自动批准 ACP 执行器的所有文件写入和 shell 命令；练习结束后恢复原设置。实际项目按[该版本的权限配置](https://github.com/openclaw/openclaw/blob/v2026.9.5/docs/tools/acp-agents-setup.md#permission-configuration)选择合适的模式。
 
+若 `gateway.reload.mode` 为 `off`，设置和恢复权限后都执行 `openclaw gateway restart`，使新设置生效；默认 `hybrid` 模式会自动重载插件。
+
 ### 准备练习仓库，再交给执行器
 
 准备一个可丢弃的练习仓库，确认 README 已提交，工作区和暂存区均干净（在该仓库运行 `git status --porcelain` 应无输出）。记下它在 Gateway 所在机器上的绝对路径，替换下面的路径占位后，再把完整任务交给 OpenClaw。优先使用你已经登录且配置完成的执行器：

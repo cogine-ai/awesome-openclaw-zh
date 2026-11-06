@@ -78,9 +78,11 @@ EASEL_ROOT=/path/to/easel python3 assets/examples/experience-card/upstream/skill
 
 `EASEL_ROOT` 是存档项目根目录；命令返回 `card` 编号与 `path` 文件位置，日期默认为当天。主题用具体事件命名，方便以后查找。
 
-修订使用 `revise`：将建卡命令返回的 `card` 值传给 `--card`，再提供 `--change` 和要更新的字段。本例的[修订输入](../../assets/examples/experience-card/input-v2.json)由复现脚本转换成这些参数；旧版全文保留，未修改字段继承。
+修订使用 `revise`，沿用建卡时的 `EASEL_ROOT` 和 `--topic`：将建卡命令返回的 `card` 值传给 `--card`，再提供 `--change` 和要更新的字段。本例的[修订输入](../../assets/examples/experience-card/input-v2.json)由复现脚本转换成这些参数；旧版全文保留，未修改字段继承。
 
 要把示例图库改成自己的案例，还需一起更新 `provenance.json` 的 `facts`、案例链接与日期，以及 `reproduce.py` 的主题、页面标题和简介；没有对应出处时将 `facts` 设为 `[]`。保留 Easel 的上游提交与脚本校验信息。
+
+`fixture_date` 是第一版日期；修订发生在另一天时，在 `provenance.json` 增加 `revision_date`。输入中的 `quotes` 会保留到修订版。
 
 ## 更新预览图
 

@@ -90,7 +90,7 @@ python3 assets/examples/interactive-desktop-coach/reproduce.py \
 
 三份完整输入：[看成果](../../assets/examples/interactive-desktop-coach/cards/01-open.json)、[选路线](../../assets/examples/interactive-desktop-coach/cards/02-choose.json)、[查条件](../../assets/examples/interactive-desktop-coach/cards/03-check.json)。
 
-先用原始输入完成上面的 `--verify`。换成自己的教程时再修改卡片 JSON，并使用下方的 `--cli ... --desktop` 显示；`--verify` 用于核对随包示例。
+先用原始输入完成上面的 `--verify`。换成自己的教程时，修改 `reproduce.py` 同目录下 `cards/` 中的三份 JSON，再使用下方的 `--cli ... --desktop` 显示；`--verify` 用于核对随包示例。
 
 ## 亲自弹出一张教学卡
 
