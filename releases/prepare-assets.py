@@ -122,7 +122,7 @@ def prepare_assets(root, output):
             case_url = "https://www.opcboost.com/" + PACKS[name].removesuffix(".md") + "/"
             write_member(archive, "START-HERE.md", (
                 f"# {name}\n\n解压后从本目录阅读 `{PACKS[name]}`。\n"
-                f"输入、实际产物、复现脚本和上游许可在 `assets/examples/{name}/`。\n"
+                f"输入、示例产物与复现脚本在 `assets/examples/{name}/`。\n"
                 "先按教程准备工具、运行原始示例，再替换输入，使用对应的运行命令制作自己的版本。\n"
                 + preview_command + f"\n[完整教程与更新]({case_url}) · "
                 "[案例仓库与共建](https://github.com/cogine-ai/awesome-openclaw-zh) · "
